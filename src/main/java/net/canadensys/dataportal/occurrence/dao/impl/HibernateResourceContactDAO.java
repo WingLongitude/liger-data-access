@@ -1,7 +1,5 @@
 package net.canadensys.dataportal.occurrence.dao.impl;
 
-import java.util.List;
-
 import net.canadensys.dataportal.occurrence.dao.ResourceContactDAO;
 import net.canadensys.dataportal.occurrence.model.ResourceContactModel;
 
@@ -19,7 +17,6 @@ public class HibernateResourceContactDAO implements ResourceContactDAO {
 	//get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceContactDAO.class);
 	private static final String MANAGED_ID = "id";
-	private static final String FKEY = "resource_information_fkey";
 	
 	@Autowired
 	private SessionFactory sessionFactory;

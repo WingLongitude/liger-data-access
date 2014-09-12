@@ -18,8 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 @Entity
 @Table(name = "resource_information")
 @SequenceGenerator(name = "resource_information_id_seq", sequenceName = "resource_information_id_seq", allocationSize=1)
@@ -47,14 +45,10 @@ public class ResourceInformationModel {
 	private String parent_collection_identifier;
 	private String collection_name;
 
-	@Autowired
-	@JoinColumn
+	@JoinColumn(name="id")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<ResourceContactModel> contacts = new HashSet(0);
 	
-	
-	@Id
-	@GeneratedValue
 	public Integer getId() {
 		return id;
 	}

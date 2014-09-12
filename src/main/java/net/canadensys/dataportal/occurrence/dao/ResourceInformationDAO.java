@@ -36,6 +36,6 @@ public interface ResourceInformationDAO {
 	 * Drop a ResourceInformation record from the table and all its associated resourceContacts;
 	 * @param resourceInformationModel
 	 */
-	public void drop(ResourceInformationModel resourceInformationModel);
+	public boolean drop(ResourceInformationModel resourceInformationModel);
 
 }

@@ -36,15 +36,15 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 	private ResourceContactDAO resourceContactDAO;
 	
 	@Test
-	public void testSaveAndLoad(){
+	public void testSaveLoadDelete(){
 		// Create contact:
 		ResourceContactModel testResourceContact = new ResourceContactModel();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
 		assertTrue(resourceContactDAO.save(testResourceContact));
 		
-		int id = testResourceContact.getId();		
-		ResourceContactModel loadedResourceContact = resourceContactDAO.load(id);
+		int contactId = testResourceContact.getId();		
+		ResourceContactModel loadedResourceContact = resourceContactDAO.load(contactId);
 		assertEquals("Test Name",loadedResourceContact.getName());
 		assertEquals("a@a.com",loadedResourceContact.getEmail());
 		
@@ -59,11 +59,21 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		testResourceInformation.setContacts(contacts);
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
 		
-		id = testResourceInformation.getId();
-		ResourceInformationModel loadedInformation = resourceInformationDAO.load(id);
+		int informationId = testResourceInformation.getId();
+		ResourceInformationModel loadedInformation = resourceInformationDAO.load(informationId);
 		assertEquals("This is the lorem ipsum abstract",loadedInformation.get_abstract());
 		assertEquals("TitleTitleTitle",loadedInformation.getTitle());
 		// Test contacts:
 		assertEquals(contacts, loadedInformation.getContacts());
+		
+		// Test resourceInformation deletion:
+		assertEquals(true, resourceInformationDAO.drop(loadedInformation));
+		ResourceInformationModel deletedResourceInformation = resourceInformationDAO.load(informationId);
+		assertEquals(null, deletedResourceInformation);
+		
+		// Test resourceContacts deletion:
+		ResourceContactModel deletedResourceContact = resourceContactDAO.load(contactId);
+		assertEquals(null, deletedResourceContact);
+		
 	}
 }

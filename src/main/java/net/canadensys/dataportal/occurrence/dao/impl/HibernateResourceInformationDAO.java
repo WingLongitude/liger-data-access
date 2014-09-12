@@ -64,9 +64,15 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 	}
 
 	@Override
-	public void drop(ResourceInformationModel resourceInformationModel) {
+	public boolean drop(ResourceInformationModel resourceInformationModel) {
 		// Delete record:
-		sessionFactory.getCurrentSession().delete(resourceInformationModel);
+		try{
+			sessionFactory.getCurrentSession().delete(resourceInformationModel);
+		} catch(HibernateException e) {
+			LOGGER.fatal("Couldn't delete ResourceInformationModel" + resourceInformationModel.toString(), e);
+			return false;
+		}
+		return true;
 	}
 
 }
