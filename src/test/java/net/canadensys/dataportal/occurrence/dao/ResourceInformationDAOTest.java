@@ -18,36 +18,37 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
- * Test Coverage : 
+ * Test Coverage :
  * -Save ResourceInformationModel
  * -Get generated id
  * -Load ResourceInformationModel from id
+ * 
  * @author Pedro Guimarães
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-spring.xml" })
-@TransactionConfiguration(transactionManager="hibernateTransactionManager")
-public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4SpringContextTests{
-	
+@TransactionConfiguration(transactionManager = "hibernateTransactionManager")
+public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
+
 	@Autowired
 	private ResourceInformationDAO resourceInformationDAO;
-	
+
 	@Autowired
 	private ResourceContactDAO resourceContactDAO;
-	
+
 	@Test
-	public void testSaveLoadDelete(){
+	public void testSaveLoadDelete() {
 		// Create contact:
 		ResourceContactModel testResourceContact = new ResourceContactModel();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
 		assertTrue(resourceContactDAO.save(testResourceContact));
-		
-		int contactId = testResourceContact.getId();		
+
+		int contactId = testResourceContact.getId();
 		ResourceContactModel loadedResourceContact = resourceContactDAO.load(contactId);
-		assertEquals("Test Name",loadedResourceContact.getName());
-		assertEquals("a@a.com",loadedResourceContact.getEmail());
-		
+		assertEquals("Test Name", loadedResourceContact.getName());
+		assertEquals("a@a.com", loadedResourceContact.getEmail());
+
 		// Add other contact
 		ResourceContactModel testResourceContact2 = new ResourceContactModel();
 		testResourceContact2.setName("Test Name 2");
@@ -62,23 +63,23 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		Set<ResourceContactModel> contacts = new HashSet<ResourceContactModel>();
 		contacts.add(loadedResourceContact);
 		contacts.add(testResourceContact2);
-		
+
 		testResourceInformation.setContacts(contacts);
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
-		
+
 		int informationId = testResourceInformation.getId();
 		ResourceInformationModel loadedInformation = resourceInformationDAO.load(informationId);
-		assertEquals("This is the lorem ipsum abstract",loadedInformation.get_abstract());
-		assertEquals("TitleTitleTitle",loadedInformation.getTitle());
+		assertEquals("This is the lorem ipsum abstract", loadedInformation.get_abstract());
+		assertEquals("TitleTitleTitle", loadedInformation.getTitle());
 		// Test contacts:
 		assertEquals(contacts, loadedInformation.getContacts());
-				
+
 		// Test resourceInformation deletion:
 		assertEquals(true, resourceInformationDAO.drop(loadedInformation));
 
 		ResourceInformationModel deletedResourceInformation = resourceInformationDAO.load(informationId);
 		assertEquals(null, deletedResourceInformation);
-		
+
 		// Test cascade deletion of all contacts after:
 		ResourceContactModel deletedResourceContact = resourceContactDAO.load(contactId);
 		// First contact:

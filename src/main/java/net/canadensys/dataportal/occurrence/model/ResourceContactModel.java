@@ -11,14 +11,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "resource_contact")
-@SequenceGenerator(name = "resource_contact_id_seq", sequenceName = "resource_contact_id_seq", allocationSize=1)
+@SequenceGenerator(name = "resource_contact_id_seq", sequenceName = "resource_contact_id_seq", allocationSize = 1)
 public class ResourceContactModel {
-	
+
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "resource_contact_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_contact_id_seq")
 	private Integer id;
-	
+
 	private String name;
 	private String position_name;
 	private String organization_name;
@@ -29,80 +29,103 @@ public class ResourceContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
-	
+
 	private int resource_information_id;
-	
+
 	/** Getters and setters: **/
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getPosition_name() {
 		return position_name;
 	}
+
 	public void setPosition_name(String position_name) {
 		this.position_name = position_name;
 	}
+
 	public String getOrganization_name() {
 		return organization_name;
 	}
+
 	public void setOrganization_name(String organization_name) {
 		this.organization_name = organization_name;
 	}
+
 	public String getAddress() {
 		return address;
 	}
-		public void setAddress(String address) {
+
+	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getAdministrative_area() {
 		return administrative_area;
 	}
+
 	public void setAdministrative_area(String administrative_area) {
 		this.administrative_area = administrative_area;
 	}
+
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 	public String getPostal_code() {
 		return postal_code;
 	}
+
 	public void setPostal_code(String postal_code) {
 		this.postal_code = postal_code;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public int getResource_information_id() {
 		return resource_information_id;
 	}
+
 	public void setResource_information_id(int resource_information_id) {
 		this.resource_information_id = resource_information_id;
 	}

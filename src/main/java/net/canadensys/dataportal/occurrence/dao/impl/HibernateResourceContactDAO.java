@@ -13,17 +13,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository("resourceContactDAO")
 public class HibernateResourceContactDAO implements ResourceContactDAO {
-	
-	//get log4j handler
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceContactDAO.class);
 	private static final String MANAGED_ID = "id";
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
 	public boolean save(ResourceContactModel resourceContactModel) {
-		try{
+		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(resourceContactModel);
 		}
 		catch (HibernateException e) {
@@ -37,12 +37,13 @@ public class HibernateResourceContactDAO implements ResourceContactDAO {
 	public ResourceContactModel load(Integer id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceContactModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, id));
-		return (ResourceContactModel)searchCriteria.uniqueResult();
+		return (ResourceContactModel) searchCriteria.uniqueResult();
 	}
-		
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
