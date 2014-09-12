@@ -295,6 +295,7 @@ CREATE TABLE resource_contact
 	postal_code character varying(10),
 	phone character varying(20),
 	email character varying(200),
+	resource_information_id integer,
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (id)
 );
 

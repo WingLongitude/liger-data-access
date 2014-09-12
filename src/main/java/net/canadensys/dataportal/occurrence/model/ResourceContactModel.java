@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,6 +29,9 @@ public class ResourceContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
+	
+	@JoinColumn(name="id")
+	private int resource_information_id;
 	
 	/** Getters and setters: **/
 	
@@ -96,5 +100,11 @@ public class ResourceContactModel {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getResource_information_id() {
+		return resource_information_id;
+	}
+	public void setResource_information_id(int resource_information_id) {
+		this.resource_information_id = resource_information_id;
 	}
 }

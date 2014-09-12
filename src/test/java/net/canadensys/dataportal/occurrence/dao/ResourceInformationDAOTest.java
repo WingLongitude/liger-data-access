@@ -68,12 +68,13 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		
 		// Test resourceInformation deletion:
 		assertEquals(true, resourceInformationDAO.drop(loadedInformation));
+
 		ResourceInformationModel deletedResourceInformation = resourceInformationDAO.load(informationId);
 		assertEquals(null, deletedResourceInformation);
 		
 		// Test resourceContacts deletion:
 		ResourceContactModel deletedResourceContact = resourceContactDAO.load(contactId);
 		assertEquals(null, deletedResourceContact);
-		
+
 	}
 }

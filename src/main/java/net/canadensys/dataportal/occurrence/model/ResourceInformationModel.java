@@ -45,7 +45,7 @@ public class ResourceInformationModel {
 	private String parent_collection_identifier;
 	private String collection_name;
 
-	@JoinColumn(name="id")
+	@JoinColumn(name="resource_information_id")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<ResourceContactModel> contacts = new HashSet(0);
 	
