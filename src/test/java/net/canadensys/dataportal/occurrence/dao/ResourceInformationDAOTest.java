@@ -48,13 +48,20 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		assertEquals("Test Name",loadedResourceContact.getName());
 		assertEquals("a@a.com",loadedResourceContact.getEmail());
 		
+		// Add other contact
+		ResourceContactModel testResourceContact2 = new ResourceContactModel();
+		testResourceContact2.setName("Test Name 2");
+		testResourceContact2.setEmail("a2@a2.com");
+		assertTrue(resourceContactDAO.save(testResourceContact));
+
 		// Test ResourceInformation model:
 		ResourceInformationModel testResourceInformation = new ResourceInformationModel();
 		testResourceInformation.set_abstract("This is the lorem ipsum abstract");
 		testResourceInformation.setTitle("TitleTitleTitle");
-		// Add contact to the resource:
+		// Add contacts to the resource:
 		Set<ResourceContactModel> contacts = new HashSet<ResourceContactModel>();
 		contacts.add(loadedResourceContact);
+		contacts.add(testResourceContact2);
 		
 		testResourceInformation.setContacts(contacts);
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
@@ -65,16 +72,19 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		assertEquals("TitleTitleTitle",loadedInformation.getTitle());
 		// Test contacts:
 		assertEquals(contacts, loadedInformation.getContacts());
-		
+				
 		// Test resourceInformation deletion:
 		assertEquals(true, resourceInformationDAO.drop(loadedInformation));
 
 		ResourceInformationModel deletedResourceInformation = resourceInformationDAO.load(informationId);
 		assertEquals(null, deletedResourceInformation);
 		
-		// Test resourceContacts deletion:
+		// Test cascade deletion of all contacts after:
 		ResourceContactModel deletedResourceContact = resourceContactDAO.load(contactId);
+		// First contact:
 		assertEquals(null, deletedResourceContact);
-
+		// Second contact:
+		deletedResourceContact = resourceContactDAO.load(testResourceContact2.getId());
+		assertEquals(null, deletedResourceContact);
 	}
 }
