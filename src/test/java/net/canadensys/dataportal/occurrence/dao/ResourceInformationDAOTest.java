@@ -44,7 +44,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		testResourceContact.setEmail("a@a.com");
 		assertTrue(resourceContactDAO.save(testResourceContact));
 
-		int contactId = testResourceContact.getId();
+		int contactId = testResourceContact.getAuto_id();
 		ResourceContactModel loadedResourceContact = resourceContactDAO.load(contactId);
 		assertEquals("Test Name", loadedResourceContact.getName());
 		assertEquals("a@a.com", loadedResourceContact.getEmail());
@@ -67,7 +67,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		testResourceInformation.setContacts(contacts);
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
 
-		int informationId = testResourceInformation.getId();
+		int informationId = testResourceInformation.getAuto_id();
 		ResourceInformationModel loadedInformation = resourceInformationDAO.load(informationId);
 		assertEquals("This is the lorem ipsum abstract", loadedInformation.get_abstract());
 		assertEquals("TitleTitleTitle", loadedInformation.getTitle());
@@ -85,7 +85,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		// First contact:
 		assertEquals(null, deletedResourceContact);
 		// Second contact:
-		deletedResourceContact = resourceContactDAO.load(testResourceContact2.getId());
+		deletedResourceContact = resourceContactDAO.load(testResourceContact2.getAuto_id());
 		assertEquals(null, deletedResourceContact);
 	}
 }

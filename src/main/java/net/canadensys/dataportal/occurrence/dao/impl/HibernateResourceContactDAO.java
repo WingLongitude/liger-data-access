@@ -16,7 +16,7 @@ public class HibernateResourceContactDAO implements ResourceContactDAO {
 
 	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceContactDAO.class);
-	private static final String MANAGED_ID = "id";
+	private static final String MANAGED_ID = "auto_id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -34,9 +34,9 @@ public class HibernateResourceContactDAO implements ResourceContactDAO {
 	}
 
 	@Override
-	public ResourceContactModel load(Integer id) {
+	public ResourceContactModel load(Integer auto_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceContactModel.class);
-		searchCriteria.add(Restrictions.eq(MANAGED_ID, id));
+		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
 		return (ResourceContactModel) searchCriteria.uniqueResult();
 	}
 

@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS import_log
 CREATE SEQUENCE IF NOT EXISTS resource_information_id_seq;
 CREATE TABLE IF NOT EXISTS resource_information
 (
-	id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
 	sourcefileid character varying(50),
 	resource_name character varying(100),
 	alternate_identifier character varying(100),
@@ -278,13 +278,13 @@ CREATE TABLE IF NOT EXISTS resource_information
 	parent_collection_identifier character varying(50),
 	collection_identifier character varying(150),
 	collection_name character varying(150),
-	CONSTRAINT resource_information_pkey PRIMARY KEY (id)
+	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS resource_contact_id_seq;
 CREATE TABLE IF NOT EXISTS resource_contact
 (
-	id integer DEFAULT nextval('resource_contact_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('resource_contact_id_seq') NOT NULL,
 	name character varying(100),
 	position_name character varying(100),
 	organization_name character varying(100),
@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS resource_contact
 	phone character varying(20),
 	email character varying(200),
 	resource_information_id integer,
-	CONSTRAINT resource_contact_pkey PRIMARY KEY (id)
+	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS resource_management_id_seq;

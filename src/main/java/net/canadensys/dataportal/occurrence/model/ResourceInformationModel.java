@@ -22,9 +22,9 @@ import javax.persistence.Table;
 public class ResourceInformationModel {
 
 	@Id
-	@Column(name = "id")
+	@Column(name = "auto_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_information_id_seq")
-	private Integer id;
+	private Integer auto_id;
 
 	private String sourcefileid;
 	private String resource_name;
@@ -47,14 +47,16 @@ public class ResourceInformationModel {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<ResourceContactModel> contacts = new HashSet(0);
 
-	public Integer getId() {
-		return id;
+	/** Getters and setters: **/
+	
+	public Integer getAuto_id() {
+		return auto_id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setAuto_id(Integer auto_id) {
+		this.auto_id = auto_id;
 	}
-
+	
 	public String getSourcefileid() {
 		return sourcefileid;
 	}

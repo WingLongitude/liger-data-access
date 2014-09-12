@@ -24,7 +24,7 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 	
 	//get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceInformationDAO.class);
-	private static final String MANAGED_ID = "id";
+	private static final String MANAGED_ID = "auto_id";
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -42,9 +42,9 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 	}
 
 	@Override
-	public ResourceInformationModel load(Integer id) {
+	public ResourceInformationModel load(Integer auto_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceInformationModel.class);
-		searchCriteria.add(Restrictions.eq(MANAGED_ID, id));
+		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
 		return (ResourceInformationModel)searchCriteria.uniqueResult();
 	}
 	

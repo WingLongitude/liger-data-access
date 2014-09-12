@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
 CREATE SEQUENCE IF NOT EXISTS resource_information_id_seq;
 CREATE TABLE IF NOT EXISTS resource_information
 (
-	id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
 	sourcefileid character varying(50),
 	resource_name character varying(100),
 	alternate_identifier character varying(100),
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS resource_information
 CREATE SEQUENCE IF NOT EXISTS buffer.resource_contact_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.resource_contact
 (
-	id integer DEFAULT nextval('buffer.resource_contact_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('buffer.resource_contact_id_seq') NOT NULL,
 	sourcefileid character varying(50),
 	resource_name character varying(100),
 	name character varying(100),

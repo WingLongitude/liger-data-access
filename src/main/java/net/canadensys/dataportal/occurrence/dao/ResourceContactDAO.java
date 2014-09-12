@@ -23,5 +23,5 @@ public interface ResourceContactDAO {
 	 * @param id
 	 * @return ResourceContactModel or null if nothing is found
 	 */
-	public ResourceContactModel load(Integer id);
+	public ResourceContactModel load(Integer auto_id);
 }

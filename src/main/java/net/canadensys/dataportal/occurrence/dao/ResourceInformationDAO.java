@@ -22,7 +22,7 @@ public interface ResourceInformationDAO {
 	 * @param id
 	 * @return ResourceInformationModel or null if nothing is found
 	 */
-	public ResourceInformationModel load(Integer id);
+	public ResourceInformationModel load(Integer auto_id);
 	
 	/**
 	 * Load a list of ResourceInformationModel for a sourcefileid.
