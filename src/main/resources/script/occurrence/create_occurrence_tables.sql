@@ -258,12 +258,33 @@ CREATE TABLE import_log
   CONSTRAINT import_log_pkey PRIMARY KEY (id )
 );
 
+CREATE SEQUENCE resource_information_id_seq;
+CREATE TABLE resource_information
+(
+	id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
+	sourcefileid character varying(50),
+	resource_name character varying(100),
+	alternate_identifier character varying(100),
+	title character varying(100),
+	publication_date date,
+	language character varying(30),
+	_abstract text,
+	keyword character varying(100),
+	keyword_thesaurus character varying(100),
+	intellectual_rights text,
+	citation character varying(200),
+	hierarchy_level character varying(100),
+	resource_logo_url character varying(150),
+	parent_collection_identifier character varying(50),
+	collection_identifier character varying(150),
+	collection_name character varying(150),
+	CONSTRAINT resource_information_pkey PRIMARY KEY (id)
+);
+
 CREATE SEQUENCE resource_contact_id_seq;
 CREATE TABLE resource_contact
 (
 	id integer DEFAULT nextval('resource_contact_id_seq') NOT NULL,
-	sourcefileid character varying(50),
-	resource_name character varying(100),
 	name character varying(100),
 	position_name character varying(100),
 	organization_name character varying(100),

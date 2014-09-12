@@ -3,7 +3,6 @@ package net.canadensys.dataportal.occurrence.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
 
 import net.canadensys.dataportal.occurrence.model.ResourceContactModel;
 
@@ -36,15 +35,12 @@ public class ResourceContactDAOTest extends AbstractTransactionalJUnit4SpringCon
 		ResourceContactModel testModel = new ResourceContactModel();
 		testModel.setName("Test Name");
 		testModel.setEmail("a@a.com");
-		testModel.setSourcefileid("test-resource");
+		testModel.setId(1);
 		assertTrue(resourceContactDAO.save(testModel));
 		
 		Integer id = testModel.getId();		
 		ResourceContactModel loadedModel = resourceContactDAO.load(id);
 		assertEquals("Test Name",loadedModel.getName());
 		assertEquals("a@a.com",loadedModel.getEmail());
-		
-		List<ResourceContactModel> loadedList = resourceContactDAO.load("test-resource");
-		assertEquals("Test Name",loadedList.get(0).getName());
 	}
 }

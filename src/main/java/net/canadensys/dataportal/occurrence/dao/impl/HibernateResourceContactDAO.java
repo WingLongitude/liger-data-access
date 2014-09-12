@@ -3,7 +3,6 @@ package net.canadensys.dataportal.occurrence.dao.impl;
 import java.util.List;
 
 import net.canadensys.dataportal.occurrence.dao.ResourceContactDAO;
-import net.canadensys.dataportal.occurrence.model.OccurrenceFieldConstants;
 import net.canadensys.dataportal.occurrence.model.ResourceContactModel;
 
 import org.apache.log4j.Logger;
@@ -20,6 +19,7 @@ public class HibernateResourceContactDAO implements ResourceContactDAO {
 	//get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceContactDAO.class);
 	private static final String MANAGED_ID = "id";
+	private static final String FKEY = "resource_information_fkey";
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -42,20 +42,11 @@ public class HibernateResourceContactDAO implements ResourceContactDAO {
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, id));
 		return (ResourceContactModel)searchCriteria.uniqueResult();
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ResourceContactModel> load(String sourcefileid){
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceContactModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourcefileid));
-		return searchCriteria.list();
-	}
-	
+		
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-
 }

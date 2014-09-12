@@ -1,7 +1,5 @@
 package net.canadensys.dataportal.occurrence.dao;
 
-import java.util.List;
-
 import net.canadensys.dataportal.occurrence.model.ResourceContactModel;
 
 /**
@@ -23,13 +21,4 @@ public interface ResourceContactDAO {
 	 * @return ResourceContactModel or null if nothing is found
 	 */
 	public ResourceContactModel load(Integer id);
-	
-	/**
-	 * Load a list of ResourceContactModel for a sourcefileid.
-	 * More than one contact could be linked to the same sourcefileid.
-	 * @param sourcefileid
-	 * @return ResourceContactModel list or an empty list if nothing is found
-	 */
-	public List<ResourceContactModel> load(String sourcefileid);
-
 }
