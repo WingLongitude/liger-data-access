@@ -30,7 +30,6 @@ public class ResourceContactModel {
 	private String phone;
 	private String email;
 	
-	@JoinColumn(name="id")
 	private int resource_information_id;
 	
 	/** Getters and setters: **/
