@@ -52,7 +52,7 @@ hascoordinates boolean,
 hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
-sourcefileid VARCHAR(50),
+resource_uuid VARCHAR(50),
 dwcaid VARCHAR(75),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
@@ -61,7 +61,7 @@ CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_raw_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
 dwcaid VARCHAR(75),
-sourcefileid character varying(50) NOT NULL,
+resource_uuid character varying(50) NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
 accessRights TEXT,
@@ -222,7 +222,7 @@ vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
-CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwcaid , sourcefileid)
+CONSTRAINT occurrence_raw_dwcaid_resource_uuid_key UNIQUE (dwcaid , resource_uuid)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.unique_values_id_seq;
@@ -251,7 +251,7 @@ CREATE SEQUENCE IF NOT EXISTS resource_information_id_seq;
 CREATE TABLE IF NOT EXISTS resource_information
 (
 	auto_id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
-	sourcefileid character varying(50),
+	resource_uuid character varying(50),
 	resource_name character varying(100),
 	alternate_identifier character varying(100),
 	title character varying(100),
@@ -274,7 +274,7 @@ CREATE SEQUENCE IF NOT EXISTS buffer.resource_contact_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.resource_contact
 (
 	auto_id integer DEFAULT nextval('buffer.resource_contact_id_seq') NOT NULL,
-	sourcefileid character varying(50),
+	resource_uuid character varying(50),
 	resource_name character varying(100),
 	name character varying(100),
 	position_name character varying(100),
@@ -295,7 +295,6 @@ CREATE TABLE IF NOT EXISTS buffer.occurrence_extension
 (
 	auto_id bigint NOT NULL,
 	dwcaid character varying(75),
-	sourcefileid character varying(50),
 	resource_uuid character varying(50),
 	ext_type character varying(25), 
 	ext_version character varying(10), 
