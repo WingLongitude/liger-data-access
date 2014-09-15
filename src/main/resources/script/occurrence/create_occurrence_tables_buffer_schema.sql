@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS resource_information
 	parent_collection_identifier character varying(50),
 	collection_identifier character varying(150),
 	collection_name character varying(150),
-	CONSTRAINT resource_information_pkey PRIMARY KEY (id)
+	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.resource_contact_id_seq;
@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_contact
 	phone character varying(20),
 	email character varying(200),
 	resource_information_id integer,
-	CONSTRAINT resource_contact_pkey PRIMARY KEY (id)
+	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_extension_id_seq;
