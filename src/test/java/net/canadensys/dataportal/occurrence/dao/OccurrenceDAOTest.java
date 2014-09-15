@@ -72,14 +72,14 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		//make sure the table is empty
 		jdbcTemplate.update("DELETE FROM occurrence");
 		//add controlled rows
-    	jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid,institutioncode) VALUES (1,'Mexico','Mexico','uom-occurrence','MT')");
-		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid,institutioncode) VALUES (2,'Sweden','Stockholm','uos-occurrence','MT')");
-		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid,institutioncode) VALUES (3,'Sweden','Uppsala','uou-occurrence','UBC')");
-		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid,institutioncode) VALUES (4,'United States','Mexico','uow-occurrence','UBC')");
+    	jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (1,'Mexico','Mexico','uom-occurrence','MT')");
+		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (2,'Sweden','Stockholm','uos-occurrence','MT')");
+		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (3,'Sweden','Uppsala','uou-occurrence','UBC')");
+		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (4,'United States','Mexico','uow-occurrence','UBC')");
 		//record with no locality
-		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid,institutioncode) VALUES (5,'Sweden',NULL,'uou-occurrence','UBC')");
+		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (5,'Sweden',NULL,'uou-occurrence','UBC')");
 		//record with empty locality
-		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid,institutioncode) VALUES (6,'Sweden','','uow-occurrence','UBC')");
+		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (6,'Sweden','','uow-occurrence','UBC')");
 		
 		
 		sqpCountryMexico = new SearchQueryPart();
@@ -177,14 +177,14 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		columnList.add("auto_id");
 		columnList.add("country");
 		columnList.add("locality");
-		columnList.add("resource_uuid");
+		columnList.add("sourcefileid");
 		String json = occurrenceDAO.getOccurrenceSummaryJson(auto_id, "auto_id", columnList);
 		
 		//check the validity by "contains" since the order is not guaranteed
 		assertTrue(json.contains("\"auto_id\":1"));
 		assertTrue(json.contains("\"country\":\"Mexico\""));
 		assertTrue(json.contains("\"locality\":\"Mexico\""));
-		assertTrue(json.contains("\"resource_uuid\":\"uom-occurrence\""));
+		assertTrue(json.contains("\"sourcefileid\":\"uom-occurrence\""));
 		
 		assertTrue(json.startsWith("{"));
 		assertTrue(json.endsWith("}"));
@@ -196,7 +196,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		columnList.add("auto_id");
 		columnList.add("country");
 		columnList.add("locality");
-		columnList.add("resource_uuid");
+		columnList.add("sourcefileid");
 		
 		OccurrenceModel occModel = occurrenceDAO.loadOccurrenceSummary(1, columnList);
 		
@@ -205,7 +205,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		
 		assertEquals("Mexico",occModel.getCountry());
 		assertEquals("Mexico",occModel.getLocality());
-		assertEquals("uom-occurrence", occModel.getResource_uuid());
+		assertEquals("uom-occurrence", occModel.getSourcefileid());
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		OccurrenceModel occModel = occurrenceDAO.load(1);
 		assertEquals("Mexico",occModel.getCountry());
 		assertEquals("Mexico",occModel.getLocality());
-		assertEquals("uom-occurrence", occModel.getResource_uuid());
+		assertEquals("uom-occurrence", occModel.getSourcefileid());
 	}
 		
 	/**

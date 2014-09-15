@@ -51,11 +51,11 @@ public class HibernateOccurrenceExtensionDAO implements OccurrenceExtensionDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OccurrenceExtensionModel> load(String extensionType, String resourceUUID, String dwcaId) {
+	public List<OccurrenceExtensionModel> load(String extensionType, String sourcefileid, String dwcaId) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceExtensionModel.class);
 		
 		searchCriteria.add(Restrictions.eq(EXTENSION_TYPE, extensionType));
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resourceUUID));
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourcefileid));
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.DWCA_ID, dwcaId));
 		return searchCriteria.list();
 	}

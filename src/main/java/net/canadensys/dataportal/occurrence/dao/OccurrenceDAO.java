@@ -40,12 +40,12 @@ public interface OccurrenceDAO {
 	
 	/**
 	 * Load a specific Occurrence into an OccurrenceModel
-	 * @param resource_uuid
+	 * @param sourceFileId
 	 * @param dwcaId
 	 * @param deepLoad Do we need to load the raw model?
 	 * @return
 	 */
-	public OccurrenceModel load(String resource_uuid, String dwcaId, boolean deepLoad);
+	public OccurrenceModel load(String sourceFileId, String dwcaId, boolean deepLoad);
 	
 	/**
 	 * Load a specific Occurrence into an OccurrenceModel but only filled columns specified by columnList.

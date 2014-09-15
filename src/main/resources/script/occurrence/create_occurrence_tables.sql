@@ -51,7 +51,7 @@ hascoordinates boolean,
 hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
-resource_uuid VARCHAR(50),
+sourcefileid VARCHAR(50),
 dwcaid VARCHAR(75),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
@@ -59,7 +59,7 @@ CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 CREATE TABLE IF NOT EXISTS occurrence_raw (
 auto_id INTEGER NOT NULL,
 dwcaid VARCHAR(75),
-resource_uuid character varying(50) NOT NULL,
+sourcefileid character varying(50) NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
 accessRights TEXT,
@@ -220,7 +220,7 @@ vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
-CONSTRAINT occurrence_raw_dwcaid_resource_uuid_key UNIQUE (dwcaid , resource_uuid)
+CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwcaid , sourcefileid)
 );
 
 
@@ -250,6 +250,7 @@ CREATE SEQUENCE IF NOT EXISTS import_log_id_seq;
 CREATE TABLE IF NOT EXISTS import_log
 (
   id integer DEFAULT nextval('import_log_id_seq') NOT NULL,
+  sourcefileid character varying(50),
   resource_uuid character varying(50),
   record_quantity integer,
   updated_by character varying(50),
@@ -303,19 +304,20 @@ CREATE SEQUENCE IF NOT EXISTS resource_management_id_seq;
 CREATE TABLE IF NOT EXISTS resource_management
 (
   id integer DEFAULT nextval('resource_management_id_seq') NOT NULL,
-  --resource_uuid character varying(50),
   name character varying(255),
-  resource_uuid character varying(36),
+  sourcefileid character varying(50),
+  resource_uuid character varying(50),
   archive_url character varying(255),
   CONSTRAINT resource_management_pkey PRIMARY KEY ( id ),
-  CONSTRAINT resource_management_source_file_id_key UNIQUE (resource_uuid)
+  CONSTRAINT resource_management_source_file_id_key UNIQUE (sourcefileid)
 );
 
 CREATE TABLE IF NOT EXISTS occurrence_extension
 (
 	auto_id bigint NOT NULL,
 	dwcaid character varying(75),
-	resource_uuid character varying(50),
+	resource_uuid character varying (50),
+	sourcefileid character varying(50),
 	ext_type character varying(25), 
 	ext_version character varying(10), 
 	ext_data hstore,

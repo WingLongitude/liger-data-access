@@ -152,7 +152,6 @@ public class OccurrenceRawModel {
 	private String recordnumber;
 	private String _references;
 	private String reproductivecondition;
-	private String resource_uuid;
 	private String rights;
 	private String rightsholder;
 	private String samplingeffort;
@@ -161,6 +160,7 @@ public class OccurrenceRawModel {
 	private String scientificnameauthorship;
 	private String scientificnameid;
 	private String sex;
+	private String sourceFileId;
 	private String specificepithet;
 	private String startdayofyear;
 	private String stateprovince;
@@ -191,6 +191,13 @@ public class OccurrenceRawModel {
 	}
 	public void setAuto_id(int auto_id) {
 		this.auto_id = auto_id;
+	}
+
+	public String getSourceFileId() {
+		return sourceFileId;
+	}
+	public void setSourceFileId(String sourceFileId) {
+		this.sourceFileId = sourceFileId;
 	}
 	
 	public String getId() {
@@ -1163,11 +1170,5 @@ public class OccurrenceRawModel {
 	}
 	public void setDwcaid(String dwcaid) {
 		this.dwcaid = dwcaid;
-	}
-	public String getResource_uuid() {
-		return resource_uuid;
-	}
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
 	}
 }

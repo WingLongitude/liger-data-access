@@ -91,9 +91,9 @@ public class HibernateOccurrenceDAO implements OccurrenceDAO {
 	}
 
 	@Override
-	public OccurrenceModel load(String resource_uuid, String dwcaId, boolean deepLoad){
+	public OccurrenceModel load(String sourceFileId, String dwcaId, boolean deepLoad){
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.DWCA_ID, dwcaId));
 		
 		if(deepLoad){

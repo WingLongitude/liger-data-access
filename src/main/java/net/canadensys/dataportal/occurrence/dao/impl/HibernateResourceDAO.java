@@ -16,25 +16,25 @@ import org.springframework.stereotype.Repository;
 
 @Repository("resourceDAO")
 public class HibernateResourceDAO implements ResourceDAO {
-	
-	//get log4j handler
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceDAO.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
-	public List<ResourceModel> loadResources(){
+	public List<ResourceModel> loadResources() {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
 		return searchCriteria.list();
 	}
-	
+
 	@Override
 	public boolean save(ResourceModel resourceModel) {
-		try{
+		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(resourceModel);
 		}
-		catch(HibernateException hEx){
+		catch (HibernateException hEx) {
 			LOGGER.fatal("Couldn't save ResourceModel", hEx);
 			return false;
 		}
@@ -42,17 +42,18 @@ public class HibernateResourceDAO implements ResourceDAO {
 	}
 
 	@Override
-	public ResourceModel load(String resource_uuid) {
+	public ResourceModel load(String sourceFileId) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
-		return (ResourceModel)searchCriteria.uniqueResult();
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
+		return (ResourceModel) searchCriteria.uniqueResult();
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 }

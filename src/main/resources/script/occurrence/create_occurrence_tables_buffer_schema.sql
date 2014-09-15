@@ -52,7 +52,7 @@ hascoordinates boolean,
 hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
-resource_uuid VARCHAR(50),
+sourcefileid VARCHAR(50),
 dwcaid VARCHAR(75),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
@@ -61,7 +61,7 @@ CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_raw_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
 dwcaid VARCHAR(75),
-resource_uuid character varying(50) NOT NULL,
+sourcefileid character varying(50) NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
 accessRights TEXT,
@@ -222,7 +222,7 @@ vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
-CONSTRAINT occurrence_raw_dwcaid_resource_uuid_key UNIQUE (dwcaid , resource_uuid)
+CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwcaid , sourcefileid)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.unique_values_id_seq;
@@ -295,6 +295,7 @@ CREATE TABLE IF NOT EXISTS buffer.occurrence_extension
 (
 	auto_id bigint NOT NULL,
 	dwcaid character varying(75),
+	sourcefileid character varying(50),
 	resource_uuid character varying(50),
 	ext_type character varying(25), 
 	ext_version character varying(10), 

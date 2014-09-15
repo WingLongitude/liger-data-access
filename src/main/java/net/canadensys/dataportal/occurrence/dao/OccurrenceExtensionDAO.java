@@ -27,7 +27,7 @@ public interface OccurrenceExtensionDAO {
 	 * @param dwcaId
 	 * @return list of matching OccurrenceExtensionModel or empty list
 	 */
-	public List<OccurrenceExtensionModel> load(String extensionType, String resourceUUID, String dwcaId);
+	public List<OccurrenceExtensionModel> load(String extensionType, String sourcefileid, String dwcaId);
 	
 	/**
 	 * Save a OccurrenceExtensionModel

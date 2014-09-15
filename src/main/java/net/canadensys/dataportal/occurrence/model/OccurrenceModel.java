@@ -91,7 +91,7 @@ public class OccurrenceModel {
 	private String dwcaid;
 
 	// name of the file that was read
-	private String resource_uuid;
+	private String sourcefileid;
 
 	public int getAuto_id() {
 		return auto_id;
@@ -525,11 +525,11 @@ public class OccurrenceModel {
 		this.dwcaid = dwcaid;
 	}
 
-	public String getResource_uuid() {
-		return resource_uuid;
+	public String getSourcefileid() {
+		return sourcefileid;
 	}
 
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
+	public void setSourcefileid(String sourcefileid) {
+		this.sourcefileid = sourcefileid;
 	}
 }

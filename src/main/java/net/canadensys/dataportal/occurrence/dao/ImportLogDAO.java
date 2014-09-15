@@ -32,5 +32,5 @@ public interface ImportLogDAO {
 	 * Load the last inserted ImportLogModel for a specific resource_uuid
 	 * @return ImportLogModel or null if nothing is found
 	 */
-	public ImportLogModel loadLastFrom(String resource_uuid);
+	public ImportLogModel loadLastFrom(String sourceFileId);
 }
