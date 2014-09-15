@@ -29,7 +29,7 @@
   "mappings" : {
     "occurrence" : {
       "properties" : {
-        "sourcefileid":{
+        "resource_uuid":{
           "type" : "string"
         },
         "dwcaid":{

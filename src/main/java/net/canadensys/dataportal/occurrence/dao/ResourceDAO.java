@@ -13,11 +13,11 @@ public interface ResourceDAO {
 	public List<ResourceModel> loadResources();
 	
 	/**
-	 * Load a ResourceModel from a sourcefileid
-	 * @param sourcefileid
+	 * Load a ResourceModel from a resource_uuid
+	 * @param resource_uuid
 	 * @return ResourceModel or null if nothing is found
 	 */
-	public ResourceModel load(String sourcefileid);
+	public ResourceModel load(String resource_uuid);
 	
 	/**
 	 * Save a ResourceModel

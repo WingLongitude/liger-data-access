@@ -43,7 +43,7 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 		// make sure the table is empty
 		jdbcTemplate.update("DELETE FROM occurrence_extension");
 		jdbcTemplate
-				.update("INSERT INTO occurrence_extension (auto_id,dwcaid,sourcefileid,resource_uuid,ext_type,ext_data) VALUES (1,'1','source','1111-1111','image', toKeyValue('image_type=>png','author=>darwin','licence=>cc0'))");
+				.update("INSERT INTO occurrence_extension (auto_id,dwcaid,resource_uuid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', toKeyValue('image_type=>png','author=>darwin','licence=>cc0'))");
 	}
 
 	@Test
@@ -52,7 +52,6 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 		OccurrenceExtensionModel occExtModel = new OccurrenceExtensionModel();
 		occExtModel.setAuto_id(2l);
 		occExtModel.setDwcaid("2");
-		occExtModel.setSourcefileid("source");
 		occExtModel.setResource_uuid("2222-2222");
 		occExtModel.setExt_type("image");
 		Map<String, String> data = new HashMap<String, String>();

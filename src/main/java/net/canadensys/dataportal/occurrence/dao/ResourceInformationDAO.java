@@ -25,9 +25,9 @@ public interface ResourceInformationDAO {
 	public ResourceInformationModel load(Integer auto_id);
 	
 	/**
-	 * Load a list of ResourceInformationModel for a sourcefileid.
-	 * More than one Information could be linked to the same sourcefileid.
-	 * @param sourcefileid
+	 * Load a list of ResourceInformationModel for a resource_uuid.
+	 * More than one Information could be linked to the same resource_uuid.
+	 * @param resource_uuid
 	 * @return ResourceInformationModel list or an empty list if nothing is found
 	 */
 	public List<ResourceInformationModel> load(String resource_uuid);

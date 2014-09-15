@@ -57,9 +57,9 @@ public class HibernateImportLogDAO implements ImportLogDAO{
 	}
 	
 	@Override
-	public ImportLogModel loadLastFrom(String sourceFileId){
+	public ImportLogModel loadLastFrom(String resource_uuid){
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(ImportLogModel.class);
-		c.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
+		c.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
 		c.addOrder(Order.desc(MANAGED_ID));
 		c.setMaxResults(1);
 		return (ImportLogModel)c.uniqueResult();

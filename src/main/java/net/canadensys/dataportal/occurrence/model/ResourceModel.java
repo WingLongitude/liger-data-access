@@ -22,7 +22,6 @@ public class ResourceModel {
 	private String name;
 	private String resource_uuid;
 	private String archive_url;
-	private String sourcefileid;
 	
 	public Integer getId() {
 		return id;
@@ -50,11 +49,5 @@ public class ResourceModel {
 	}
 	public void setArchive_url(String archive_url) {
 		this.archive_url = archive_url;
-	}
-	public String getSourcefileid() {
-		return sourcefileid;
-	}
-	public void setSourcefileid(String sourcefileid) {
-		this.sourcefileid = sourcefileid;
 	}
 }

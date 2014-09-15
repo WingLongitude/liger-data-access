@@ -15,7 +15,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 /**
  * Test Coverage : 
  * -Save ResourceModel
- * -Load ResourceModel from sourcefileid
+ * -Load ResourceModel from resource_uuid
  * @author canadensys
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,15 +29,13 @@ public class ResourceDAOTest extends AbstractTransactionalJUnit4SpringContextTes
 	@Test
 	public void testSaveAndLoad(){
 		ResourceModel testModel = new ResourceModel();
-		
-		testModel.setSourcefileid("test_sourcefileid");
-		testModel.setResource_uuid("12345");
+		testModel.setResource_uuid("test_resource_uuid");
 		assertTrue(resourceDAO.save(testModel));
 		
 		int id = testModel.getId();
 		
-		ResourceModel loadedModel = resourceDAO.load("test_sourcefileid");
+		ResourceModel loadedModel = resourceDAO.load("test_resource_uuid");
 		assertEquals(id,loadedModel.getId().intValue());
-		assertEquals("test_sourcefileid",loadedModel.getSourcefileid());
+		assertEquals("test_resource_uuid",loadedModel.getResource_uuid());
 	}
 }

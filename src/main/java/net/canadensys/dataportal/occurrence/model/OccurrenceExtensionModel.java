@@ -24,8 +24,6 @@ public class OccurrenceExtensionModel {
 	@NaturalId
 	private String dwcaid;
 	@NaturalId
-	private String sourcefileid;
-	@NaturalId
 	private String resource_uuid;
 	
 	private String ext_type;
@@ -46,13 +44,6 @@ public class OccurrenceExtensionModel {
 	}
 	public void setDwcaid(String dwcaid) {
 		this.dwcaid = dwcaid;
-	}
-	
-	public String getSourcefileid() {
-		return sourcefileid;
-	}
-	public void setSourcefileid(String sourcefileid) {
-		this.sourcefileid = sourcefileid;
 	}
 	
 	public String getResource_uuid() {

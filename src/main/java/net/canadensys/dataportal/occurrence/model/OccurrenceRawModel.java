@@ -24,8 +24,6 @@ public class OccurrenceRawModel {
 	
 	//mapped to id in the dwca
 	private String dwcaid;
-	//not in dwca
-	private String sourcefileid;
 	
 	private String acceptednameusage;
 	private String acceptednameusageid;
@@ -154,6 +152,7 @@ public class OccurrenceRawModel {
 	private String recordnumber;
 	private String _references;
 	private String reproductivecondition;
+	private String resource_uuid;
 	private String rights;
 	private String rightsholder;
 	private String samplingeffort;
@@ -1159,16 +1158,16 @@ public class OccurrenceRawModel {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getSourcefileid() {
-		return sourcefileid;
-	}
-	public void setSourcefileid(String sourcefileid) {
-		this.sourcefileid = sourcefileid;
-	}
 	public String getDwcaid() {
 		return dwcaid;
 	}
 	public void setDwcaid(String dwcaid) {
 		this.dwcaid = dwcaid;
+	}
+	public String getResource_uuid() {
+		return resource_uuid;
+	}
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
 	}
 }

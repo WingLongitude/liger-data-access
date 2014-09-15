@@ -42,9 +42,9 @@ public class HibernateResourceDAO implements ResourceDAO {
 	}
 
 	@Override
-	public ResourceModel load(String sourcefileid) {
+	public ResourceModel load(String resource_uuid) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourcefileid));
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
 		return (ResourceModel)searchCriteria.uniqueResult();
 	}
 	

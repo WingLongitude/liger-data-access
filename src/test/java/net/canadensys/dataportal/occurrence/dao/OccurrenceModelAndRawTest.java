@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import net.canadensys.dataportal.occurrence.dao.OccurrenceDAO;
 import net.canadensys.dataportal.occurrence.model.OccurrenceModel;
 import net.canadensys.dataportal.occurrence.model.OccurrenceRawModel;
 import net.canadensys.query.QueryOperatorEnum;
@@ -56,8 +55,8 @@ public class OccurrenceModelAndRawTest  extends AbstractTransactionalJUnit4Sprin
 		//make sure the table is empty
 		jdbcTemplate.update("DELETE FROM occurrence");
 		//add controlled rows
-		jdbcTemplate.update("INSERT INTO occurrence_raw (auto_id,country,locality,sourcefileid) VALUES (1,'Mexico','Mexicco','uom-occurrence')");
-    	jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid) VALUES (1,'Mexico','Mexico','uom-occurrence')");
+		jdbcTemplate.update("INSERT INTO occurrence_raw (auto_id,country,locality,resource_uuid) VALUES (1,'Mexico','Mexicco','uom-occurrence')");
+    	jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,resource_uuid) VALUES (1,'Mexico','Mexico','uom-occurrence')");
     }
     
     @Test

@@ -303,7 +303,7 @@ CREATE SEQUENCE IF NOT EXISTS resource_management_id_seq;
 CREATE TABLE IF NOT EXISTS resource_management
 (
   id integer DEFAULT nextval('resource_management_id_seq') NOT NULL,
-  resource_uuid character varying(50),
+  --resource_uuid character varying(50),
   name character varying(255),
   resource_uuid character varying(36),
   archive_url character varying(255),
