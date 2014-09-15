@@ -26,7 +26,7 @@ public class ResourceInformationModel {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_information_id_seq")
 	private Integer auto_id;
 
-	private String sourcefileid;
+	private String resource_uuid;
 	private String resource_name;
 	private String alternate_identifier;
 	private String title;
@@ -48,7 +48,7 @@ public class ResourceInformationModel {
 	private Set<ResourceContactModel> contacts = new HashSet(0);
 
 	/** Getters and setters: **/
-	
+
 	public Integer getAuto_id() {
 		return auto_id;
 	}
@@ -56,13 +56,13 @@ public class ResourceInformationModel {
 	public void setAuto_id(Integer auto_id) {
 		this.auto_id = auto_id;
 	}
-	
-	public String getSourcefileid() {
-		return sourcefileid;
+
+	public String getResource_uuid() {
+		return resource_uuid;
 	}
 
-	public void setSourcefileid(String sourcefileid) {
-		this.sourcefileid = sourcefileid;
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
 	}
 
 	public String getResource_name() {

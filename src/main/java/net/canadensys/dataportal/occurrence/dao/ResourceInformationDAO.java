@@ -30,7 +30,7 @@ public interface ResourceInformationDAO {
 	 * @param sourcefileid
 	 * @return ResourceInformationModel list or an empty list if nothing is found
 	 */
-	public List<ResourceInformationModel> load(String sourcefileid);
+	public List<ResourceInformationModel> load(String resource_uuid);
 	
 	/**
 	 * Drop a ResourceInformation record from the table and all its associated resourceContacts;

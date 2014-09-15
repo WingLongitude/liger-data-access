@@ -17,21 +17,21 @@ import org.springframework.stereotype.Repository;
 /**
  * 
  * @author Pedro Guimarães
- *
+ * 
  */
 @Repository("resourceInformationDAO")
 public class HibernateResourceInformationDAO implements ResourceInformationDAO {
-	
-	//get log4j handler
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceInformationDAO.class);
 	private static final String MANAGED_ID = "auto_id";
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public boolean save(ResourceInformationModel resourceInformationModel) {
-		try{
+		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(resourceInformationModel);
 		}
 		catch (HibernateException e) {
@@ -45,20 +45,21 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 	public ResourceInformationModel load(Integer auto_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceInformationModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
-		return (ResourceInformationModel)searchCriteria.uniqueResult();
+		return (ResourceInformationModel) searchCriteria.uniqueResult();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResourceInformationModel> load(String sourcefileid){
+	public List<ResourceInformationModel> load(String resource_uuid) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceInformationModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourcefileid));
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
 		return searchCriteria.list();
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -66,13 +67,13 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 	@Override
 	public boolean drop(ResourceInformationModel resourceInformationModel) {
 		// Delete record:
-		try{
+		try {
 			sessionFactory.getCurrentSession().delete(resourceInformationModel);
-		} catch(HibernateException e) {
+		}
+		catch (HibernateException e) {
 			LOGGER.fatal("Couldn't delete ResourceInformationModel" + resourceInformationModel.toString(), e);
 			return false;
 		}
 		return true;
 	}
-
 }
