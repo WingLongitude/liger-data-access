@@ -1,6 +1,5 @@
 package net.canadensys.dataportal.occurrence.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +28,10 @@ public class ResourceContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
-	private int resource_information_fkey;
+	
+	@ManyToOne
+	@JoinColumn(name="resource_information_fkey")
+	private ResourceInformationModel resourceInformation;
 
 	/** Getters and setters: **/
 
@@ -119,13 +121,5 @@ public class ResourceContactModel {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public int getResource_information_fkey() {
-		return resource_information_fkey;
-	}
-
-	public void setResource_information_fkey(int resource_information_fkey) {
-		this.resource_information_fkey = resource_information_fkey;
 	}
 }

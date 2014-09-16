@@ -1,7 +1,6 @@
 package net.canadensys.dataportal.occurrence.model;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -41,9 +39,8 @@ public class ResourceInformationModel {
 	private String parent_collection_identifier;
 	private String collection_name;
 
-	@JoinColumn(name = "resource_information_id")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<ResourceContactModel> contacts = new HashSet(0);
+	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<ResourceContactModel> contacts;
 
 	/** Getters and setters: **/
 
