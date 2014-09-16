@@ -4,12 +4,26 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>wingLongitude</groupId>
+	<groupId>winglongitude</groupId>
 	<artifactId>liger-data-access</artifactId>
 	<version>2.11.0-SNAPSHOT</version>
 	<name>Liger Data Access</name>
 	<description>Data access layer for the Lontra, Harlequin, the Canadensys-explorer and SiBBr's portal-biodiversidade;</description>
-	<url>http://github.com/wingLongitude</url>
+	<url>https://github.com/WingLongitude/liger-data-access</url>
+
+	<scm>
+		<connection>scm:git:https://github.com/WingLongitude/liger-data-access.git</connection>
+		<developerConnection>scm:git:git@github.com:WingLongitude/liger-data-access.git</developerConnection>
+		<url>https://github.com/WingLongitude/liger-data-access</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>bintray</id>
+			<name>winglongitude-maven-liger-data-access</name>
+			<url>https://api.bintray.com/maven/winglongitude/maven/liger-data-access</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -23,6 +37,15 @@
 					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -34,6 +57,38 @@
 		<canadensys.core.version>1.8</canadensys.core.version>
 		<dwca-reader.version>1.18</dwca-reader.version>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<prerequisites>
 		<maven>3.0</maven>
