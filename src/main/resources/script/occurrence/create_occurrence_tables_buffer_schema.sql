@@ -247,10 +247,10 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
   CONSTRAINT download_log_pkey PRIMARY KEY (id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS resource_information_id_seq;
-CREATE TABLE IF NOT EXISTS resource_information
+CREATE SEQUENCE IF NOT EXISTS buffer.resource_information_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.resource_information
 (
-	auto_id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('buffer.resource_information_id_seq') NOT NULL,
 	resource_uuid character varying(50),
 	resource_name character varying(100),
 	alternate_identifier character varying(100),
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_contact
 	postal_code character varying(10),
 	phone character varying(20),
 	email character varying(200),
-	resource_information_id integer,
+	resource_information_id_fkey integer references resource_information(auto_id),
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 
