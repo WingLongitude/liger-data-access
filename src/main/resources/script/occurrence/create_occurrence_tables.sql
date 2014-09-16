@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS resource_contact
 	postal_code character varying(10),
 	phone character varying(20),
 	email character varying(200),
-	resourceresource_information_fkey integer references resource_information(auto_id),
+	resource_information_fkey integer references resource_information(auto_id),
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 

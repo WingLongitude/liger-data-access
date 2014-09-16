@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -14,7 +16,6 @@ import javax.persistence.Table;
 public class ResourceContactModel {
 
 	@Id
-	@Column(name = "auto_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_contact_id_seq")
 	private Integer auto_id;
 
@@ -28,7 +29,6 @@ public class ResourceContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
-
 	private int resource_information_fkey;
 
 	/** Getters and setters: **/

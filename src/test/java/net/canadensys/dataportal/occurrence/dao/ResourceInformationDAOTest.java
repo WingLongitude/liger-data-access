@@ -37,7 +37,6 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 	public void testSaveLoadDelete() {
 		// Test ResourceInformation model:
 		ResourceInformationModel testResourceInformation = new ResourceInformationModel();
-		int informationId = testResourceInformation.getAuto_id();
 		testResourceInformation.set_abstract("This is the lorem ipsum abstract");
 		testResourceInformation.setTitle("TitleTitleTitle");
 
@@ -46,20 +45,25 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 
 		// Create contact:
 		ResourceContactModel testResourceContact = new ResourceContactModel();
-		int contact1Id = testResourceContact.getAuto_id();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
 		contacts.add(testResourceContact);
+		
 		// Add other contact
 		ResourceContactModel testResourceContact2 = new ResourceContactModel();
 		testResourceContact2.setName("Test Name 2");
 		testResourceContact2.setEmail("a2@a2.com");
-		int contact2Id = testResourceContact2.getAuto_id();
 		contacts.add(testResourceContact2);
+		
 		// Add contacts to information and save information
 		testResourceInformation.setContacts(contacts);
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
-
+		
+		// Fetch ids from added objects:
+		int informationId = testResourceInformation.getAuto_id();
+		int contact1Id = testResourceContact.getAuto_id();
+		int contact2Id = testResourceContact2.getAuto_id();
+		
 		ResourceInformationModel loadedInformation = resourceInformationDAO.load(informationId);
 		assertEquals("This is the lorem ipsum abstract", loadedInformation.get_abstract());
 		assertEquals("TitleTitleTitle", loadedInformation.getTitle());
