@@ -29,7 +29,7 @@ public class ResourceContactModel {
 	private String phone;
 	private String email;
 
-	private int resource_information_id;
+	private int resource_information_fkey;
 
 	/** Getters and setters: **/
 
@@ -121,11 +121,11 @@ public class ResourceContactModel {
 		this.email = email;
 	}
 
-	public int getResource_information_id() {
-		return resource_information_id;
+	public int getResource_information_fkey() {
+		return resource_information_fkey;
 	}
 
-	public void setResource_information_id(int resource_information_id) {
-		this.resource_information_id = resource_information_id;
+	public void setResource_information_fkey(int resource_information_fkey) {
+		this.resource_information_fkey = resource_information_fkey;
 	}
 }

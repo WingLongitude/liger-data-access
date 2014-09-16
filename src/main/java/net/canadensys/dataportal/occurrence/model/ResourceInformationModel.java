@@ -22,7 +22,6 @@ import javax.persistence.Table;
 public class ResourceInformationModel {
 
 	@Id
-	@Column(name = "auto_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_information_id_seq")
 	private Integer auto_id;
 

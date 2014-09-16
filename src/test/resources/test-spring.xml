@@ -53,10 +53,6 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="resourceContactDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceContactDAO">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	
 	<bean id="resourceInformationDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceInformationDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
