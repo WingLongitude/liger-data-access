@@ -7,6 +7,19 @@ Code Status
 -----------
 [![Build Status](https://travis-ci.org/WingLongitude/liger-data-access.png)](https://travis-ci.org/WingLongitude/liger-data-access)
 
+Maven
+-----
+liger-data-access artifacts are deployed to [jCenter](https://bintray.com/bintray/jcenter).
+```
+	<repositories>
+    ...
+		<repository>
+			<id>jcenter</id>
+			<url>http://jcenter.bintray.com/</url>
+		</repository>
+	</repositories>
+```
+
 Dependencies
 ------------
 * [Apache Maven 3](http://maven.apache.org/)
