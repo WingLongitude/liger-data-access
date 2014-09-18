@@ -28,6 +28,7 @@ public class ResourceContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
+	private String contact_type;
 	
 	@ManyToOne
 	@JoinColumn(name="resource_information_fkey")
@@ -121,5 +122,21 @@ public class ResourceContactModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getContact_type() {
+		return contact_type;
+	}
+
+	public void setContact_type(String contact_type) {
+		this.contact_type = contact_type;
+	}
+
+	public ResourceInformationModel getResourceInformation() {
+		return resourceInformation;
+	}
+
+	public void setResourceInformation(ResourceInformationModel resourceInformation) {
+		this.resourceInformation = resourceInformation;
 	}
 }
