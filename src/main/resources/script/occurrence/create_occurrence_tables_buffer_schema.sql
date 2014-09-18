@@ -53,14 +53,14 @@ hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
 sourcefileid VARCHAR(50),
-dwcaid VARCHAR(75),
+dwcaid VARCHAR(100),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_raw_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
-dwcaid VARCHAR(75),
+dwcaid VARCHAR(100),
 sourcefileid character varying(50) NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_information
 	publication_date date,
 	language character varying(30),
 	_abstract text,
-	keyword character varying(100),
+	keyword character varying(200),
 	keyword_thesaurus character varying(100),
 	intellectual_rights text,
 	citation character varying(200),
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_contact
 	postal_code character varying(10),
 	phone character varying(20),
 	email character varying(200),
-	resource_information_id_fkey integer references resource_information(auto_id),
+	resource_information_fkey integer references resource_information(auto_id),
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 

@@ -52,13 +52,13 @@ hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
 sourcefileid VARCHAR(50),
-dwcaid VARCHAR(75),
+dwcaid VARCHAR(100),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
 
 CREATE TABLE IF NOT EXISTS occurrence_raw (
 auto_id INTEGER NOT NULL,
-dwcaid VARCHAR(75),
+dwcaid VARCHAR(100),
 sourcefileid character varying(50) NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS resource_information
 	publication_date date,
 	language character varying(30),
 	_abstract text,
-	keyword character varying(100),
+	keyword character varying(200),
 	keyword_thesaurus character varying(100),
 	intellectual_rights text,
 	citation character varying(200),
