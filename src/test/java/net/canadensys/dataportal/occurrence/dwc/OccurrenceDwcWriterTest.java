@@ -44,7 +44,7 @@ public class OccurrenceDwcWriterTest {
 		
 		occRawModel.setAuto_id(1);
 		occRawModel.setOccurrenceid("ID#1");
-		occRawModel.setSourceFileId("source-file-occurrence");
+		occRawModel.setSourcefileid("source-file-occurrence");
 		occRawModel.setCountry("Canada");
 		occRawModel.set_class("Equisetopsida");
 		
