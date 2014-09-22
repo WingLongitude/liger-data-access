@@ -39,7 +39,7 @@ public class ResourceInformationModel {
 	private String parent_collection_identifier;
 	private String collection_name;
 
-	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ResourceContactModel> contacts;
 
 	/** Getters and setters: **/
