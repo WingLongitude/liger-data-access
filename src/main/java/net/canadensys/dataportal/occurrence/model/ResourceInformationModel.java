@@ -39,6 +39,9 @@ public class ResourceInformationModel {
 	private String parent_collection_identifier;
 	private String collection_name;
 
+	/**
+	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
+	 */
 	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ResourceContactModel> contacts;
 
