@@ -27,8 +27,9 @@ public class OccurrenceModel {
 
 	private String basisofrecord;
 	private String catalognumber;
+	private String occurrenceid;
 	private String collectioncode;
-
+	private String bibliographiccitation;
 	private String associatedmedia;
 	private String _references;
 
@@ -125,6 +126,13 @@ public class OccurrenceModel {
 		this.catalognumber = catalognumber;
 	}
 
+	public String getOccurrenceid() {
+		return occurrenceid;
+	}
+	public void setOccurrenceid(String occurrenceid) {
+		this.occurrenceid = occurrenceid;
+	}
+
 	public String getCollectioncode() {
 		return collectioncode;
 	}
@@ -151,6 +159,13 @@ public class OccurrenceModel {
 
 	public String getDatasetname() {
 		return datasetname;
+	}
+
+	public String getBibliographiccitation() {
+		return bibliographiccitation;
+	}
+	public void setBibliographiccitation(String bibliographiccitation) {
+		this.bibliographiccitation = bibliographiccitation;
 	}
 
 	public void setDatasetname(String datasetname) {
