@@ -10,25 +10,26 @@ import org.junit.Test;
 
 /**
  * Test for SingleValueFieldInterpreter
+ * 
  * @author canadensys
- *
+ * 
  */
 public class SingleValueFieldInterpreterTest {
-	
+
 	@Test
-	public void testMinMaxInterpreterBetween(){
+	public void testMinMaxInterpreterBetween() {
 
 		SearchQueryPart sqp = new SearchQueryPart();
 		sqp.setSearchableField(TestSearchableFieldBuilder.buildNumericSingleValueSearchableField(1, "country", "countryid", Integer.class));
 		sqp.setOp(QueryOperatorEnum.EQ);
 		sqp.addValue("4");
 		sqp.addParsedValue("4", "countryid", 4);
-		
+
 		SingleValueFieldInterpreter svInterpreter = new SingleValueFieldInterpreter();
 		assertTrue(svInterpreter.canHandleSearchQueryPart(sqp));
 		assertEquals("countryid=4", svInterpreter.toSQL(sqp));
 		assertEquals("countryid=4", svInterpreter.toCriterion(sqp).toString());
-		
+
 		sqp = new SearchQueryPart();
 		sqp.setSearchableField(TestSearchableFieldBuilder.buildSingleValueSearchableField(2, "country", "country"));
 		sqp.setOp(QueryOperatorEnum.EQ);
@@ -37,8 +38,8 @@ public class SingleValueFieldInterpreterTest {
 		assertTrue(svInterpreter.canHandleSearchQueryPart(sqp));
 		assertEquals("country='Japa''n'", svInterpreter.toSQL(sqp));
 		assertEquals("country=Japa'n", svInterpreter.toCriterion(sqp).toString());
-		
-		//Test float
+
+		// Test float
 		sqp = new SearchQueryPart();
 		sqp.setSearchableField(TestSearchableFieldBuilder.buildNumericSingleValueSearchableField(3, "latitude", "lat", Float.class));
 		sqp.setOp(QueryOperatorEnum.IN);
@@ -49,8 +50,8 @@ public class SingleValueFieldInterpreterTest {
 		assertTrue(svInterpreter.canHandleSearchQueryPart(sqp));
 		assertEquals("lat IN (4.3,6.7)", svInterpreter.toSQL(sqp));
 		assertEquals("lat in (4.3, 6.7)", svInterpreter.toCriterion(sqp).toString());
-		
-		//Test boolean
+
+		// Test boolean
 		sqp = new SearchQueryPart();
 		sqp.setSearchableField(TestSearchableFieldBuilder.buildBooleanSingleValueSearchableField(6, "hassome", "hassomething"));
 		sqp.setOp(QueryOperatorEnum.EQ);

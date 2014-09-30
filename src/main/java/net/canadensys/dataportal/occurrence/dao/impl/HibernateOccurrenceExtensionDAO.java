@@ -16,23 +16,24 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Implementation for accessing occurrence extension data through Hibernate technology.
+ * 
  * @author canadensys
- *
+ * 
  */
 @Repository("occurrenceExtensionDAO")
-public class HibernateOccurrenceExtensionDAO implements OccurrenceExtensionDAO{
-	
-	//get log4j handler
+public class HibernateOccurrenceExtensionDAO implements OccurrenceExtensionDAO {
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateOccurrenceExtensionDAO.class);
 	private static final String MANAGED_ID = "id";
 	private static final String EXTENSION_TYPE = "ext_type";
-		
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
 	public boolean save(OccurrenceExtensionModel occurrenceExtensionModel) {
-		try{
+		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(occurrenceExtensionModel);
 		}
 		catch (HibernateException e) {
@@ -46,23 +47,24 @@ public class HibernateOccurrenceExtensionDAO implements OccurrenceExtensionDAO{
 	public OccurrenceExtensionModel load(Long id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceExtensionModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, id));
-		return (OccurrenceExtensionModel)searchCriteria.uniqueResult();
+		return (OccurrenceExtensionModel) searchCriteria.uniqueResult();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OccurrenceExtensionModel> load(String extensionType, String sourcefileid, String dwcaId) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceExtensionModel.class);
-		
+
 		searchCriteria.add(Restrictions.eq(EXTENSION_TYPE, extensionType));
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourcefileid));
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.DWCA_ID, dwcaId));
 		return searchCriteria.list();
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

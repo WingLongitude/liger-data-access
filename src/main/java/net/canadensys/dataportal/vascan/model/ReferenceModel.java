@@ -1,7 +1,8 @@
 /*
-	Copyright (c) 2010-2013 Canadensys
-*/
+ * Copyright (c) 2010-2013 Canadensys
+ */
 package net.canadensys.dataportal.vascan.model;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,23 +14,24 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="reference")
+@Table(name = "reference")
 public class ReferenceModel {
-	
-	private int			id;
-	private String		referencecode;
-	private String		referenceshort;
-	private String		reference;
-	private	String		url;
+
+	private int id;
+	private String referencecode;
+	private String referenceshort;
+	private String reference;
+	private String url;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private	Date		cdate;
-		
+	private Date cdate;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -37,6 +39,7 @@ public class ReferenceModel {
 	public String getReferencecode() {
 		return referencecode;
 	}
+
 	public void setReferencecode(String referencecode) {
 		this.referencecode = referencecode;
 	}
@@ -44,13 +47,15 @@ public class ReferenceModel {
 	public String getReferenceshort() {
 		return referenceshort;
 	}
+
 	public void setReferenceshort(String referenceshort) {
 		this.referenceshort = referenceshort;
 	}
-	
+
 	public String getReference() {
 		return reference;
 	}
+
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
@@ -58,17 +63,18 @@ public class ReferenceModel {
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	public Date getCdate() {
 		return cdate;
 	}
+
 	public void setCdate(Date cdate) {
 		this.cdate = cdate;
 	}
-
 
 	@Override
 	/**
@@ -77,7 +83,7 @@ public class ReferenceModel {
 	 */
 	public String toString() {
 		String delimiter = " ";
-		//String newline = "\n";
+		// String newline = "\n";
 		StringBuffer reference = new StringBuffer("");
 		reference.append(this.id).append(delimiter);
 		reference.append(this.referencecode).append(delimiter);
@@ -85,5 +91,5 @@ public class ReferenceModel {
 		reference.append(this.reference).append(delimiter);
 		reference.append(this.url);
 		return reference.toString();
-	}	
+	}
 }

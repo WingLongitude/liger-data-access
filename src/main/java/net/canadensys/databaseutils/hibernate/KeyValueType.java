@@ -20,7 +20,7 @@ import org.hibernate.usertype.UserType;
  * 
  * @author Jakub Gluszecki (original author)
  * @author cgendreau
- *
+ * 
  */
 public class KeyValueType implements UserType {
 
@@ -30,7 +30,7 @@ public class KeyValueType implements UserType {
 
 	@SuppressWarnings("unchecked")
 	public Object deepCopy(Object o) throws HibernateException {
-		if( o == null){
+		if (o == null) {
 			return null;
 		}
 		// Not a true deep copy but since the map contains immutable Strings, it's fine.

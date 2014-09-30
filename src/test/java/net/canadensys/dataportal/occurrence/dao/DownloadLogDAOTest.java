@@ -16,22 +16,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
- * Test Coverage : 
+ * Test Coverage :
  * -Save DownloadLogModel
  * -Get generated id
  * -Load DownloadLogModel from id
+ * 
  * @author canadensys
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-spring.xml" })
-@TransactionConfiguration(transactionManager="hibernateTransactionManager")
-public class DownloadLogDAOTest extends AbstractTransactionalJUnit4SpringContextTests{
+@TransactionConfiguration(transactionManager = "hibernateTransactionManager")
+public class DownloadLogDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
 	private DownloadLogDAO downloadLogDAO;
-	
+
 	@Test
-	public void testSaveAndLoad(){
+	public void testSaveAndLoad() {
 		DownloadLogModel testModel = new DownloadLogModel();
 		Date now = new Date();
 		testModel.setEvent_date(now);
@@ -39,13 +40,13 @@ public class DownloadLogDAOTest extends AbstractTransactionalJUnit4SpringContext
 		testModel.setEmail("a@a.com");
 		testModel.setNumber_of_records(12);
 		downloadLogDAO.save(testModel);
-		
+
 		int id = testModel.getId();
-		
+
 		DownloadLogModel loadedModel = downloadLogDAO.load(id);
-		assertEquals("this is a search",loadedModel.getSearch_criteria());
-		assertEquals("a@a.com",loadedModel.getEmail());
-		assertEquals(new Integer(12),loadedModel.getNumber_of_records());
-		assertEquals(now,loadedModel.getEvent_date());
+		assertEquals("this is a search", loadedModel.getSearch_criteria());
+		assertEquals("a@a.com", loadedModel.getEmail());
+		assertEquals(new Integer(12), loadedModel.getNumber_of_records());
+		assertEquals(now, loadedModel.getEvent_date());
 	}
 }

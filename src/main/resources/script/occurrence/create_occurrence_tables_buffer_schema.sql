@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
 associatedmedia TEXT,
 associatedsequences TEXT,
-basisofrecord VARCHAR(25),
+basisofrecord VARCHAR(50),
 bibliographiccitation TEXT,
 catalogNumber TEXT,
 occurrenceid TEXT,

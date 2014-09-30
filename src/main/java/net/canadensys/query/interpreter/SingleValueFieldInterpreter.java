@@ -12,92 +12,102 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  * Interprets a SearchQueryPart on a single database field.
+ * 
  * @author canadensys
- *
+ * 
  */
-public class SingleValueFieldInterpreter implements QueryPartInterpreter{
-	
-	//get log4j handler
+public class SingleValueFieldInterpreter implements QueryPartInterpreter {
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(SingleValueFieldInterpreter.class);
-	
+
 	@Override
 	public boolean canHandleSearchableField(SearchableField searchableField) {
-		return (searchableField.getRelatedFields() != null && 
-				searchableField.getRelatedFields().size() == 1 &&
-				searchableField.getType() != null &&
-				(String.class.equals(searchableField.getType()) ||
-						Number.class.isAssignableFrom(searchableField.getType()) ||
-						Boolean.class.equals(searchableField.getType())
-				));
+		return (searchableField.getRelatedFields() != null && searchableField.getRelatedFields().size() == 1 && searchableField.getType() != null && (String.class
+				.equals(searchableField.getType()) || Number.class.isAssignableFrom(searchableField.getType()) || Boolean.class
+					.equals(searchableField.getType())));
 	}
 
 	@Override
 	public boolean canHandleSearchQueryPart(SearchQueryPart searchQueryPart) {
 		return canHandleSearchableField(searchQueryPart.getSearchableField());
 	}
-	
+
 	@Override
 	public Criterion toCriterion(SearchQueryPart searchQueryPart) {
-		
-		if(!canHandleSearchQueryPart(searchQueryPart)){
+
+		if (!canHandleSearchQueryPart(searchQueryPart)) {
 			LOGGER.error("Can't handle QueryPart : " + searchQueryPart);
 			return null;
 		}
-		
+
 		SearchableField searchableField = searchQueryPart.getSearchableField();
 		Object singleParsedValue = searchQueryPart.getParsedValue(searchQueryPart.getSingleValue(), searchableField.getRelatedField());
-		switch(searchQueryPart.getOp()){
-			case EQ : return Restrictions.eq(searchableField.getRelatedField(), singleParsedValue);
-			case NEQ : return Restrictions.ne(searchableField.getRelatedField(), singleParsedValue);
-			case SLIKE : return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.START);
-			case ELIKE : return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.END);
-			case CLIKE : return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.ANYWHERE);
-			case IN : return Restrictions.in(searchableField.getRelatedField(), searchQueryPart.getValueList());
+		switch (searchQueryPart.getOp()) {
+			case EQ:
+				return Restrictions.eq(searchableField.getRelatedField(), singleParsedValue);
+			case NEQ:
+				return Restrictions.ne(searchableField.getRelatedField(), singleParsedValue);
+			case SLIKE:
+				return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.START);
+			case ELIKE:
+				return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.END);
+			case CLIKE:
+				return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.ANYWHERE);
+			case IN:
+				return Restrictions.in(searchableField.getRelatedField(), searchQueryPart.getValueList());
 		}
 		return null;
 	}
 
 	@Override
 	public String toSQL(SearchQueryPart searchQueryPart) {
-		if(!canHandleSearchQueryPart(searchQueryPart)){
+		if (!canHandleSearchQueryPart(searchQueryPart)) {
 			LOGGER.warn("Can't handle QueryPart : " + searchQueryPart);
 			return null;
 		}
-		
+
 		return convertIntoSQL(searchQueryPart);
 	}
-	
-	
+
 	/**
 	 * Convert a SearchQueryPart into a SQL fragment.
-	 * @param queryPart a valid SearchQueryPart object
+	 * 
+	 * @param queryPart
+	 *            a valid SearchQueryPart object
 	 * @return SQL fragment representing this SearchQueryPart
 	 */
-	public String convertIntoSQL(SearchQueryPart queryPart){
-		//this function is not able to convert composed fields
-		if(queryPart.getFieldList() == null || queryPart.getFieldList().size() > 1){
+	public String convertIntoSQL(SearchQueryPart queryPart) {
+		// this function is not able to convert composed fields
+		if (queryPart.getFieldList() == null || queryPart.getFieldList().size() > 1) {
 			return null;
 		}
 
 		SearchableField searchableField = queryPart.getSearchableField();
 		String value = "";
-		if(Number.class.isAssignableFrom(searchableField.getType())){
-			value = StringUtils.join(queryPart.getValueList(),",");
+		if (Number.class.isAssignableFrom(searchableField.getType())) {
+			value = StringUtils.join(queryPart.getValueList(), ",");
 		}
-		else{ //TODO maybe handle boolean itself
-			for(String currValue : queryPart.getValueList()){
+		else { // TODO maybe handle boolean itself
+			for (String currValue : queryPart.getValueList()) {
 				value += "'" + SQLHelper.escapeSQLString(currValue) + "',";
 			}
 			value = StringUtils.removeEnd(value, ",");
 		}
-		
-		switch(queryPart.getOp()){
-			case EQ : return searchableField.getRelatedField()+"="+value;
-			case NEQ : return searchableField.getRelatedField()+"<>"+value;
-			case SLIKE : return searchableField.getRelatedField()+" ILIKE '"+SQLHelper.escapeSQLString(queryPart.getSingleValue())+"%'";
-			case ELIKE : return searchableField.getRelatedField()+" ILIKE '%"+SQLHelper.escapeSQLString(queryPart.getSingleValue())+"'";
-			case CLIKE : return searchableField.getRelatedField()+" ILIKE '%"+SQLHelper.escapeSQLString(queryPart.getSingleValue())+"%'";
-			case IN : return searchableField.getRelatedField()+" IN (" + value + ")";
+
+		switch (queryPart.getOp()) {
+			case EQ:
+				return searchableField.getRelatedField() + "=" + value;
+			case NEQ:
+				return searchableField.getRelatedField() + "<>" + value;
+			case SLIKE:
+				return searchableField.getRelatedField() + " ILIKE '" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
+			case ELIKE:
+				return searchableField.getRelatedField() + " ILIKE '%" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "'";
+			case CLIKE:
+				return searchableField.getRelatedField() + " ILIKE '%" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
+			case IN:
+				return searchableField.getRelatedField() + " IN (" + value + ")";
 		}
 		return null;
 	}

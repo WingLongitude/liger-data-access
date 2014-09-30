@@ -8,6 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Entity
 @Table(name = "resource_contact")
@@ -18,6 +22,8 @@ public class ResourceContactModel {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_contact_id_seq")
 	private Integer auto_id;
 
+	private String resource_uuid;
+	private String resource_name;
 	private String name;
 	private String position_name;
 	private String organization_name;
@@ -29,9 +35,9 @@ public class ResourceContactModel {
 	private String phone;
 	private String email;
 	private String contact_type;
-	
+
 	@ManyToOne
-	@JoinColumn(name="resource_information_fkey")
+	@JoinColumn(name = "resource_information_fkey")
 	private ResourceInformationModel resourceInformation;
 
 	/** Getters and setters: **/
@@ -42,6 +48,22 @@ public class ResourceContactModel {
 
 	public void setAuto_id(Integer auto_id) {
 		this.auto_id = auto_id;
+	}
+
+	public String getResource_uuid() {
+		return resource_uuid;
+	}
+
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
+	}
+
+	public String getResource_name() {
+		return resource_name;
+	}
+
+	public void setResource_name(String resource_name) {
+		this.resource_name = resource_name;
 	}
 
 	public String getName() {

@@ -129,6 +129,7 @@ public class OccurrenceModel {
 	public String getOccurrenceid() {
 		return occurrenceid;
 	}
+
 	public void setOccurrenceid(String occurrenceid) {
 		this.occurrenceid = occurrenceid;
 	}
@@ -164,6 +165,7 @@ public class OccurrenceModel {
 	public String getBibliographiccitation() {
 		return bibliographiccitation;
 	}
+
 	public void setBibliographiccitation(String bibliographiccitation) {
 		this.bibliographiccitation = bibliographiccitation;
 	}

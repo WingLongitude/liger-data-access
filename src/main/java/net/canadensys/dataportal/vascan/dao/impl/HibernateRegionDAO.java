@@ -12,25 +12,27 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Implementation for accessing region data through Hibernate technology.
+ * 
  * @author canadensys
- *
+ * 
  */
 @Repository("regionDAO")
-public class HibernateRegionDAO implements RegionDAO{
+public class HibernateRegionDAO implements RegionDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RegionModel> loadAllRegion() {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(RegionModel.class);
-		return (List<RegionModel>)searchCriteria.list();
+		return (List<RegionModel>) searchCriteria.list();
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

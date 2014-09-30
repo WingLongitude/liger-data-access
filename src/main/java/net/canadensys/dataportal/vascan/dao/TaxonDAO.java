@@ -9,35 +9,40 @@ import net.canadensys.dataportal.vascan.model.TaxonModel;
 
 /**
  * Interface for accessing taxon concept including TaxonModel and TaxonLookupModel
+ * 
  * @author canadensys
- *
+ * 
  */
 public interface TaxonDAO {
-	
+
 	/**
 	 * Save a TaxonLookupModel. A TaxonLookupModel contains denormalized fields allowing faster access (than joining).
+	 * 
 	 * @return success or not
 	 */
 	public boolean saveTaxonLookup(TaxonLookupModel tlm);
-	
+
 	/**
 	 * Remove a taxon from the database. The taxon will not be deleted if it is used as a parent in taxonomy or a hybrid parent.
-	 *TODO : also check for verncular
+	 * TODO : also check for verncular
+	 * 
 	 * @param taxonId
 	 * @return
 	 */
 	public boolean deleteTaxon(Integer taxonId);
-	
+
 	/**
 	 * Load a TaxonLookupModel from an identifier. TaxonLookupModel contains denormalized fields allowing faster access (than joining).
+	 * 
 	 * @param taxonId
 	 * @return
 	 */
 	public TaxonLookupModel loadTaxonLookup(Integer taxonId);
-	
+
 	/**
-	 * Get an Iterator on the TaxonLookupModel matching the criteria 
-	 * @param limitResultsTo 
+	 * Get an Iterator on the TaxonLookupModel matching the criteria
+	 * 
+	 * @param limitResultsTo
 	 * @param habitus
 	 * @param taxonid
 	 * @param rqp
@@ -47,10 +52,12 @@ public interface TaxonDAO {
 	 * @param sort
 	 * @return
 	 */
-	public Iterator<TaxonLookupModel> loadTaxonLookup(int limitResultsTo, String habitus, int taxonid, RegionQueryPart rqp, String[] status, String[] rank, boolean includeHybrids, String sort);
-	
+	public Iterator<TaxonLookupModel> loadTaxonLookup(int limitResultsTo, String habitus, int taxonid, RegionQueryPart rqp, String[] status,
+			String[] rank, boolean includeHybrids, String sort);
+
 	/**
-	 * Count the taxon matching the criteria 
+	 * Count the taxon matching the criteria
+	 * 
 	 * @param habitus
 	 * @param taxonid
 	 * @param rqp
@@ -67,33 +74,38 @@ public interface TaxonDAO {
 	 * @return List of Object array [id:integer,calname:String,rank:String]
 	 */
 	public List<Object[]> getAcceptedTaxon(int maximumRank);
-	
+
 	/**
 	 * Load a TaxonModel from an identifier.
+	 * 
 	 * @param vernacularNameId
 	 * @return
 	 */
 	public TaxonModel loadTaxon(Integer taxonId);
-	
+
 	/**
 	 * Load a TaxonModel list from a list of id
+	 * 
 	 * @param taxonIdList
 	 * @return
 	 */
 	public List<TaxonModel> loadTaxonList(List<Integer> taxonIdList);
-	
+
 	/**
 	 * Load a TaxonModel list from a taxon calculated name. More than one TaxonModel can share the same calculated name.
+	 * 
 	 * @param taxonName
 	 * @return
 	 */
 	public List<TaxonModel> loadTaxonByName(String taxonCalculatedName);
-	
+
 	/**
 	 * Load denormalized taxon data for a collection of ids.
+	 * 
 	 * @param taxonIdList
-	 * @return list of Object with the following content: "id","mdate","status","parentid","url","reference","calnameauthor","author","rank","parentfsn","higherclassification","class",
-			"order","family","genus","subgenus","specificepithet","infraspecificepithet"
+	 * @return list of Object with the following content:
+	 *         "id","mdate","status","parentid","url","reference","calnameauthor","author","rank","parentfsn","higherclassification","class",
+	 *         "order","family","genus","subgenus","specificepithet","infraspecificepithet"
 	 */
 	public List<Object[]> loadCompleteTaxonData(List<Integer> taxonIdList);
 

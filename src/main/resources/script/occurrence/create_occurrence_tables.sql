@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS occurrence (
 auto_id INTEGER NOT NULL,
 associatedmedia TEXT,
 associatedsequences TEXT,
-basisofrecord VARCHAR(25),
+basisofrecord VARCHAR(50),
 bibliographiccitation TEXT,
 catalogNumber TEXT,
 occurrenceid TEXT,
@@ -288,6 +288,8 @@ CREATE SEQUENCE IF NOT EXISTS resource_contact_id_seq;
 CREATE TABLE IF NOT EXISTS resource_contact
 (
 	auto_id integer DEFAULT nextval('resource_contact_id_seq') NOT NULL,
+	resource_uuid character varying(50), 	 	
+	resource_name character varying(100), 
 	name character varying(100),
 	position_name character varying(100),
 	organization_name character varying(100),

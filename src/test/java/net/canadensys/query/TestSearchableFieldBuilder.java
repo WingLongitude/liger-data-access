@@ -5,13 +5,14 @@ import java.util.List;
 
 /**
  * Utility class to build SearchableField for testing purpose.
+ * 
  * @author canadensys
- *
+ * 
  */
 public class TestSearchableFieldBuilder {
-	
-	public static SearchableField buildMinMaxIntegerSearchableField(){
-		return new SearchableField(){
+
+	public static SearchableField buildMinMaxIntegerSearchableField() {
+		return new SearchableField() {
 			@Override
 			public SearchableFieldTypeEnum getSearchableFieldTypeEnum() {
 				return SearchableFieldTypeEnum.MIN_MAX_NUMBER;
@@ -54,9 +55,9 @@ public class TestSearchableFieldBuilder {
 			}
 		};
 	}
-	
-	public static SearchableField buildStartEndDateSearchableField(){
-		return new SearchableField(){
+
+	public static SearchableField buildStartEndDateSearchableField() {
+		return new SearchableField() {
 			@Override
 			public SearchableFieldTypeEnum getSearchableFieldTypeEnum() {
 				return SearchableFieldTypeEnum.START_END_DATE;
@@ -99,9 +100,10 @@ public class TestSearchableFieldBuilder {
 			}
 		};
 	}
-	
-	public static SearchableField buildSingleValueSearchableField(final int searchableFieldId,final String searchableFieldName, final String relatedField){
-		return new SearchableField(){
+
+	public static SearchableField buildSingleValueSearchableField(final int searchableFieldId, final String searchableFieldName,
+			final String relatedField) {
+		return new SearchableField() {
 
 			@Override
 			public int getSearchableFieldId() {
@@ -145,12 +147,13 @@ public class TestSearchableFieldBuilder {
 			public String getRelatedField() {
 				return relatedField;
 			}
-			
+
 		};
 	}
-	
-	public static SearchableField buildNumericSingleValueSearchableField(final int searchableFieldId,final String searchableFieldName, final String relatedField, final Class<? extends Number> clazz){
-		return new SearchableField(){
+
+	public static SearchableField buildNumericSingleValueSearchableField(final int searchableFieldId, final String searchableFieldName,
+			final String relatedField, final Class<? extends Number> clazz) {
+		return new SearchableField() {
 
 			@Override
 			public int getSearchableFieldId() {
@@ -191,12 +194,13 @@ public class TestSearchableFieldBuilder {
 			public String getRelatedField() {
 				return relatedField;
 			}
-			
+
 		};
 	}
-	
-	public static SearchableField buildBooleanSingleValueSearchableField(final int searchableFieldId,final String searchableFieldName, final String relatedField){
-		return new SearchableField(){
+
+	public static SearchableField buildBooleanSingleValueSearchableField(final int searchableFieldId, final String searchableFieldName,
+			final String relatedField) {
+		return new SearchableField() {
 
 			@Override
 			public int getSearchableFieldId() {
@@ -236,16 +240,16 @@ public class TestSearchableFieldBuilder {
 			public String getRelatedField() {
 				return relatedField;
 			}
-			
+
 		};
 	}
-	
-	public static SearchableField buildInsidePolygonSearchableField(){
-		return new SearchableField(){
+
+	public static SearchableField buildInsidePolygonSearchableField() {
+		return new SearchableField() {
 
 			@Override
 			public int getSearchableFieldId() {
-				return 6; //random number
+				return 6; // random number
 			}
 
 			@Override
@@ -282,15 +286,15 @@ public class TestSearchableFieldBuilder {
 			public String getRelatedField() {
 				return null;
 			}
-			
+
 		};
 	}
-	
-	public static SearchableField buildWithinRadiusSearchableField(){
-		return new SearchableField(){
+
+	public static SearchableField buildWithinRadiusSearchableField() {
+		return new SearchableField() {
 			@Override
 			public int getSearchableFieldId() {
-				return 9; //random number
+				return 9; // random number
 			}
 
 			@Override

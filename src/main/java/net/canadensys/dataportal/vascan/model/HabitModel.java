@@ -1,7 +1,8 @@
 /*
-	Copyright (c) 2010-2013 Canadensys
-*/
+ * Copyright (c) 2010-2013 Canadensys
+ */
 package net.canadensys.dataportal.vascan.model;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,24 +11,26 @@ import javax.persistence.Table;
 
 /**
  * Model representing a habit (tree, shrub, ...)
+ * 
  * @author canadensys
- *
+ * 
  */
 @Entity
-@Table(name="habit")
-public class HabitModel{
-	private int			id;
-	private String		habit;
+@Table(name = "habit")
+public class HabitModel {
+	private int id;
+	private String habit;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the habit name
 	 */
@@ -36,7 +39,8 @@ public class HabitModel{
 	}
 
 	/**
-	 * @param habit the habit name
+	 * @param habit
+	 *            the habit name
 	 */
 	public void setHabit(String habit) {
 		this.habit = habit;

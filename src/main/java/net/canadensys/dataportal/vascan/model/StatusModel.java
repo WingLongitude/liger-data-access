@@ -1,6 +1,6 @@
 /*
-	Copyright (c) 2010 Canadensys
-*/
+ * Copyright (c) 2010 Canadensys
+ */
 
 package net.canadensys.dataportal.vascan.model;
 
@@ -12,27 +12,29 @@ import javax.persistence.Table;
 
 /**
  * Model representing a status (accepted, synonym).
+ * 
  * @author canadensys
- *
+ * 
  */
 @Entity
-@Table(name="status")
-public class StatusModel{
+@Table(name = "status")
+public class StatusModel {
 
-	private int			id;
-	private String		status;
-	
+	private int id;
+	private String status;
+
 	/**
 	 * @return the id
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -46,13 +48,16 @@ public class StatusModel{
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -64,7 +69,9 @@ public class StatusModel{
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -79,12 +86,12 @@ public class StatusModel{
 		if (status == null) {
 			if (other.status != null)
 				return false;
-		} else if (!status.equals(other.status))
+		}
+		else if (!status.equals(other.status))
 			return false;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-	
-	
+
 }

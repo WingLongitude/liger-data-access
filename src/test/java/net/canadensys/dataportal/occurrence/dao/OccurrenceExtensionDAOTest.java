@@ -23,11 +23,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 /**
  * This test is using a 'stub' hstore since hstore is PostgreSQL specific.
  * The trick to use it with h2 is available in src/test/resources/h2/h2setup.sql
- * Test Coverage : 
+ * Test Coverage :
  * -Insert extension data using jdbcTemplate
  * -Save OccurrenceExtensionModel
  * -Load OccurrenceExtensionModel from id
  * -Load OccurrenceExtensionModel list from extensionType, resourceUUID, dwcaID
+ * 
  * @author canadensys
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -63,12 +64,12 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 		// reload the model
 		OccurrenceExtensionModel extModel = occurrenceExtDAO.load(2l);
 		assertEquals("cc-by", extModel.getExt_data().get("licence"));
-		
-		//reload it by list
+
+		// reload it by list
 		List<OccurrenceExtensionModel> extModelList = occurrenceExtDAO.load("image", "source", "2");
 		assertFalse(extModelList.isEmpty());
 		assertEquals("cc-by", extModelList.get(0).getExt_data().get("licence"));
-		
+
 		// test that loading a non existing extension return an empty list and not null
 		assertNotNull(occurrenceExtDAO.load("null", "????", "-7"));
 	}

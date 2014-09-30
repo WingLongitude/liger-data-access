@@ -1,7 +1,8 @@
 /*
-	Copyright (c) 2010-2013 Canadensys
-*/
+ * Copyright (c) 2010-2013 Canadensys
+ */
 package net.canadensys.dataportal.vascan.model;
+
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -27,49 +28,49 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="taxon")
-public class TaxonModel implements Comparable<TaxonModel>{
+@Table(name = "taxon")
+public class TaxonModel implements Comparable<TaxonModel> {
 
-	private Integer					id;
-	private String					uninomial;
-	private String					binomial;
-	private String					trinomial;
-	private String					quadrinomial;
-	private String					author;
-	private StatusModel				status;
-	private RankModel				rank;
-	private ReferenceModel			reference;
-	private String					commentary;
-	private int						notaxon;
+	private Integer id;
+	private String uninomial;
+	private String binomial;
+	private String trinomial;
+	private String quadrinomial;
+	private String author;
+	private StatusModel status;
+	private RankModel rank;
+	private ReferenceModel reference;
+	private String commentary;
+	private int notaxon;
 	@Temporal(TemporalType.TIMESTAMP)
-	private	Date					cdate;
+	private Date cdate;
 	@Temporal(TemporalType.TIMESTAMP)
-	private	Date					mdate;
-    private List<HabitModel>		habit;
-    private TaxonLookupModel		lookup;
-	private List<DistributionModel>		distribution;
-	private List<VernacularNameModel>	vernacularnames;
-	private List<TaxonModel>			children;
-	private List<TaxonModel>			parents;
-	private List<TaxonModel>			hybridparents;
-	
+	private Date mdate;
+	private List<HabitModel> habit;
+	private TaxonLookupModel lookup;
+	private List<DistributionModel> distribution;
+	private List<VernacularNameModel> vernacularnames;
+	private List<TaxonModel> children;
+	private List<TaxonModel> parents;
+	private List<TaxonModel> hybridparents;
 
 	/**
 	 * @return the id
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
 		return id;
 	}
-	
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the uninomial
 	 */
@@ -78,7 +79,8 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	}
 
 	/**
-	 * @param uninomial the uninomial to set
+	 * @param uninomial
+	 *            the uninomial to set
 	 */
 	public void setUninomial(String uninomial) {
 		this.uninomial = uninomial;
@@ -92,7 +94,8 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	}
 
 	/**
-	 * @param binominal the binominal to set
+	 * @param binominal
+	 *            the binominal to set
 	 */
 	public void setBinomial(String binomial) {
 		this.binomial = binomial;
@@ -106,7 +109,8 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	}
 
 	/**
-	 * @param trinominal the trinominal to set
+	 * @param trinominal
+	 *            the trinominal to set
 	 */
 	public void setTrinomial(String trinomial) {
 		this.trinomial = trinomial;
@@ -120,7 +124,8 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	}
 
 	/**
-	 * @param quarinomial the quarinomial to set
+	 * @param quarinomial
+	 *            the quarinomial to set
 	 */
 	public void setQuadrinomial(String quadrinomial) {
 		this.quadrinomial = quadrinomial;
@@ -134,7 +139,8 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	}
 
 	/**
-	 * @param author the author to set
+	 * @param author
+	 *            the author to set
 	 */
 	public void setAuthor(String author) {
 		this.author = author;
@@ -144,28 +150,29 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	 * @return the rank
 	 */
 	@ManyToOne
-	@JoinColumn(name="rankid")
+	@JoinColumn(name = "rankid")
 	public RankModel getRank() {
 		return rank;
 	}
 
 	/**
-	 * @param rank the rank to set
+	 * @param rank
+	 *            the rank to set
 	 */
 	public void setRank(RankModel rank) {
 		this.rank = rank;
 	}
-	
+
 	@ManyToOne
-	@JoinColumn(name="statusid")
+	@JoinColumn(name = "statusid")
 	public StatusModel getStatus() {
 		return status;
 	}
+
 	public void setStatus(StatusModel status) {
 		this.status = status;
 	}
-	
-	
+
 	/**
 	 * @param cdate
 	 */
@@ -191,78 +198,83 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	 * @return the vernacularNames
 	 */
 
-	@OneToMany(mappedBy="taxon")
+	@OneToMany(mappedBy = "taxon")
 	@OrderBy("status ASC, name ASC")
 	public List<VernacularNameModel> getVernacularnames() {
 		return vernacularnames;
 	}
+
 	public void setVernacularnames(List<VernacularNameModel> vernacularnames) {
 		this.vernacularnames = vernacularnames;
 	}
-	
+
 	/**
-	 * Get the object's taxon concept number. The taxon number is a legacy 
-	 * number mapped to different distribution files (xls, word, 
+	 * Get the object's taxon concept number. The taxon number is a legacy
+	 * number mapped to different distribution files (xls, word,
 	 * filemakerpro) and seldom used by Luc Brouillet and his team.
 	 * 
 	 * @return the object's noTaxon. Function returns 0 if noTaxon is not set.
-	 */	
-	public Integer getNotaxon(){
+	 */
+	public Integer getNotaxon() {
 		return notaxon;
 	}
-	
+
 	/**
 	 * Set the object's noTaxon.
 	 * 
-	 * @param noTaxon the object's noTaxon.
+	 * @param noTaxon
+	 *            the object's noTaxon.
 	 */
-	public void setNotaxon(Integer notaxon){
-		this.notaxon = notaxon;	
+	public void setNotaxon(Integer notaxon) {
+		this.notaxon = notaxon;
 	}
 
 	/**
 	 * Get the object's reference.
 	 * Reference indicates where the taxon concept is explicitly expressed.
 	 * 
-	 * @return the object's reference id. Function returns null if reference is 
-	 * not set.
+	 * @return the object's reference id. Function returns null if reference is
+	 *         not set.
 	 */
 	@ManyToOne
-	@JoinColumn(name="referenceid")
-	public ReferenceModel getReference(){
+	@JoinColumn(name = "referenceid")
+	public ReferenceModel getReference() {
 		return reference;
 	}
-	
+
 	/**
 	 * Set the object's reference.
 	 * 
-	 * @param referenceId the object's reference.
+	 * @param referenceId
+	 *            the object's reference.
 	 */
-	public void setReference(ReferenceModel reference){
+	public void setReference(ReferenceModel reference) {
 		this.reference = reference;
 	}
 
 	/**
-	 * Get the object's commentary. 
+	 * Get the object's commentary.
 	 * 
 	 * @return the object's commentary. Function returns null if commentary is
-	 * not set.
+	 *         not set.
 	 */
-	public String getCommentary(){
+	public String getCommentary() {
 		return commentary;
 	}
-	
+
 	/**
 	 * Set the object's commentary.
 	 * 
-	 * @param commentary the object's commentary.
+	 * @param commentary
+	 *            the object's commentary.
 	 */
-	public void setCommentary(String commentary){
+	public void setCommentary(String commentary) {
 		this.commentary = commentary;
 	}
 
 	/**
-	 * @param notaxon the notaxon to set
+	 * @param notaxon
+	 *            the notaxon to set
 	 */
 	public void setNotaxon(int notaxon) {
 		this.notaxon = notaxon;
@@ -272,20 +284,15 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	 * @return the habits
 	 */
 	@ManyToMany
-	@JoinTable(name = "taxonhabit",
-	    joinColumns = {
-			@JoinColumn(name="taxonid")
-	    },inverseJoinColumns = {
-			@JoinColumn(name="habitid")
-	    }
-	)
+	@JoinTable(name = "taxonhabit", joinColumns = { @JoinColumn(name = "taxonid") }, inverseJoinColumns = { @JoinColumn(name = "habitid") })
 	@Basic(fetch = FetchType.LAZY)
 	public List<HabitModel> getHabit() {
 		return habit;
 	}
-	
+
 	/**
-	 * @param habitus the habitus to set
+	 * @param habitus
+	 *            the habitus to set
 	 */
 	public void setHabit(List<HabitModel> habit) {
 		this.habit = habit;
@@ -293,120 +300,102 @@ public class TaxonModel implements Comparable<TaxonModel>{
 
 	/**
 	 * Get the object's distributionlookup
-	 * distributionlookup 
+	 * distributionlookup
 	 * 
-	 * @return the object's distribution information (statusid for all provinces) 
+	 * @return the object's distribution information (statusid for all provinces)
 	 */
-	@NotFound(action=NotFoundAction.IGNORE)
+	@NotFound(action = NotFoundAction.IGNORE)
 	@OneToOne
-	@JoinColumn(name="id",insertable=false,updatable=false,nullable=true)
+	@JoinColumn(name = "id", insertable = false, updatable = false, nullable = true)
 	public TaxonLookupModel getLookup() {
 		return lookup;
 	}
-	
+
 	/**
-	 * @param distributionlookup the distributionlookup to set
+	 * @param distributionlookup
+	 *            the distributionlookup to set
 	 */
 	public void setLookup(TaxonLookupModel lookup) {
 		this.lookup = lookup;
 	}
-	
+
 	/**
 	 * @return the distribution
 	 */
 	@ManyToMany
-	@JoinTable(name = "distribution",
-		joinColumns = {
-			@JoinColumn(name="taxonid")
-	    },inverseJoinColumns = {
-			@JoinColumn(name="id")
-    	}
-	)
+	@JoinTable(name = "distribution", joinColumns = { @JoinColumn(name = "taxonid") }, inverseJoinColumns = { @JoinColumn(name = "id") })
 	@Basic(fetch = FetchType.LAZY)
 	public List<DistributionModel> getDistribution() {
 		return distribution;
 	}
 
 	/**
-	 * @param distribution the distribution to set
+	 * @param distribution
+	 *            the distribution to set
 	 */
 	public void setDistribution(List<DistributionModel> distribution) {
 		this.distribution = distribution;
 	}
-	
 
 	/**
 	 * The list is sorted by calname. This list is not sorted since the calname
 	 * is not available in taxon table for an ORDER BY and the hibernate sort only accept Set and Map.
+	 * 
 	 * @return the children
 	 */
 	@ManyToMany
-	@JoinTable(name = "taxonomy",
-	    joinColumns = {
-			@JoinColumn(name="parentid",insertable=false,updatable=false)
-	    },inverseJoinColumns = {
-			@JoinColumn(name="childid",insertable=false,updatable=false)
-	    }
-	)
+	@JoinTable(name = "taxonomy", joinColumns = { @JoinColumn(name = "parentid", insertable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "childid", insertable = false, updatable = false) })
 	@Basic(fetch = FetchType.LAZY)
 	public List<TaxonModel> getChildren() {
 		return children;
 	}
-	
+
 	/**
-	 * @param children the children to set
+	 * @param children
+	 *            the children to set
 	 */
 	public void setChildren(List<TaxonModel> children) {
 		this.children = children;
 	}
-	
+
 	/**
 	 * @return the hybridParents
 	 */
 	@ManyToMany
-	@JoinTable(name = "taxonhybridparent",
-	    joinColumns = {
-			@JoinColumn(name="childid")
-	    }
-		,inverseJoinColumns = {
-			@JoinColumn(name="parentid")
-	    }
-	)
+	@JoinTable(name = "taxonhybridparent", joinColumns = { @JoinColumn(name = "childid") }, inverseJoinColumns = { @JoinColumn(name = "parentid") })
 	@Basic(fetch = FetchType.LAZY)
 	public List<TaxonModel> getHybridparents() {
 		return hybridparents;
 	}
-	
+
 	/**
-	 * @param hybridparents the hybrid parents to set
+	 * @param hybridparents
+	 *            the hybrid parents to set
 	 */
 	public void setHybridparents(List<TaxonModel> hybridparents) {
 		this.hybridparents = hybridparents;
 	}
-	
+
 	/**
 	 * @return the parents
 	 */
 	@ManyToMany
-	@JoinTable(name = "taxonomy",
-	    joinColumns = {
-			@JoinColumn(name="childid")
-	    },inverseJoinColumns = {
-			@JoinColumn(name="parentid")
-	    }
-	)
+	@JoinTable(name = "taxonomy", joinColumns = { @JoinColumn(name = "childid") }, inverseJoinColumns = { @JoinColumn(name = "parentid") })
 	public List<TaxonModel> getParents() {
 		return parents;
 	}
 
 	/**
-	 * @param parents the parents to set
+	 * @param parents
+	 *            the parents to set
 	 */
 	public void setParents(List<TaxonModel> parents) {
 		this.parents = parents;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -417,27 +406,29 @@ public class TaxonModel implements Comparable<TaxonModel>{
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
-		//TODO : $$EnhancerByCGLIB$$6c2b56f0 added to class name...
-		// check hibernate.cfg.xml hibernate.hibernate.cglib.use_reflection_optimizer ... which might 
+		// TODO : $$EnhancerByCGLIB$$6c2b56f0 added to class name...
+		// check hibernate.cfg.xml hibernate.hibernate.cglib.use_reflection_optimizer ... which might
 		// cause this.
-		/*if (getClass() != obj.getClass())
-			return false;
-		*/
+		/*
+		 * if (getClass() != obj.getClass())
+		 * return false;
+		 */
 		TaxonModel other = (TaxonModel) obj;
 		if (this.getId() != other.getId())
 			return false;
-		
+
 		return true;
 	}
-	
-	
+
 	@Override
 	/**
 	 * toString is mainly used in the admin backend, where a basic string representation
@@ -445,7 +436,7 @@ public class TaxonModel implements Comparable<TaxonModel>{
 	 */
 	public String toString() {
 		String delimiter = " ";
-		//String newline = "\n";
+		// String newline = "\n";
 		StringBuffer taxon = new StringBuffer("");
 		taxon.append(this.id).append(delimiter);
 		taxon.append(this.uninomial).append(delimiter);
@@ -459,30 +450,30 @@ public class TaxonModel implements Comparable<TaxonModel>{
 		taxon.append(this.reference.getReferencecode());
 		return taxon.toString();
 	}
-	
+
 	/**
 	 * Compare based on the lookup calculated name
 	 */
-	public int compareTo(TaxonModel obj){
-		try{
-			if(obj != null && obj.getLookup() != null && this.lookup != null){
+	public int compareTo(TaxonModel obj) {
+		try {
+			if (obj != null && obj.getLookup() != null && this.lookup != null) {
 				return this.lookup.getCalname().compareTo(obj.getLookup().getCalname());
 			}
 			else
 				return 1;
-			}
-		catch(Exception e){
+		}
+		catch (Exception e) {
 			return 1;
 		}
 	}
-	
-	public static class CompareLookup implements Comparator<Object>{
+
+	public static class CompareLookup implements Comparator<Object> {
 		@Override
 		public int compare(Object arg0, Object arg1) {
-			if(arg0 == null || arg1 == null)
+			if (arg0 == null || arg1 == null)
 				return 0;
-			TaxonModel obj1 = (TaxonModel)arg0;
-			TaxonModel obj2 = (TaxonModel)arg1;
+			TaxonModel obj1 = (TaxonModel) arg0;
+			TaxonModel obj2 = (TaxonModel) arg1;
 			return obj1.compareTo(obj2);
 		}
 	}

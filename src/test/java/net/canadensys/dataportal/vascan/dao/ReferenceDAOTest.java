@@ -9,12 +9,11 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/vascan/vascan-test-context.xml" })
-@TransactionConfiguration(transactionManager="hibernateTransactionManager")
-public class ReferenceDAOTest extends AbstractTransactionalJUnit4SpringContextTests{
-	
+@TransactionConfiguration(transactionManager = "hibernateTransactionManager")
+public class ReferenceDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Test
-	public void test(){
+	public void test() {
 		System.out.println("allo");
 	}
 
