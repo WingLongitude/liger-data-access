@@ -60,12 +60,14 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		ResourceContactModel testResourceContact = new ResourceContactModel();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
+		testResourceContact.setResourceInformation(testResourceInformation);
 		contacts.add(testResourceContact);
 
 		// Add other contact
 		ResourceContactModel testResourceContact2 = new ResourceContactModel();
 		testResourceContact2.setName("Test Name 2");
 		testResourceContact2.setEmail("a2@a2.com");
+		testResourceContact2.setResourceInformation(testResourceInformation);
 		contacts.add(testResourceContact2);
 
 		// Add contacts to information and save information
@@ -73,7 +75,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
 
 		// Fetch ids from added objects:
-		int informationId = testResourceInformation.getAuto_id();
+		Integer informationId = testResourceInformation.getAuto_id();
 		int contact1Id = testResourceContact.getAuto_id();
 		int contact2Id = testResourceContact2.getAuto_id();
 
@@ -89,10 +91,12 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 			if (contact.getAuto_id() == contact1Id) {
 				assertEquals("Test Name", contact.getName());
 				assertEquals("a@a.com", contact.getEmail());
+				assertEquals(informationId, contact.getResourceInformation().getAuto_id());
 			}
 			else if (contact.getAuto_id() == contact2Id) {
 				assertEquals("Test Name 2", contact.getName());
 				assertEquals("a2@a2.com", contact.getEmail());
+				assertEquals(informationId, contact.getResourceInformation().getAuto_id());
 			}
 		}
 
