@@ -92,11 +92,17 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 				assertEquals("Test Name", contact.getName());
 				assertEquals("a@a.com", contact.getEmail());
 				assertEquals(informationId, contact.getResourceInformation().getAuto_id());
+				// Assert resource_information_fkey is being filled:
+				Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name\'", Integer.class);
+				assertEquals(fkey, informationId);
 			}
 			else if (contact.getAuto_id() == contact2Id) {
 				assertEquals("Test Name 2", contact.getName());
 				assertEquals("a2@a2.com", contact.getEmail());
 				assertEquals(informationId, contact.getResourceInformation().getAuto_id());
+				// Assert resource_information_fkey is being filled:
+				Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name 2\'", Integer.class);
+				assertEquals(fkey, informationId);
 			}
 		}
 
@@ -108,6 +114,6 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		// Assert contacts were also deleted
 		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM resource_contact WHERE auto_id=" + contact1Id + " OR auto_id ="
 				+ contact2Id, Long.class);
-		assertEquals(0, contactCount.intValue());
+		assertEquals(0, contactCount.intValue()); 
 	}
 }
