@@ -3,6 +3,7 @@ package net.canadensys.dataportal.occurrence.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -87,25 +88,36 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 
 		// Test contacts load:
 		Set<ResourceContactModel> resourceContacts = loadedInformation.getContacts();
+		ResourceContactModel loadedContact1 = null;
+		ResourceContactModel loadedContact2 = null;
+		
 		for (ResourceContactModel contact : resourceContacts) {
-			if (contact.getAuto_id() == contact1Id) {
-				assertEquals("Test Name", contact.getName());
-				assertEquals("a@a.com", contact.getEmail());
-				assertEquals(informationId, contact.getResourceInformation().getAuto_id());
-				// Assert resource_information_fkey is being filled:
-				Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name\'", Integer.class);
-				assertEquals(fkey, informationId);
+			Integer autoId = contact.getAuto_id();
+			if (autoId == contact1Id) {
+				loadedContact1 = contact;
 			}
-			else if (contact.getAuto_id() == contact2Id) {
-				assertEquals("Test Name 2", contact.getName());
-				assertEquals("a2@a2.com", contact.getEmail());
-				assertEquals(informationId, contact.getResourceInformation().getAuto_id());
-				// Assert resource_information_fkey is being filled:
-				Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name 2\'", Integer.class);
-				assertEquals(fkey, informationId);
+			else if (autoId == contact2Id) {
+				loadedContact2 = contact;
+			}
+			else {
+				fail("Unknown contact for auto_id: " + autoId);
 			}
 		}
+		
+		assertEquals("Test Name", loadedContact1.getName());
+		assertEquals("a@a.com", loadedContact1.getEmail());
+		assertEquals(informationId, loadedContact1.getResourceInformation().getAuto_id());
+		// Assert resource_information_fkey is being filled:
+		Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name\'", Integer.class);
+		assertEquals(fkey, informationId);
 
+		assertEquals("Test Name 2", loadedContact2.getName());
+		assertEquals("a2@a2.com", loadedContact2.getEmail());
+		assertEquals(informationId, loadedContact2.getResourceInformation().getAuto_id());
+		// Assert resource_information_fkey is being filled:
+		fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name 2\'", Integer.class);
+		assertEquals(fkey, informationId);
+		
 		// Test cascade deletion of information and all contacts after information deletion:
 		assertTrue(resourceInformationDAO.delete(loadedInformation));
 		// Assert information was deleted:
