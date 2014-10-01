@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -49,7 +48,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 
 	@Test
 	public void testSaveLoadDelete() {
-		
+
 		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
 		// Test ResourceInformation model:
 		ResourceInformationModel testResourceInformation = new ResourceInformationModel();
@@ -57,28 +56,24 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		testResourceInformation.setTitle("TitleTitleTitle");
 		testResourceInformation.setResource_uuid(resource_uuid);
 
-		Set<ResourceContactModel> contacts = new HashSet<ResourceContactModel>();
 		// Create contact:
 		ResourceContactModel testResourceContact = new ResourceContactModel();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
-		testResourceInformation.setResourceInformation(testResourceContact);
-		contacts.add(testResourceContact);
+		testResourceInformation.addContact(testResourceContact);
 
 		// Add other contact
 		ResourceContactModel testResourceContact2 = new ResourceContactModel();
 		testResourceContact2.setName("Test Name 2");
 		testResourceContact2.setEmail("a2@a2.com");
 		testResourceContact2.setResourceInformation(testResourceInformation);
-		testResourceInformation.setResourceInformation(testResourceContact2);
-		contacts.add(testResourceContact2);
+		testResourceInformation.addContact(testResourceContact2);
 
-		// Add contacts to information and save information
-		testResourceInformation.setContacts(contacts);
+		// Save information
 		assertTrue(resourceInformationDAO.save(testResourceInformation));
 
-		// Fetch ids from added objects:
-		Integer informationId = testResourceInformation.getAuto_id();
+		// Fetch ids from saved objects:
+		Integer resourceInformationId = testResourceInformation.getAuto_id();
 		int contact1Id = testResourceContact.getAuto_id();
 		int contact2Id = testResourceContact2.getAuto_id();
 
@@ -90,7 +85,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		Set<ResourceContactModel> resourceContacts = loadedInformation.getContacts();
 		ResourceContactModel loadedContact1 = null;
 		ResourceContactModel loadedContact2 = null;
-		
+
 		for (ResourceContactModel contact : resourceContacts) {
 			Integer autoId = contact.getAuto_id();
 			if (autoId == contact1Id) {
@@ -103,29 +98,29 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 				fail("Unknown contact for auto_id: " + autoId);
 			}
 		}
-		
+
 		assertEquals("Test Name", loadedContact1.getName());
 		assertEquals("a@a.com", loadedContact1.getEmail());
-		assertEquals(informationId, loadedContact1.getResourceInformation().getAuto_id());
+		assertEquals(resourceInformationId, loadedContact1.getResourceInformation().getAuto_id());
 		// Assert resource_information_fkey is being filled:
 		Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name\'", Integer.class);
-		assertEquals(fkey, informationId);
+		assertEquals(fkey, resourceInformationId);
 
 		assertEquals("Test Name 2", loadedContact2.getName());
 		assertEquals("a2@a2.com", loadedContact2.getEmail());
-		assertEquals(informationId, loadedContact2.getResourceInformation().getAuto_id());
+		assertEquals(resourceInformationId, loadedContact2.getResourceInformation().getAuto_id());
 		// Assert resource_information_fkey is being filled:
 		fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name 2\'", Integer.class);
-		assertEquals(fkey, informationId);
-		
+		assertEquals(fkey, resourceInformationId);
+
 		// Test cascade deletion of information and all contacts after information deletion:
 		assertTrue(resourceInformationDAO.delete(loadedInformation));
 		// Assert information was deleted:
-		assertNull(resourceInformationDAO.load(informationId));
+		assertNull(resourceInformationDAO.load(resourceInformationId));
 
 		// Assert contacts were also deleted
 		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM resource_contact WHERE auto_id=" + contact1Id + " OR auto_id ="
 				+ contact2Id, Long.class);
-		assertEquals(0, contactCount.intValue()); 
+		assertEquals(0, contactCount.intValue());
 	}
 }

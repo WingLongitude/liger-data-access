@@ -1,7 +1,5 @@
 package net.canadensys.dataportal.occurrence.dao;
 
-import java.util.List;
-
 import net.canadensys.dataportal.occurrence.model.ResourceInformationModel;
 
 /**

@@ -1,6 +1,7 @@
 package net.canadensys.dataportal.occurrence.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -45,14 +46,21 @@ public class ResourceInformationModel {
 	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ResourceContactModel> contacts;
 
+	public ResourceInformationModel() {
+		contacts = new HashSet<ResourceContactModel>();
+	}
+
 	/**
-	 * Set resource information for a given contact
+	 * Add a ResourceContactModel to the contact list.
+	 * The reference to this ResourceInformationModel instance will be set on the provided contact.
+	 * 
 	 * @param contact
 	 */
-	public void setResourceInformation(ResourceContactModel contact) {
+	public void addContact(ResourceContactModel contact) {
 		contact.setResourceInformation(this);
+		contacts.add(contact);
 	}
-	
+
 	/** Getters and setters: **/
 
 	public Integer getAuto_id() {
@@ -191,10 +199,16 @@ public class ResourceInformationModel {
 		this.collection_name = collection_name;
 	}
 
-	public  Set<ResourceContactModel> getContacts() {
+	public Set<ResourceContactModel> getContacts() {
 		return contacts;
 	}
 
+	/**
+	 * Contact list setter mainly used for Java Beans compliance.
+	 * If you want to add contact, consider using addContact(ResourceContactModel)
+	 * 
+	 * @param contacts
+	 */
 	public void setContacts(Set<ResourceContactModel> contacts) {
 		this.contacts = contacts;
 	}
