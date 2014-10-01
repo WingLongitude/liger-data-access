@@ -45,6 +45,14 @@ public class ResourceInformationModel {
 	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ResourceContactModel> contacts;
 
+	/**
+	 * Set resource information for a given contact
+	 * @param contact
+	 */
+	public void setResourceInformation(ResourceContactModel contact) {
+		contact.setResourceInformation(this);
+	}
+	
 	/** Getters and setters: **/
 
 	public Integer getAuto_id() {
@@ -183,7 +191,7 @@ public class ResourceInformationModel {
 		this.collection_name = collection_name;
 	}
 
-	public Set<ResourceContactModel> getContacts() {
+	public  Set<ResourceContactModel> getContacts() {
 		return contacts;
 	}
 

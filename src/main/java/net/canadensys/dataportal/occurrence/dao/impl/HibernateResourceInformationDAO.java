@@ -50,10 +50,10 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResourceInformationModel> load(String resource_uuid) {
+	public ResourceInformationModel load(String resource_uuid) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceInformationModel.class);
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
-		return searchCriteria.list();
+		return (ResourceInformationModel) searchCriteria.uniqueResult();
 	}
 
 	public SessionFactory getSessionFactory() {

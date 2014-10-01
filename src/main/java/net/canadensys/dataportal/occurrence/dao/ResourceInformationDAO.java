@@ -28,13 +28,12 @@ public interface ResourceInformationDAO {
 	public ResourceInformationModel load(Integer auto_id);
 
 	/**
-	 * Load a list of ResourceInformationModel for a resource_uuid.
-	 * More than one Information could be linked to the same resource_uuid.
+	 * Load a ResourceInformationModel from a resource_uuid
 	 * 
 	 * @param resource_uuid
 	 * @return ResourceInformationModel list or an empty list if nothing is found
 	 */
-	public List<ResourceInformationModel> load(String resource_uuid);
+	public ResourceInformationModel load(String resource_uuid);
 
 	/**
 	 * Drop a ResourceInformation record from the table and all its associated resourceContacts;

@@ -49,19 +49,20 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 
 	@Test
 	public void testSaveLoadDelete() {
+		
+		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
 		// Test ResourceInformation model:
 		ResourceInformationModel testResourceInformation = new ResourceInformationModel();
 		testResourceInformation.set_abstract("This is the lorem ipsum abstract");
 		testResourceInformation.setTitle("TitleTitleTitle");
+		testResourceInformation.setResource_uuid(resource_uuid);
 
-		// Add contacts to the resource:
 		Set<ResourceContactModel> contacts = new HashSet<ResourceContactModel>();
-
 		// Create contact:
 		ResourceContactModel testResourceContact = new ResourceContactModel();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
-		testResourceContact.setResourceInformation(testResourceInformation);
+		testResourceInformation.setResourceInformation(testResourceContact);
 		contacts.add(testResourceContact);
 
 		// Add other contact
@@ -69,6 +70,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		testResourceContact2.setName("Test Name 2");
 		testResourceContact2.setEmail("a2@a2.com");
 		testResourceContact2.setResourceInformation(testResourceInformation);
+		testResourceInformation.setResourceInformation(testResourceContact2);
 		contacts.add(testResourceContact2);
 
 		// Add contacts to information and save information
@@ -80,11 +82,9 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		int contact1Id = testResourceContact.getAuto_id();
 		int contact2Id = testResourceContact2.getAuto_id();
 
-		ResourceInformationModel loadedInformation = resourceInformationDAO.load(informationId);
+		ResourceInformationModel loadedInformation = resourceInformationDAO.load(resource_uuid);
 		assertEquals("This is the lorem ipsum abstract", loadedInformation.get_abstract());
 		assertEquals("TitleTitleTitle", loadedInformation.getTitle());
-		// Test contacts:
-		assertEquals(contacts, loadedInformation.getContacts());
 
 		// Test contacts load:
 		Set<ResourceContactModel> resourceContacts = loadedInformation.getContacts();
