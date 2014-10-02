@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_contact
 	phone character varying(20),
 	email character varying(200),
 	contact_type character varying(20),
-	resource_information_fkey integer references resource_information(auto_id),
+	resource_information_fkey integer references buffer.resource_information(auto_id),
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 
