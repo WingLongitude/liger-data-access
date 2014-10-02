@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "resource_information")
 @SequenceGenerator(name = "resource_information_id_seq", sequenceName = "resource_information_id_seq", allocationSize = 1)
@@ -43,6 +45,7 @@ public class ResourceInformationModel {
 	/**
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ResourceContactModel> contacts;
 

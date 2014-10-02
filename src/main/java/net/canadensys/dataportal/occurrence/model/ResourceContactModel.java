@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Model of the contact of a specific resource.
  * 
@@ -37,6 +39,7 @@ public class ResourceContactModel {
 	private String email;
 	private String contact_type;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "resource_information_fkey")
 	private ResourceInformationModel resourceInformation;
