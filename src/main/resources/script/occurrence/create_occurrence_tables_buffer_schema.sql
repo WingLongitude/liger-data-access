@@ -1,5 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS buffer;
-CREATE TABLE IF NOT EXISTS buffer.occurrence (
+CREATE TABLE  buffer.occurrence (
 auto_id INTEGER NOT NULL,
 associatedmedia TEXT,
 associatedsequences TEXT,
@@ -10,10 +10,10 @@ occurrenceid TEXT,
 _references TEXT,
 collectionCode TEXT,
 continent VARCHAR(50),
-country VARCHAR(90),
-county VARCHAR(90),
-municipality VARCHAR(90),
-datasetName VARCHAR(50),
+country VARCHAR(100),
+county VARCHAR(100),
+municipality VARCHAR(150),
+datasetName VARCHAR(100),
 habitat TEXT,
 locality TEXT,
 kingdom VARCHAR(25),
