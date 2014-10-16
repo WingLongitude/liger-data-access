@@ -47,6 +47,13 @@ public class HibernateResourceDAO implements ResourceDAO {
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
 		return (ResourceModel) searchCriteria.uniqueResult();
 	}
+	
+	@Override
+	public ResourceModel loadByAutoId(String auto_id) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
+		searchCriteria.add(Restrictions.eq("id", Integer.parseInt(auto_id)));
+		return (ResourceModel) searchCriteria.uniqueResult();
+	}
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
