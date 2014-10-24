@@ -3,13 +3,13 @@ CREATE TABLE  buffer.occurrence (
 auto_id INTEGER NOT NULL,
 associatedmedia TEXT,
 associatedsequences TEXT,
-basisofrecord VARCHAR(50),
+basisofrecord VARCHAR(100),
 bibliographiccitation TEXT,
 catalogNumber TEXT,
 occurrenceid TEXT,
 _references TEXT,
 collectionCode TEXT,
-continent VARCHAR(50),
+continent VARCHAR(100),
 country VARCHAR(100),
 county VARCHAR(100),
 municipality VARCHAR(150),
@@ -17,7 +17,7 @@ datasetName VARCHAR(100),
 habitat TEXT,
 locality TEXT,
 kingdom VARCHAR(25),
-phylum character varying(50),
+phylum character varying(100),
 _class character varying(100),
 _order TEXT,
 family TEXT,
@@ -291,6 +291,43 @@ CREATE TABLE IF NOT EXISTS buffer.resource_contact
 	contact_type character varying(20),
 	resource_information_fkey integer references buffer.resource_information(auto_id),
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
+);
+
+/* Structure to save publisher information and contacts: */
+CREATE SEQUENCE IF NOT EXISTS buffer.publisher_information_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.publisher_information
+(
+	auto_id integer DEFAULT nextval('buffer.publisher_information_id_seq') NOT NULL,
+	name character varying(100),
+	description text,
+	address text,
+	city character varying(100),
+	administrative_area character varying(100),
+	postal_code character varying(10),
+	homepage character varying(50),
+	email character varying(50),
+	phone character varying(15),
+	logo_url character varying(100),
+	decimallatitude DOUBLE PRECISION,
+	decimallongitude DOUBLE PRECISION,
+	CONSTRAINT publisher_information_pkey PRIMARY KEY (auto_id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS buffer.publisher_contact_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.publisher_contact
+(
+	auto_id integer DEFAULT nextval('buffer.publisher_contact_id_seq') NOT NULL,
+	name character varying(100),
+	position_name character varying(100),
+	address text,
+	city character varying(100),
+	administrative_area character varying(100),
+	country character varying(100),
+	postal_code character varying(10),
+	phone character varying(20),
+	email character varying(200),
+	publisher_information_fkey integer references buffer.publisher_information(auto_id),
+	CONSTRAINT publisher_contact_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_extension_id_seq;

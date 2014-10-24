@@ -53,5 +53,4 @@ public class ResourceInformationModelTest {
 			fail(e.getMessage());
 		}
 	}
-
 }

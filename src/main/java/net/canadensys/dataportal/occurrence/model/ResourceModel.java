@@ -24,6 +24,7 @@ public class ResourceModel {
 	private String sourcefileid;
 	private String resource_uuid;
 	private String archive_url;
+	private Integer record_count;
 
 	public Integer getId() {
 		return id;
@@ -63,5 +64,13 @@ public class ResourceModel {
 
 	public void setSourcefileid(String sourcefileid) {
 		this.sourcefileid = sourcefileid;
+	}
+
+	public Integer getRecord_count() {
+		return record_count;
+	}
+
+	public void setRecord_count(Integer record_count) {
+		this.record_count = record_count;
 	}
 }
