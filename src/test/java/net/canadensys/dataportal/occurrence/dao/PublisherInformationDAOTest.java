@@ -230,5 +230,7 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 		assertEquals(results.size(), 2);
 		assertEquals(results.get(0).get("name"), "Institution 1");
 		assertEquals(results.get(1).get("email"), "mail@inst2.com");
+		List<PublisherInformationModel> publishers = publisherInformationDAO.loadPublishers();
+		assertTrue(publishers.size()==2);
 	}
 }
