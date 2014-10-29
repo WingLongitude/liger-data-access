@@ -221,11 +221,11 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 		jdbcTemplate.update("INSERT INTO publisher_information (auto_id, name, description, phone, email) VALUES (1, 'Institution 1', 'The first institution', '123456789', 'mail@inst1.com')");
 		jdbcTemplate.update("INSERT INTO publisher_information (auto_id, name, description, phone, email) VALUES (2, 'Institution 2', 'The second institution', '987654321', 'mail@inst2.com')");
 		// add resources related to the publisher_informaiton
-		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (1, 'Resource 1', 123456789, 1)");
-		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (2, 'Resource 2', 23489, 1)");
-		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (3, 'Resource 3', 290, 2)");
-		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (4, 'Resource 4', 89, 2)");
-		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (5, 'Resource 5', 52089, 2)");
+		jdbcTemplate.update("INSERT INTO resource_management (id, name, record_count, publisher_information_fkey) VALUES (1, 'Resource 1', 123456789, 1)");
+		jdbcTemplate.update("INSERT INTO resource_management (id, name, record_count, publisher_information_fkey) VALUES (2, 'Resource 2', 23489, 1)");
+		jdbcTemplate.update("INSERT INTO resource_management (id, name, record_count, publisher_information_fkey) VALUES (3, 'Resource 3', 290, 2)");
+		jdbcTemplate.update("INSERT INTO resource_management (id, name, record_count, publisher_information_fkey) VALUES (4, 'Resource 4', 89, 2)");
+		jdbcTemplate.update("INSERT INTO resource_management (id, name, record_count, publisher_information_fkey) VALUES (5, 'Resource 5', 52089, 2)");
 		List<Map<String,Object>> results = jdbcTemplate.queryForList("SELECT * FROM PUBLISHER_INFORMATION");
 		assertEquals(results.size(), 2);
 		assertEquals(results.get(0).get("name"), "Institution 1");
