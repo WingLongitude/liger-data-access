@@ -4,8 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Model to keep info about resources. Resource represents the source archive.
@@ -25,6 +29,11 @@ public class ResourceModel {
 	private String resource_uuid;
 	private String archive_url;
 	private Integer record_count;
+	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "publisher_information_fkey")
+	private PublisherInformationModel publisherInformation;
 
 	public Integer getId() {
 		return id;
@@ -72,5 +81,13 @@ public class ResourceModel {
 
 	public void setRecord_count(Integer record_count) {
 		this.record_count = record_count;
+	}
+
+	public PublisherInformationModel getPublisherInformation() {
+		return publisherInformation;
+	}
+
+	public void setPublisherInformation(PublisherInformationModel publisherInformation) {
+		this.publisherInformation = publisherInformation;
 	}
 }

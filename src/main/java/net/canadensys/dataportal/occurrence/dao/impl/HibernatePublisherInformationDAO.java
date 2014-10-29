@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author Pedro Guimarães
  * 
  */
-@Repository("PublisherInformationDAO")
+@Repository("publisherInformationDAO")
 public class HibernatePublisherInformationDAO implements PublisherInformationDAO {
 
 	// get log4j handler
@@ -28,6 +28,12 @@ public class HibernatePublisherInformationDAO implements PublisherInformationDAO
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Override
+	public List<PublisherInformationModel> loadPublishers() {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherInformationModel.class);
+		return searchCriteria.list();
+	}
+	
 	@Override
 	public boolean save(PublisherInformationModel PublisherInformationModel) {
 		try {
@@ -66,11 +72,5 @@ public class HibernatePublisherInformationDAO implements PublisherInformationDAO
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public List<PublisherInformationModel> loadAll() {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherInformationModel.class);
-		return searchCriteria.list();
 	}
 }

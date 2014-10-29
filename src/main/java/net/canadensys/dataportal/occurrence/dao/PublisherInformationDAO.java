@@ -31,7 +31,7 @@ public interface PublisherInformationDAO {
 	 * Return all available publisher information records
 	 * @return
 	 */
-	public List<PublisherInformationModel> loadAll();
+	public List<PublisherInformationModel> loadPublishers();
 
 	/**
 	 * Drop a publisherInformation record from the table and all its associated publisherContacts

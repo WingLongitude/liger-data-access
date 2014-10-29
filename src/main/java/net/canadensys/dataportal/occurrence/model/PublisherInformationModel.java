@@ -36,6 +36,7 @@ public class PublisherInformationModel {
 	private String logo_url;
 	private Double decimallatitude;
 	private Double decimallongitude;
+	private Integer record_count;
 
 	/**
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
@@ -43,9 +44,20 @@ public class PublisherInformationModel {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "publisherInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PublisherContactModel> contacts;
+	
+	/**
+	 * FetchType.EAGER will make resources be always loaded. TODO: Add deepLoad condition to load() in DAO
+	 */
+	@JsonManagedReference
+	@OneToMany(mappedBy = "publisherInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<ResourceModel> resources;
 
+	/**
+	 * Class constructor
+	 */
 	public PublisherInformationModel() {
 		contacts = new HashSet<PublisherContactModel>();
+		resources = new HashSet<ResourceModel>();
 	}
 
 	/**
@@ -58,6 +70,18 @@ public class PublisherInformationModel {
 		contact.setPublisherInformation(this);
 		contacts.add(contact);
 	}
+	
+	/**
+	 * Add a ResourceModel to the resource list.
+	 * The reference to this ResourceInformationModel instance will be set on the provided contact.
+	 * 
+	 * @param contact
+	 */
+	public void addResource(ResourceModel resource) {
+		resource.setPublisherInformation(this);
+		resources.add(resource);
+	}
+
 
 	/** Getters and setters: **/
 
@@ -177,5 +201,21 @@ public class PublisherInformationModel {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Integer getRecord_count() {
+		return record_count;
+	}
+
+	public void setRecord_count(Integer record_count) {
+		this.record_count = record_count;
+	}
+
+	public Set<ResourceModel> getResources() {
+		return resources;
+	}
+
+	public void setResources(Set<ResourceModel> resources) {
+		this.resources = resources;
 	}
 }

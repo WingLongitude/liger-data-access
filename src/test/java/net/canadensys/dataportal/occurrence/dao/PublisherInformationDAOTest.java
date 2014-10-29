@@ -6,21 +6,15 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
 
-import net.canadensys.dataportal.occurrence.model.OccurrenceModel;
-import net.canadensys.dataportal.occurrence.model.OccurrenceRawModel;
 import net.canadensys.dataportal.occurrence.model.PublisherContactModel;
 import net.canadensys.dataportal.occurrence.model.PublisherInformationModel;
-import net.canadensys.query.QueryOperatorEnum;
-import net.canadensys.query.SearchQueryPart;
-import net.canadensys.query.TestSearchableFieldBuilder;
+import net.canadensys.dataportal.occurrence.model.ResourceModel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +31,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  * -Get generated id
  * -Load PublisherInformationModel from id
  * -Delete PublisherInformationModel
+ * -CRUD for PublisherContact and ResourceModel
  * 
  * @author Pedro Guimarães
  */
@@ -59,6 +54,11 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 	@Test
 	public void testSaveLoadDelete() {
 
+		// Clear previous data:
+		jdbcTemplate.update("DELETE FROM publisher_contact;");
+		jdbcTemplate.update("DELETE FROM resource_management;");
+		jdbcTemplate.update("DELETE FROM publisher_information;");
+		
 		// Test PublisherInformation model:
 		PublisherInformationModel testPublisherInformation = new PublisherInformationModel();
 		testPublisherInformation.setDescription("This is the lorem ipsum abstract");
@@ -76,25 +76,44 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 		testPublisherContact2.setEmail("a2@a2.com");
 		testPublisherContact2.setPublisherInformation(testPublisherInformation);
 		testPublisherInformation.addContact(testPublisherContact2);
+		
+		
+		// Add resource:
+		ResourceModel testResource1 = new ResourceModel();
+		testResource1.setName("Test resource 1");
+		testResource1.setRecord_count(0);
+		testResource1.setPublisherInformation(testPublisherInformation);
+		testPublisherInformation.addResource(testResource1);
+		
+		// Add resource:
+		ResourceModel testResource2 = new ResourceModel();
+		testResource2.setName("Test resource 2");
+		testResource2.setRecord_count(100);
+		testResource2.setPublisherInformation(testPublisherInformation);
+		testPublisherInformation.addResource(testResource2);
 
 		// Save information
 		assertTrue(publisherInformationDAO.save(testPublisherInformation));
 
 		// Fetch ids from saved objects:
 		Integer publisherInformationId = testPublisherInformation.getAuto_id();
+		
 		int contact1Id = testPublisherContact.getAuto_id();
 		int contact2Id = testPublisherContact2.getAuto_id();
+		
+		int resource1Id = testResource1.getId();
+		int resource2Id = testResource2.getId();
 
 		PublisherInformationModel loadedInformation = publisherInformationDAO.load(publisherInformationId);
 		assertEquals("This is the lorem ipsum abstract", loadedInformation.getDescription());
 		assertEquals("TitleTitleTitle", loadedInformation.getName());
 
 		// Test contacts load:
-		Set<PublisherContactModel> PublisherContacts = loadedInformation.getContacts();
+		Set<PublisherContactModel> publisherContacts = loadedInformation.getContacts();
 		PublisherContactModel loadedContact1 = null;
 		PublisherContactModel loadedContact2 = null;
 
-		for (PublisherContactModel contact : PublisherContacts) {
+		for (PublisherContactModel contact : publisherContacts) {
 			Integer autoId = contact.getAuto_id();
 			if (autoId == contact1Id) {
 				loadedContact1 = contact;
@@ -120,16 +139,54 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 		// Assert Publisher_information_fkey is being filled:
 		fkey = jdbcTemplate.queryForObject("SELECT publisher_information_fkey FROM publisher_contact WHERE name =\'Test Name 2\'", Integer.class);
 		assertEquals(fkey, publisherInformationId);
+		
+		// Test resources load:
+		Set<ResourceModel> resources = loadedInformation.getResources();
+		ResourceModel loadedResource1 = null;
+		ResourceModel loadedResource2 = null;
+
+		for (ResourceModel resource : resources) {
+			Integer id = resource.getId();
+			if (id == resource1Id) {
+				loadedResource1 = resource;
+			}
+			else if (id == resource2Id) {
+				loadedResource2 = resource;
+			}
+			else {
+				fail("Unknown resource for id: " + id);
+			}
+		}
+
+		assertEquals("Test resource 1", loadedResource1.getName());
+		assertEquals(new Integer(0), loadedResource1.getRecord_count());
+		assertEquals(publisherInformationId, loadedResource1.getPublisherInformation().getAuto_id());
+		// Assert Publisher_information_fkey is being filled:
+		Integer fkey1 = jdbcTemplate.queryForObject("SELECT publisher_information_fkey FROM resource_management WHERE name =\'Test resource 1\'", Integer.class);
+		assertEquals(fkey1, publisherInformationId);
+		
+		assertEquals("Test resource 2", loadedResource2.getName());
+		assertEquals(new Integer(100), loadedResource2.getRecord_count());
+		assertEquals(publisherInformationId, loadedResource2.getPublisherInformation().getAuto_id());
+		// Assert Publisher_information_fkey is being filled:
+		fkey1 = jdbcTemplate.queryForObject("SELECT publisher_information_fkey FROM resource_management WHERE name =\'Test resource 2\'", Integer.class);
+		assertEquals(fkey1, publisherInformationId);
 
 		// Test cascade deletion of information and all contacts after information deletion:
 		assertTrue(publisherInformationDAO.delete(loadedInformation));
 		// Assert information was deleted:
 		assertNull(publisherInformationDAO.load(publisherInformationId));
 
+		
 		// Assert contacts were also deleted
 		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM publisher_contact WHERE auto_id=" + contact1Id + " OR auto_id ="
 				+ contact2Id, Long.class);
 		assertEquals(0, contactCount.intValue());
+		
+		// Assert resource were !not! deleted
+		Long resourceCount = jdbcTemplate.queryForObject("SELECT count(*) FROM resource_management WHERE id=" + resource1Id + " OR id ="
+				+ resource2Id, Long.class);
+		assertTrue(resourceCount.intValue()==0);
 	}
 	
 	@Test
@@ -152,17 +209,23 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 		assertTrue(publisherInformationDAO.save(publisher1));
 		assertTrue(publisherInformationDAO.save(publisher2));
 		
-		List<PublisherInformationModel> loadedPublishers = publisherInformationDAO.loadAll();
+		List<PublisherInformationModel> loadedPublishers = publisherInformationDAO.loadPublishers();
 		assertTrue(publishers.equals(loadedPublishers));
 	}
 	
 	@Test
 	public void testLoadAllJDBC() {
 		jdbcTemplate.update("DELETE FROM publisher_information");
-		// add controlled rows
+		jdbcTemplate.update("DELETE FROM resource_management");
+		// add controlled publisher information rows
 		jdbcTemplate.update("INSERT INTO publisher_information (auto_id, name, description, phone, email) VALUES (1, 'Institution 1', 'The first institution', '123456789', 'mail@inst1.com')");
 		jdbcTemplate.update("INSERT INTO publisher_information (auto_id, name, description, phone, email) VALUES (2, 'Institution 2', 'The second institution', '987654321', 'mail@inst2.com')");
-		
+		// add resources related to the publisher_informaiton
+		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (1, 'Resource 1', 123456789, 1)");
+		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (2, 'Resource 2', 23489, 1)");
+		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (3, 'Resource 3', 290, 2)");
+		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (4, 'Resource 4', 89, 2)");
+		jdbcTemplate.update("INSERT INTO resource_management (auto_id, name, record_count, publisher_information_fkey) VALUES (5, 'Resource 5', 52089, 2)");
 		List<Map<String,Object>> results = jdbcTemplate.queryForList("SELECT * FROM PUBLISHER_INFORMATION");
 		assertEquals(results.size(), 2);
 		assertEquals(results.get(0).get("name"), "Institution 1");
