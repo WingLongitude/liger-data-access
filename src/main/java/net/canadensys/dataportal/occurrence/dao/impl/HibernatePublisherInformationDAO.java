@@ -30,10 +30,10 @@ public class HibernatePublisherInformationDAO implements PublisherInformationDAO
 
 	@Override
 	public List<PublisherInformationModel> loadPublishers() {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherInformationModel.class);
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherInformationModel.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return searchCriteria.list();
 	}
-	
+
 	@Override
 	public boolean save(PublisherInformationModel PublisherInformationModel) {
 		try {

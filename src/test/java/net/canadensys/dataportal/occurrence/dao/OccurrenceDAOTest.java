@@ -391,5 +391,4 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		Integer count = occurrenceDAO.getCountDistinct(searchCriteria, "locality");
 		assertEquals(3, count.intValue());
 	}
-
 }

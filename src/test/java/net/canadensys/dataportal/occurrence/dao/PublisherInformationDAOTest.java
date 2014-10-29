@@ -215,8 +215,9 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 	
 	@Test
 	public void testLoadAllJDBC() {
-		jdbcTemplate.update("DELETE FROM publisher_information");
 		jdbcTemplate.update("DELETE FROM resource_management");
+		jdbcTemplate.update("DELETE FROM publisher_information");
+		
 		// add controlled publisher information rows
 		jdbcTemplate.update("INSERT INTO publisher_information (auto_id, name, description, phone, email) VALUES (1, 'Institution 1', 'The first institution', '123456789', 'mail@inst1.com')");
 		jdbcTemplate.update("INSERT INTO publisher_information (auto_id, name, description, phone, email) VALUES (2, 'Institution 2', 'The second institution', '987654321', 'mail@inst2.com')");
