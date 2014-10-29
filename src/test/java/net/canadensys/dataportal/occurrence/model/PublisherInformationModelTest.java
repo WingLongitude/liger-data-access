@@ -28,7 +28,11 @@ public class PublisherInformationModelTest {
 		PublisherContactModel publisherContactModel = new PublisherContactModel();
 		publisherContactModel.setName("Contact Name");
 		publisherInformationModel.addContact(publisherContactModel);
-
+		
+		ResourceModel resourceModel = new ResourceModel();
+		resourceModel.setName("Resource 1");
+		publisherInformationModel.addResource(resourceModel);
+		
 		ObjectMapper om = new ObjectMapper();
 		try {
 			// serialize as json
@@ -37,12 +41,17 @@ public class PublisherInformationModelTest {
 			// read to object back from json string
 			PublisherInformationModel publisherInformationModelFromJson = om.readValue(json, PublisherInformationModel.class);
 			PublisherContactModel firstContactFromJson = publisherInformationModelFromJson.getContacts().iterator().next();
-
+			ResourceModel resourceFromJson = publisherInformationModelFromJson.getResources().iterator().next();
+					
 			assertEquals("Contact Name", firstContactFromJson.getName());
+			assertEquals("Resource 1", resourceFromJson.getName());
 
 			// check that the reference to 'parent' PublisherInformationModel is there
 			assertNotNull(firstContactFromJson.getPublisherInformation());
 			assertEquals("test Publisher name", firstContactFromJson.getPublisherInformation().getName());
+			
+			assertNotNull(resourceFromJson.getPublisherInformation());
+			assertEquals("test Publisher name", resourceFromJson.getPublisherInformation().getName());
 		}
 		catch (JsonProcessingException e) {
 			e.printStackTrace();

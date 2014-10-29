@@ -310,6 +310,7 @@ CREATE TABLE IF NOT EXISTS buffer.publisher_information
 	logo_url character varying(100),
 	decimallatitude DOUBLE PRECISION,
 	decimallongitude DOUBLE PRECISION,
+	record_count integer,
 	CONSTRAINT publisher_information_pkey PRIMARY KEY (auto_id)
 );
 

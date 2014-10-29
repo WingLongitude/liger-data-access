@@ -305,20 +305,6 @@ CREATE TABLE IF NOT EXISTS resource_contact
 	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS resource_management_id_seq;
-CREATE TABLE IF NOT EXISTS resource_management
-(
-  id integer DEFAULT nextval('resource_management_id_seq') NOT NULL,
-  name character varying(255),
-  sourcefileid character varying(50),
-  resource_uuid character varying(50),
-  archive_url character varying(255),
-  record_count integer,
-  resource_information_fkey integer references resource_information(auto_id),
-  CONSTRAINT resource_management_pkey PRIMARY KEY ( id ),
-  CONSTRAINT resource_management_source_file_id_key UNIQUE (sourcefileid)
-);
-
 /* Structure to save publisher information and contacts: */
 CREATE SEQUENCE IF NOT EXISTS publisher_information_id_seq;
 CREATE TABLE IF NOT EXISTS publisher_information
@@ -336,6 +322,7 @@ CREATE TABLE IF NOT EXISTS publisher_information
 	logo_url character varying(100),
 	decimallatitude DOUBLE PRECISION,
 	decimallongitude DOUBLE PRECISION,
+	record_count integer,
 	CONSTRAINT publisher_information_pkey PRIMARY KEY (auto_id)
 );
 
@@ -354,6 +341,21 @@ CREATE TABLE IF NOT EXISTS publisher_contact
 	email character varying(200),
 	publisher_information_fkey integer references publisher_information(auto_id),
 	CONSTRAINT publisher_contact_pkey PRIMARY KEY (auto_id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS resource_management_id_seq;
+CREATE TABLE IF NOT EXISTS resource_management
+(
+  id integer DEFAULT nextval('resource_management_id_seq') NOT NULL,
+  name character varying(255),
+  sourcefileid character varying(50),
+  resource_uuid character varying(50),
+  archive_url character varying(255),
+  record_count integer,
+  resource_information_fkey integer references resource_information(auto_id),
+  publisher_information_fkey integer references publisher_information(auto_id),
+  CONSTRAINT resource_management_pkey PRIMARY KEY ( id ),
+  CONSTRAINT resource_management_source_file_id_key UNIQUE (sourcefileid)
 );
 
 CREATE TABLE IF NOT EXISTS occurrence_extension
