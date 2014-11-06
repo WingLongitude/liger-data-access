@@ -39,8 +39,8 @@ public class ResourceDAOTest extends AbstractTransactionalJUnit4SpringContextTes
 		ResourceModel loadedModel = resourceDAO.load("test_sourcefileid");
 		assertEquals(id, loadedModel.getId().intValue());
 		assertEquals("test_sourcefileid", loadedModel.getSourcefileid());
-		
-		ResourceModel loadedById = resourceDAO.loadByAutoId(String.valueOf(id));
+
+		ResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);
 	}
 }
