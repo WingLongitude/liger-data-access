@@ -6,15 +6,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "resource_information")
@@ -45,8 +43,8 @@ public class ResourceInformationModel {
 	/**
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
-	@JsonManagedReference
-	@OneToMany(mappedBy = "resourceInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "resource_information_fkey", nullable = false)
 	private Set<ResourceContactModel> contacts;
 
 	public ResourceInformationModel() {
@@ -60,7 +58,6 @@ public class ResourceInformationModel {
 	 * @param contact
 	 */
 	public void addContact(ResourceContactModel contact) {
-		contact.setResourceInformation(this);
 		contacts.add(contact);
 	}
 

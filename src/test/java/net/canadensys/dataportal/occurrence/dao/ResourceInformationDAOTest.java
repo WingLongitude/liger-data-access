@@ -66,7 +66,6 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		ResourceContactModel testResourceContact2 = new ResourceContactModel();
 		testResourceContact2.setName("Test Name 2");
 		testResourceContact2.setEmail("a2@a2.com");
-		testResourceContact2.setResourceInformation(testResourceInformation);
 		testResourceInformation.addContact(testResourceContact2);
 
 		// Save information
@@ -74,8 +73,12 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 
 		// Fetch ids from saved objects:
 		Integer resourceInformationId = testResourceInformation.getAuto_id();
+		assertTrue(resourceInformationId != null && resourceInformationId.intValue() >= 0);
 		int contact1Id = testResourceContact.getAuto_id();
 		int contact2Id = testResourceContact2.getAuto_id();
+
+		assertTrue(contact1Id >= 0);
+		assertTrue(contact2Id != contact1Id);
 
 		ResourceInformationModel loadedInformation = resourceInformationDAO.load(resource_uuid);
 		assertEquals("This is the lorem ipsum abstract", loadedInformation.get_abstract());
@@ -101,14 +104,14 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 
 		assertEquals("Test Name", loadedContact1.getName());
 		assertEquals("a@a.com", loadedContact1.getEmail());
-		assertEquals(resourceInformationId, loadedContact1.getResourceInformation().getAuto_id());
+
 		// Assert resource_information_fkey is being filled:
 		Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name\'", Integer.class);
 		assertEquals(fkey, resourceInformationId);
 
 		assertEquals("Test Name 2", loadedContact2.getName());
 		assertEquals("a2@a2.com", loadedContact2.getEmail());
-		assertEquals(resourceInformationId, loadedContact2.getResourceInformation().getAuto_id());
+
 		// Assert resource_information_fkey is being filled:
 		fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name 2\'", Integer.class);
 		assertEquals(fkey, resourceInformationId);

@@ -4,12 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Model of the contact of a specific resource.
@@ -38,11 +34,6 @@ public class ResourceContactModel {
 	private String phone;
 	private String email;
 	private String contact_type;
-
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "resource_information_fkey")
-	private ResourceInformationModel resourceInformation;
 
 	/** Getters and setters: **/
 
@@ -156,13 +147,5 @@ public class ResourceContactModel {
 
 	public void setContact_type(String contact_type) {
 		this.contact_type = contact_type;
-	}
-
-	public ResourceInformationModel getResourceInformation() {
-		return resourceInformation;
-	}
-
-	public void setResourceInformation(ResourceInformationModel resourceInformation) {
-		this.resourceInformation = resourceInformation;
 	}
 }
