@@ -93,6 +93,12 @@ public class OccurrenceModel {
 
 	// name of the file that was read
 	private String sourcefileid;
+	
+	// name of the institution for filtering
+	private String publishername;
+	
+	// name of the resource for filtering
+	private String resourcename;
 
 	public int getAuto_id() {
 		return auto_id;
@@ -548,5 +554,21 @@ public class OccurrenceModel {
 
 	public void setSourcefileid(String sourcefileid) {
 		this.sourcefileid = sourcefileid;
+	}
+
+	public String getPublishername() {
+		return publishername;
+	}
+
+	public void setPublishername(String publishername) {
+		this.publishername = publishername;
+	}
+
+	public String getResourcename() {
+		return resourcename;
+	}
+
+	public void setResourcename(String resourcename) {
+		this.resourcename = resourcename;
 	}
 }

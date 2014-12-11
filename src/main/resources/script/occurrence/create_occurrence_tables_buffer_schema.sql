@@ -1,5 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS buffer;
-CREATE TABLE  buffer.occurrence (
+CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
 associatedmedia TEXT,
 associatedsequences TEXT,
@@ -55,6 +55,8 @@ hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
 sourcefileid VARCHAR(50),
+publishername character varying (100),
+resourcename character varying (255),
 dwcaid VARCHAR(75),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
@@ -266,7 +268,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_information
 	citation character varying(200),
 	hierarchy_level character varying(100),
 	resource_logo_url character varying(150),
-	parent_collection_identifier character varying(50),
+	parent_collection_identifier character varying(100),
 	collection_identifier character varying(150),
 	collection_name character varying(150),
 	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
@@ -280,12 +282,12 @@ CREATE TABLE IF NOT EXISTS buffer.resource_contact
 	resource_name character varying(100),
 	name character varying(100),
 	position_name character varying(100),
-	organization_name character varying(100),
+	organization_name character varying(150),
 	address text,
 	city character varying(100),
 	administrative_area character varying(100),
 	country character varying(100),
-	postal_code character varying(10),
+	postal_code character varying(50),
 	phone character varying(20),
 	email character varying(200),
 	contact_type character varying(20),

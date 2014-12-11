@@ -27,7 +27,7 @@ public interface ResourceDAO {
 	 * @param auto_id
 	 * @return ResourceModel or null if nothing is found
 	 */
-	public ResourceModel load(Integer auto_id);
+	public ResourceModel loadByAutoId(Integer auto_id);
 
 	/**
 	 * Save a ResourceModel

@@ -49,7 +49,7 @@ public class HibernateResourceDAO implements ResourceDAO {
 	}
 
 	@Override
-	public ResourceModel load(Integer auto_id) {
+	public ResourceModel loadByAutoId(Integer auto_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
 		searchCriteria.add(Restrictions.eq("id", auto_id));
 		return (ResourceModel) searchCriteria.uniqueResult();
