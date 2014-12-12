@@ -14,20 +14,20 @@ public interface ResourceDAO {
 	public List<ResourceModel> loadResources();
 
 	/**
-	 * Load a ResourceModel from a resource_uuid
-	 * 
-	 * @param resource_uuid
-	 * @return ResourceModel or null if nothing is found
-	 */
-	public ResourceModel load(String resource_uuid);
-
-	/**
 	 * Load a ResourceModel from its auto_id
 	 * 
 	 * @param auto_id
 	 * @return ResourceModel or null if nothing is found
 	 */
-	public ResourceModel loadByAutoId(Integer auto_id);
+	public ResourceModel load(Integer auto_id);
+	
+	/**
+	 * Load a ResourceModel from a resource_uuid
+	 * 
+	 * @param resource_uuid
+	 * @return ResourceModel or null if nothing is found
+	 */
+	public ResourceModel loadBySourceFileId(String resource_uuid);
 
 	/**
 	 * Save a ResourceModel

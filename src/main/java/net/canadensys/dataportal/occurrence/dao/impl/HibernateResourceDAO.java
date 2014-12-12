@@ -30,6 +30,20 @@ public class HibernateResourceDAO implements ResourceDAO {
 	}
 
 	@Override
+	public ResourceModel load(Integer auto_id) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
+		searchCriteria.add(Restrictions.eq("id", auto_id));
+		return (ResourceModel) searchCriteria.uniqueResult();
+	}
+
+	@Override
+	public ResourceModel loadBySourceFileId(String sourceFileId) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
+		return (ResourceModel) searchCriteria.uniqueResult();
+	}
+
+	@Override
 	public boolean save(ResourceModel resourceModel) {
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(resourceModel);
@@ -39,20 +53,6 @@ public class HibernateResourceDAO implements ResourceDAO {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public ResourceModel load(String sourceFileId) {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
-		return (ResourceModel) searchCriteria.uniqueResult();
-	}
-
-	@Override
-	public ResourceModel loadByAutoId(Integer auto_id) {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceModel.class);
-		searchCriteria.add(Restrictions.eq("id", auto_id));
-		return (ResourceModel) searchCriteria.uniqueResult();
 	}
 
 	public SessionFactory getSessionFactory() {
