@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS contact
 	name TEXT,
 	position_name TEXT,
 	organization_name TEXT,
-	address text,
+	address TEXT,
 	city TEXT,
 	administrative_area TEXT,
 	country TEXT,
@@ -325,8 +325,8 @@ CREATE TABLE IF NOT EXISTS contact
 	email TEXT,
 	contact_type TEXT,
 	role TEXT,
-	resource_information_fkey integer references resource_information(auto_id),
 	publisher_information_fkey integer references publisher_information(auto_id),
+	resource_information_fkey integer references resource_information(auto_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 

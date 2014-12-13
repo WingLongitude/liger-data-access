@@ -19,6 +19,7 @@ public class ContactModel {
 
 	public static final String CONTACT_TYPE_RESOURCE = "resource"; 
 	public static final String CONTACT_TYPE_PUBLISHER = "publisher";
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_id_seq")
@@ -34,8 +35,11 @@ public class ContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
+	// Tells if the contact is related to publisher or resource: 
 	private String contact_type;
+	// The role of the contact within its context (e.g. metadata_provider, resource_creator, agent, contact):
 	private String role;
+	
 	/** Getters and setters: **/
 
 	public Integer getAuto_id() {

@@ -74,9 +74,7 @@ public class PublisherInformationDAOTest extends AbstractTransactionalJUnit4Spri
 		ContactModel testPublisherContact2 = new ContactModel();
 		testPublisherContact2.setName("Test Name 2");
 		testPublisherContact2.setEmail("a2@a2.com");
-//		testPublisherContact2.setPublisherInformation(testPublisherInformation);
 		testPublisherInformation.addContact(testPublisherContact2);
-		
 		
 		// Add resource:
 		ResourceModel testResource1 = new ResourceModel();

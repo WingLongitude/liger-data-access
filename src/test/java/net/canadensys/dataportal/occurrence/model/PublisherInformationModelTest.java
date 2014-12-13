@@ -46,6 +46,7 @@ public class PublisherInformationModelTest {
 			assertEquals("Contact Name", firstContactFromJson.getName());
 			assertEquals("Resource 1", resourceFromJson.getName());
 
+			// check that the reference to 'parent' PublisherInformationModel is there
 			assertNotNull(resourceFromJson.getPublisherInformation());
 			assertEquals("test Publisher name", resourceFromJson.getPublisherInformation().getName());
 		}

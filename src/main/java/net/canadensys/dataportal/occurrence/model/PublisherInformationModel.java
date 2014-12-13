@@ -57,8 +57,9 @@ public class PublisherInformationModel {
 	 * Class constructor
 	 */
 	public PublisherInformationModel() {
-		contacts = new HashSet<ContactModel>();
+		// Initialize data structures:
 		resources = new HashSet<ResourceModel>();
+		contacts = new HashSet<ContactModel>();
 	}
 
 	/**
@@ -68,6 +69,7 @@ public class PublisherInformationModel {
 	 * @param contact
 	 */
 	public void addContact(ContactModel contact) {
+		// Set contact type and parent foreigh key to publisher_information:
 		contact.setContact_type(ContactModel.CONTACT_TYPE_PUBLISHER);
 		contacts.add(contact);
 	}

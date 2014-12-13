@@ -20,9 +20,9 @@
 				<value>net.canadensys.dataportal.occurrence.model.OccurrenceModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.UniqueValuesModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.DownloadLogModel</value>
+				<value>net.canadensys.dataportal.occurrence.model.ContactModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.ResourceInformationModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.PublisherInformationModel</value>
-				<value>net.canadensys.dataportal.occurrence.model.ContactModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.ImportLogModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.ResourceModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.OccurrenceExtensionModel</value>
