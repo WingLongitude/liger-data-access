@@ -9,7 +9,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import net.canadensys.dataportal.occurrence.model.ResourceContactModel;
+import net.canadensys.dataportal.occurrence.model.ContactModel;
 import net.canadensys.dataportal.occurrence.model.ResourceInformationModel;
 
 import org.junit.Test;
@@ -57,13 +57,13 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		testResourceInformation.setResource_uuid(resource_uuid);
 
 		// Create contact:
-		ResourceContactModel testResourceContact = new ResourceContactModel();
+		ContactModel testResourceContact = new ContactModel();
 		testResourceContact.setName("Test Name");
 		testResourceContact.setEmail("a@a.com");
 		testResourceInformation.addContact(testResourceContact);
 
 		// Add other contact
-		ResourceContactModel testResourceContact2 = new ResourceContactModel();
+		ContactModel testResourceContact2 = new ContactModel();
 		testResourceContact2.setName("Test Name 2");
 		testResourceContact2.setEmail("a2@a2.com");
 		testResourceInformation.addContact(testResourceContact2);
@@ -85,11 +85,11 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		assertEquals("TitleTitleTitle", loadedInformation.getTitle());
 
 		// Test contacts load:
-		Set<ResourceContactModel> resourceContacts = loadedInformation.getContacts();
-		ResourceContactModel loadedContact1 = null;
-		ResourceContactModel loadedContact2 = null;
+		Set<ContactModel> resourceContacts = loadedInformation.getContacts();
+		ContactModel loadedContact1 = null;
+		ContactModel loadedContact2 = null;
 
-		for (ResourceContactModel contact : resourceContacts) {
+		for (ContactModel contact : resourceContacts) {
 			Integer autoId = contact.getAuto_id();
 			if (autoId == contact1Id) {
 				loadedContact1 = contact;
@@ -106,14 +106,14 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		assertEquals("a@a.com", loadedContact1.getEmail());
 
 		// Assert resource_information_fkey is being filled:
-		Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name\'", Integer.class);
+		Integer fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM contact WHERE name =\'Test Name\'", Integer.class);
 		assertEquals(fkey, resourceInformationId);
 
 		assertEquals("Test Name 2", loadedContact2.getName());
 		assertEquals("a2@a2.com", loadedContact2.getEmail());
 
 		// Assert resource_information_fkey is being filled:
-		fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM resource_contact WHERE name =\'Test Name 2\'", Integer.class);
+		fkey = jdbcTemplate.queryForObject("SELECT resource_information_fkey FROM contact WHERE name =\'Test Name 2\'", Integer.class);
 		assertEquals(fkey, resourceInformationId);
 
 		// Test cascade deletion of information and all contacts after information deletion:
@@ -122,7 +122,7 @@ public class ResourceInformationDAOTest extends AbstractTransactionalJUnit4Sprin
 		assertNull(resourceInformationDAO.load(resourceInformationId));
 
 		// Assert contacts were also deleted
-		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM resource_contact WHERE auto_id=" + contact1Id + " OR auto_id ="
+		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM contact WHERE auto_id=" + contact1Id + " OR auto_id ="
 				+ contact2Id, Long.class);
 		assertEquals(0, contactCount.intValue());
 	}

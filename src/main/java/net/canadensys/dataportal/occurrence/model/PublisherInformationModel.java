@@ -41,9 +41,8 @@ public class PublisherInformationModel {
 	/**
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
-	@JsonManagedReference
-	@OneToMany(mappedBy = "publisherInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<PublisherContactModel> contacts;
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	private Set<ContactModel> contacts;
 	
 	/**
 	 * FetchType.EAGER will make resources be always loaded. TODO: Add deepLoad condition to load() in DAO
@@ -56,18 +55,20 @@ public class PublisherInformationModel {
 	 * Class constructor
 	 */
 	public PublisherInformationModel() {
-		contacts = new HashSet<PublisherContactModel>();
+		// Initialize data structures:
 		resources = new HashSet<ResourceModel>();
+		contacts = new HashSet<ContactModel>();
 	}
 
 	/**
-	 * Add a publisherContactModel to the contact list.
+	 * Add a ContactModel to the contact list.
 	 * The reference to this publisherInformationModel instance will be set on the provided contact.
 	 * 
 	 * @param contact
 	 */
-	public void addContact(PublisherContactModel contact) {
-		contact.setPublisherInformation(this);
+	public void addContact(ContactModel contact) {
+		// Set contact type and parent foreigh key to publisher_information:
+		contact.setContact_type(ContactModel.CONTACT_TYPE_PUBLISHER);
 		contacts.add(contact);
 	}
 	
@@ -93,17 +94,17 @@ public class PublisherInformationModel {
 		this.auto_id = auto_id;
 	}
 
-	public Set<PublisherContactModel> getContacts() {
+	public Set<ContactModel> getContacts() {
 		return contacts;
 	}
 
 	/**
 	 * Contact list setter mainly used for Java Beans compliance.
-	 * If you want to add contact, consider using addContact(publisherContactModel)
+	 * If you want to add contact, consider using addContact(ContactModel)
 	 * 
 	 * @param contacts
 	 */
-	public void setContacts(Set<PublisherContactModel> contacts) {
+	public void setContacts(Set<ContactModel> contacts) {
 		this.contacts = contacts;
 	}
 

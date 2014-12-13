@@ -25,7 +25,7 @@ public class PublisherInformationModelTest {
 		PublisherInformationModel publisherInformationModel = new PublisherInformationModel();
 		publisherInformationModel.setName("test Publisher name");
 
-		PublisherContactModel publisherContactModel = new PublisherContactModel();
+		ContactModel publisherContactModel = new ContactModel();
 		publisherContactModel.setName("Contact Name");
 		publisherInformationModel.addContact(publisherContactModel);
 		
@@ -40,16 +40,13 @@ public class PublisherInformationModelTest {
 
 			// read to object back from json string
 			PublisherInformationModel publisherInformationModelFromJson = om.readValue(json, PublisherInformationModel.class);
-			PublisherContactModel firstContactFromJson = publisherInformationModelFromJson.getContacts().iterator().next();
+			ContactModel firstContactFromJson = publisherInformationModelFromJson.getContacts().iterator().next();
 			ResourceModel resourceFromJson = publisherInformationModelFromJson.getResources().iterator().next();
 					
 			assertEquals("Contact Name", firstContactFromJson.getName());
 			assertEquals("Resource 1", resourceFromJson.getName());
 
 			// check that the reference to 'parent' PublisherInformationModel is there
-			assertNotNull(firstContactFromJson.getPublisherInformation());
-			assertEquals("test Publisher name", firstContactFromJson.getPublisherInformation().getName());
-			
 			assertNotNull(resourceFromJson.getPublisherInformation());
 			assertEquals("test Publisher name", resourceFromJson.getPublisherInformation().getName());
 		}

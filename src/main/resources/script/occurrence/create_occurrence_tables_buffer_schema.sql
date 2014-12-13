@@ -251,6 +251,7 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
   CONSTRAINT download_log_pkey PRIMARY KEY (id )
 );
 
+/* Structure to persist resource eml information */
 CREATE SEQUENCE IF NOT EXISTS buffer.resource_information_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.resource_information
 (
@@ -274,28 +275,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_information
 	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.resource_contact_id_seq;
-CREATE TABLE IF NOT EXISTS buffer.resource_contact
-(
-	auto_id integer DEFAULT nextval('buffer.resource_contact_id_seq') NOT NULL,
-	resource_uuid TEXT,
-	resource_name TEXT,
-	name TEXT,
-	position_name TEXT,
-	organization_name TEXT,
-	address TEXT,
-	city TEXT,
-	administrative_area TEXT,
-	country TEXT,
-	postal_code TEXT,
-	phone TEXT,
-	email TEXT,
-	contact_type TEXT,
-	resource_information_fkey integer references buffer.resource_information(auto_id),
-	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
-);
-
-/* Structure to save publisher information and contacts: */
+/* Structure to persist publisher information */
 CREATE SEQUENCE IF NOT EXISTS buffer.publisher_information_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.publisher_information
 (
@@ -316,12 +296,14 @@ CREATE TABLE IF NOT EXISTS buffer.publisher_information
 	CONSTRAINT publisher_information_pkey PRIMARY KEY (auto_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.publisher_contact_id_seq;
-CREATE TABLE IF NOT EXISTS buffer.publisher_contact
+/* Structure to persist publisher information and contacts: */
+CREATE SEQUENCE IF NOT EXISTS buffer.contact_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.contact
 (
-	auto_id integer DEFAULT nextval('buffer.publisher_contact_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('buffer.contact_id_seq') NOT NULL,
 	name TEXT,
 	position_name TEXT,
+	organization_name TEXT,
 	address TEXT,
 	city TEXT,
 	administrative_area TEXT,
@@ -329,8 +311,11 @@ CREATE TABLE IF NOT EXISTS buffer.publisher_contact
 	postal_code TEXT,
 	phone TEXT,
 	email TEXT,
-	publisher_information_fkey integer references buffer.publisher_information(auto_id),
-	CONSTRAINT publisher_contact_pkey PRIMARY KEY (auto_id)
+	contact_type TEXT,
+	role TEXT,
+	publisher_information_fkey integer references publisher_information(auto_id),
+	resource_information_fkey integer references resource_information(auto_id),
+	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_extension_id_seq;
