@@ -4,29 +4,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
- * Model of the contact of a specific Publisher.
+ * Model of the contact of a specific resource.
  * 
- * @author Pedro Guimarães
+ * @author Christian Gendreau, Pedro Guimarães
  */
 @Entity
-@Table(name = "publisher_contact")
-@SequenceGenerator(name = "publisher_contact_id_seq", sequenceName = "publisher_contact_id_seq", allocationSize = 1)
-public class PublisherContactModel {
+@Table(name = "contact")
+@SequenceGenerator(name = "contact_id_seq", sequenceName = "contact_id_seq", allocationSize = 1)
+public class ContactModel {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisher_contact_id_seq")
-	private Integer auto_id;
+	public static final String CONTACT_TYPE_RESOURCE = "resource"; 
+	public static final String CONTACT_TYPE_PUBLISHER = "publisher";
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_id_seq")
+	private Integer auto_id;
+
 	private String name;
 	private String position_name;
+	private String organization_name;
 	private String address;
 	private String city;
 	private String administrative_area;
@@ -34,12 +34,8 @@ public class PublisherContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "publisher_information_fkey")
-	private PublisherInformationModel publisherInformation;
-
+	private String contact_type;
+	private String role;
 	/** Getters and setters: **/
 
 	public Integer getAuto_id() {
@@ -48,6 +44,30 @@ public class PublisherContactModel {
 
 	public void setAuto_id(Integer auto_id) {
 		this.auto_id = auto_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPosition_name() {
+		return position_name;
+	}
+
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
+
+	public String getOrganization_name() {
+		return organization_name;
+	}
+
+	public void setOrganization_name(String organization_name) {
+		this.organization_name = organization_name;
 	}
 
 	public String getAddress() {
@@ -106,27 +126,19 @@ public class PublisherContactModel {
 		this.email = email;
 	}
 
-	public PublisherInformationModel getPublisherInformation() {
-		return publisherInformation;
+	public String getContact_type() {
+		return contact_type;
 	}
 
-	public void setPublisherInformation(PublisherInformationModel PublisherInformation) {
-		this.publisherInformation = PublisherInformation;
+	public void setContact_type(String contact_type) {
+		this.contact_type = contact_type;
 	}
 
-	public String getName() {
-		return name;
+	public String getRole() {
+		return role;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPosition_name() {
-		return position_name;
-	}
-
-	public void setPosition_name(String position_name) {
-		this.position_name = position_name;
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

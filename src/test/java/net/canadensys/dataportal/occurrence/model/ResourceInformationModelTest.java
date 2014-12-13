@@ -24,7 +24,7 @@ public class ResourceInformationModelTest {
 		ResourceInformationModel resourceInformationModel = new ResourceInformationModel();
 		resourceInformationModel.setResource_name("test resource name");
 
-		ResourceContactModel resourceContactModel = new ResourceContactModel();
+		ContactModel resourceContactModel = new ContactModel();
 		resourceContactModel.setName("Contact Name");
 		resourceInformationModel.addContact(resourceContactModel);
 
@@ -35,7 +35,7 @@ public class ResourceInformationModelTest {
 
 			// read to object back from json string
 			ResourceInformationModel resourceInformationModelFromJson = om.readValue(json, ResourceInformationModel.class);
-			ResourceContactModel firstContactFromJson = resourceInformationModelFromJson.getContacts().iterator().next();
+			ContactModel firstContactFromJson = resourceInformationModelFromJson.getContacts().iterator().next();
 
 			assertEquals("Contact Name", firstContactFromJson.getName());
 

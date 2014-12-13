@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -41,9 +42,9 @@ public class PublisherInformationModel {
 	/**
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
-	@JsonManagedReference
-	@OneToMany(mappedBy = "publisherInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<PublisherContactModel> contacts;
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "publisher_information_fkey", nullable = true)
+	private Set<ContactModel> contacts;
 	
 	/**
 	 * FetchType.EAGER will make resources be always loaded. TODO: Add deepLoad condition to load() in DAO
@@ -56,18 +57,18 @@ public class PublisherInformationModel {
 	 * Class constructor
 	 */
 	public PublisherInformationModel() {
-		contacts = new HashSet<PublisherContactModel>();
+		contacts = new HashSet<ContactModel>();
 		resources = new HashSet<ResourceModel>();
 	}
 
 	/**
-	 * Add a publisherContactModel to the contact list.
+	 * Add a ContactModel to the contact list.
 	 * The reference to this publisherInformationModel instance will be set on the provided contact.
 	 * 
 	 * @param contact
 	 */
-	public void addContact(PublisherContactModel contact) {
-		contact.setPublisherInformation(this);
+	public void addContact(ContactModel contact) {
+		contact.setContact_type(ContactModel.CONTACT_TYPE_PUBLISHER);
 		contacts.add(contact);
 	}
 	
@@ -93,17 +94,17 @@ public class PublisherInformationModel {
 		this.auto_id = auto_id;
 	}
 
-	public Set<PublisherContactModel> getContacts() {
+	public Set<ContactModel> getContacts() {
 		return contacts;
 	}
 
 	/**
 	 * Contact list setter mainly used for Java Beans compliance.
-	 * If you want to add contact, consider using addContact(publisherContactModel)
+	 * If you want to add contact, consider using addContact(ContactModel)
 	 * 
 	 * @param contacts
 	 */
-	public void setContacts(Set<PublisherContactModel> contacts) {
+	public void setContacts(Set<ContactModel> contacts) {
 		this.contacts = contacts;
 	}
 

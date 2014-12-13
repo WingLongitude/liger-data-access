@@ -45,11 +45,11 @@ public class ResourceInformationModel {
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "resource_information_fkey", nullable = false)
-	private Set<ResourceContactModel> contacts;
+	@JoinColumn(name = "resource_information_fkey", nullable = true)
+	private Set<ContactModel> contacts;
 
 	public ResourceInformationModel() {
-		contacts = new HashSet<ResourceContactModel>();
+		contacts = new HashSet<ContactModel>();
 	}
 
 	/**
@@ -58,7 +58,8 @@ public class ResourceInformationModel {
 	 * 
 	 * @param contact
 	 */
-	public void addContact(ResourceContactModel contact) {
+	public void addContact(ContactModel contact) {
+		contact.setContact_type(ContactModel.CONTACT_TYPE_RESOURCE);
 		contacts.add(contact);
 	}
 
@@ -200,7 +201,7 @@ public class ResourceInformationModel {
 		this.collection_name = collection_name;
 	}
 
-	public Set<ResourceContactModel> getContacts() {
+	public Set<ContactModel> getContacts() {
 		return contacts;
 	}
 
@@ -210,7 +211,7 @@ public class ResourceInformationModel {
 	 * 
 	 * @param contacts
 	 */
-	public void setContacts(Set<ResourceContactModel> contacts) {
+	public void setContacts(Set<ContactModel> contacts) {
 		this.contacts = contacts;
 	}
 }
