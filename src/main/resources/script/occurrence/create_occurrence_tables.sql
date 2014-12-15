@@ -264,10 +264,10 @@ CREATE TABLE IF NOT EXISTS import_log
 );
 
 /* Structure to persist resource metadata information: */
-CREATE SEQUENCE IF NOT EXISTS resource_information_id_seq;
-CREATE TABLE IF NOT EXISTS resource_information
+CREATE SEQUENCE IF NOT EXISTS resource_metadata_id_seq;
+CREATE TABLE IF NOT EXISTS resource_metadata
 (
-	auto_id integer DEFAULT nextval('resource_information_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('resource_metadata_id_seq') NOT NULL,
 	resource_uuid TEXT,
 	resource_name TEXT,
 	alternate_identifier TEXT,
@@ -284,14 +284,14 @@ CREATE TABLE IF NOT EXISTS resource_information
 	parent_collection_identifier TEXT,
 	collection_identifier TEXT,
 	collection_name TEXT,
-	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
+	CONSTRAINT resource_metadata_pkey PRIMARY KEY (auto_id)
 );
 
 /* Structure to persist publisher information: */
-CREATE SEQUENCE IF NOT EXISTS publisher_information_id_seq;
-CREATE TABLE IF NOT EXISTS publisher_information
+CREATE SEQUENCE IF NOT EXISTS publisher_id_seq;
+CREATE TABLE IF NOT EXISTS publisher
 (
-	auto_id integer DEFAULT nextval('publisher_information_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('publisher_id_seq') NOT NULL,
 	name TEXT,
 	description TEXT,
 	address TEXT,
@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS publisher_information
 	decimallatitude DOUBLE PRECISION,
 	decimallongitude DOUBLE PRECISION,
 	record_count integer,
-	CONSTRAINT publisher_information_pkey PRIMARY KEY (auto_id)
+	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
 );
 
 /* Structure to persist contacts information: */
@@ -324,24 +324,24 @@ CREATE TABLE IF NOT EXISTS contact
 	phone TEXT,
 	email TEXT,
 	role TEXT,
-	publisher_information_fkey integer references publisher_information(auto_id),
-	resource_information_fkey integer references resource_information(auto_id),
+	publisher_fkey integer references publisher(auto_id),
+	resource_metadata_fkey integer references resource_metadata(auto_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS resource_management_id_seq;
-CREATE TABLE IF NOT EXISTS resource_management
+CREATE SEQUENCE IF NOT EXISTS dwca_resource_id_seq;
+CREATE TABLE IF NOT EXISTS dwca_resource
 (
-  id integer DEFAULT nextval('resource_management_id_seq') NOT NULL,
+  id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
   name TEXT,
   sourcefileid character varying(255),
   resource_uuid TEXT,
   archive_url TEXT,
   record_count integer,
-  resource_information_fkey integer references resource_information(auto_id),
-  publisher_information_fkey integer references publisher_information(auto_id),
-  CONSTRAINT resource_management_pkey PRIMARY KEY ( id ),
-  CONSTRAINT resource_management_source_file_id_key UNIQUE (sourcefileid)
+  resource_metadata_fkey integer references resource_metadata(auto_id),
+  publisher_fkey integer references publisher(auto_id),
+  CONSTRAINT dwca_resource_pkey PRIMARY KEY ( id ),
+  CONSTRAINT dwca_resource_source_file_id_key UNIQUE (sourcefileid)
 );
 
 CREATE TABLE IF NOT EXISTS occurrence_extension
@@ -357,6 +357,6 @@ CREATE TABLE IF NOT EXISTS occurrence_extension
 );
 
 CREATE OR REPLACE VIEW complete_occurrence_view AS 
- SELECT occ.catalognumber AS p_catalognumber, occ.collectioncode AS p_collectioncode, occ.continent AS p_continent, occ.country AS p_country, occ.datasetname AS p_datasetname, occ.family AS p_family, occ.habitat AS p_habitat, occ.kingdom AS p_kingdom, occ.locality AS p_locality, occ._order AS p_order, occ.recordedby AS p_recordedby, occ.recordnumber AS p_recordnumber, occ.scientificname AS p_scientificname, occ.stateprovince AS p_stateprovince, occ.taxonrank AS p_taxonrank, occ.verbatimelevation AS p_verbatimelevation, occ.minimumelevationinmeters AS p_minimumelevationinmeters, occ.maximumelevationinmeters AS p_maximumelevationinmeters, occ.decimallatitude AS p_decimallatitude, occ.decimallongitude AS p_decimallongitude, occ.eventdate AS p_eventdate, occ.starteventdate AS p_starteventdate, occ.endeventdate AS p_endeventdate, occ.sday AS p_sday, occ.smonth AS p_smonth, occ.syear AS p_syear, occ.eday AS p_eday, occ.emonth AS p_emonth, occ.eyear AS p_eyear, occ.phylum AS p_phylum, occ._class AS p_class, occ.genus AS p_genus, occ.specificepithet AS p_specificepithet, occ.infraspecificepithet AS p_infraspecificepithet, occ.associatedmedia AS p_associatedmedia, occ.scientificnameauthorship AS p_scientificnameauthorship, occ.institutioncode AS p_institutioncode, occ.hascoordinates AS p_hascoordinates, occ.hasmedia AS p_hasmedia, occ.rawscientificname AS p_rawscientificname, occ._references AS p_reference, occ.county AS p_county, occ.municipality AS p_municipality, occ.decade AS p_decade, occ.averagealtituderounded AS p_averagealtituderounded, occ.dwcaid AS p_dwcaid, raw.acceptednameusage, raw.associatedmedia, raw.associatedoccurrences, raw.associatedreferences, raw.associatedsequences, raw.associatedtaxa, raw.basisofrecord, raw.behavior, raw.bibliographiccitation, raw.catalognumber, raw.collectioncode, raw.collectionid, raw.continent, raw.coordinateuncertaintyinmeters, raw.country, raw.countrycode, raw.county, raw.datasetid, raw.datasetname, raw.dateidentified, raw.decimallatitude, raw.decimallongitude, raw.disposition, raw.dynamicproperties, raw.establishmentmeans, raw.eventdate, raw.eventremarks, raw.eventtime, raw.family, raw.footprintwkt, raw.genus, raw.geodeticdatum, raw.georeferencedby, raw.georeferenceprotocol, raw.georeferenceremarks, raw.georeferencesources, raw.georeferenceverificationstatus, raw.habitat, raw.higherclassification, raw.identificationqualifier, raw.identificationremarks, raw.identifiedby, raw.individualcount, raw.infraspecificepithet, raw.institutioncode, raw.kingdom, raw.language, raw.lifestage, raw.locality, raw.locationremarks, raw.maximumelevationinmeters, raw.minimumelevationinmeters, raw.modified, raw.municipality, raw.nomenclaturalcode, raw.occurrenceid, raw.occurrenceremarks, raw.othercatalognumbers, raw.ownerinstitutioncode, raw.phylum, raw.preparations, raw.previousidentifications, raw.recordedby, raw.recordnumber, raw.reproductivecondition, raw.rights, raw.rightsholder, raw.samplingprotocol, raw.scientificname, raw.scientificnameauthorship, raw.sex, raw.specificepithet, raw.stateprovince, raw.taxonrank, raw.taxonremarks, raw.type, raw.typestatus, raw.verbatimcoordinates, raw.verbatimcoordinatesystem, raw.verbatimdepth, raw.verbatimelevation, raw.verbatimeventdate, raw.verbatimlatitude, raw.verbatimlongitude, raw.verbatimsrs, raw.waterbody 
+SELECT occ.catalognumber AS p_catalognumber, occ.collectioncode AS p_collectioncode, occ.continent AS p_continent, occ.country AS p_country, occ.datasetname AS p_datasetname, occ.family AS p_family, occ.habitat AS p_habitat, occ.kingdom AS p_kingdom, occ.locality AS p_locality, occ._order AS p_order, occ.recordedby AS p_recordedby, occ.recordnumber AS p_recordnumber, occ.scientificname AS p_scientificname, occ.stateprovince AS p_stateprovince, occ.taxonrank AS p_taxonrank, occ.verbatimelevation AS p_verbatimelevation, occ.minimumelevationinmeters AS p_minimumelevationinmeters, occ.maximumelevationinmeters AS p_maximumelevationinmeters, occ.decimallatitude AS p_decimallatitude, occ.decimallongitude AS p_decimallongitude, occ.eventdate AS p_eventdate, occ.starteventdate AS p_starteventdate, occ.endeventdate AS p_endeventdate, occ.sday AS p_sday, occ.smonth AS p_smonth, occ.syear AS p_syear, occ.eday AS p_eday, occ.emonth AS p_emonth, occ.eyear AS p_eyear, occ.phylum AS p_phylum, occ._class AS p_class, occ.genus AS p_genus, occ.specificepithet AS p_specificepithet, occ.infraspecificepithet AS p_infraspecificepithet, occ.associatedmedia AS p_associatedmedia, occ.scientificnameauthorship AS p_scientificnameauthorship, occ.institutioncode AS p_institutioncode, occ.hascoordinates AS p_hascoordinates, occ.hasmedia AS p_hasmedia, occ.rawscientificname AS p_rawscientificname, occ._references AS p_reference, occ.county AS p_county, occ.municipality AS p_municipality, occ.decade AS p_decade, occ.averagealtituderounded AS p_averagealtituderounded, occ.dwcaid AS p_dwcaid, raw.acceptednameusage, raw.associatedmedia, raw.associatedoccurrences, raw.associatedreferences, raw.associatedsequences, raw.associatedtaxa, raw.basisofrecord, raw.behavior, raw.bibliographiccitation, raw.catalognumber, raw.collectioncode, raw.collectionid, raw.continent, raw.coordinateuncertaintyinmeters, raw.country, raw.countrycode, raw.county, raw.datasetid, raw.datasetname, raw.dateidentified, raw.decimallatitude, raw.decimallongitude, raw.disposition, raw.dynamicproperties, raw.establishmentmeans, raw.eventdate, raw.eventremarks, raw.eventtime, raw.family, raw.footprintwkt, raw.genus, raw.geodeticdatum, raw.georeferencedby, raw.georeferenceprotocol, raw.georeferenceremarks, raw.georeferencesources, raw.georeferenceverificationstatus, raw.habitat, raw.higherclassification, raw.identificationqualifier, raw.identificationremarks, raw.identifiedby, raw.individualcount, raw.infraspecificepithet, raw.institutioncode, raw.kingdom, raw.language, raw.lifestage, raw.locality, raw.locationremarks, raw.maximumelevationinmeters, raw.minimumelevationinmeters, raw.modified, raw.municipality, raw.nomenclaturalcode, raw.occurrenceid, raw.occurrenceremarks, raw.othercatalognumbers, raw.ownerinstitutioncode, raw.phylum, raw.preparations, raw.previousidentifications, raw.recordedby, raw.recordnumber, raw.reproductivecondition, raw.rights, raw.rightsholder, raw.samplingprotocol, raw.scientificname, raw.scientificnameauthorship, raw.sex, raw.specificepithet, raw.stateprovince, raw.taxonrank, raw.taxonremarks, raw.type, raw.typestatus, raw.verbatimcoordinates, raw.verbatimcoordinatesystem, raw.verbatimdepth, raw.verbatimelevation, raw.verbatimeventdate, raw.verbatimlatitude, raw.verbatimlongitude, raw.verbatimsrs, raw.waterbody 
 FROM occurrence occ, occurrence_raw raw
 WHERE occ.auto_id = raw.auto_id;

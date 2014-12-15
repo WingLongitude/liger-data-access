@@ -1,8 +1,8 @@
 package net.canadensys.dataportal.occurrence.dao.impl;
 
-import net.canadensys.dataportal.occurrence.dao.ResourceInformationDAO;
+import net.canadensys.dataportal.occurrence.dao.ResourceMetadataDAO;
 import net.canadensys.dataportal.occurrence.model.OccurrenceFieldConstants;
-import net.canadensys.dataportal.occurrence.model.ResourceInformationModel;
+import net.canadensys.dataportal.occurrence.model.ResourceMetadataModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -17,41 +17,41 @@ import org.springframework.stereotype.Repository;
  * @author Pedro Guimarães
  * 
  */
-@Repository("resourceInformationDAO")
-public class HibernateResourceInformationDAO implements ResourceInformationDAO {
+@Repository("resourceMetadataDAO")
+public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 
 	// get log4j handler
-	private static final Logger LOGGER = Logger.getLogger(HibernateResourceInformationDAO.class);
+	private static final Logger LOGGER = Logger.getLogger(HibernateResourceMetadataDAO.class);
 	private static final String MANAGED_ID = "auto_id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public boolean save(ResourceInformationModel resourceInformationModel) {
+	public boolean save(ResourceMetadataModel resourceInformationModel) {
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(resourceInformationModel);
 		}
 		catch (HibernateException e) {
-			LOGGER.fatal("Couldn't save ResourceInformationModel", e);
+			LOGGER.fatal("Couldn't save ResourceMetadataModel", e);
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public ResourceInformationModel load(Integer auto_id) {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceInformationModel.class);
+	public ResourceMetadataModel load(Integer auto_id) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
-		return (ResourceInformationModel) searchCriteria.uniqueResult();
+		return (ResourceMetadataModel) searchCriteria.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ResourceInformationModel load(String resource_uuid) {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceInformationModel.class);
+	public ResourceMetadataModel load(String resource_uuid) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
-		return (ResourceInformationModel) searchCriteria.uniqueResult();
+		return (ResourceMetadataModel) searchCriteria.uniqueResult();
 	}
 
 	public SessionFactory getSessionFactory() {
@@ -63,13 +63,13 @@ public class HibernateResourceInformationDAO implements ResourceInformationDAO {
 	}
 
 	@Override
-	public boolean delete(ResourceInformationModel resourceInformationModel) {
+	public boolean delete(ResourceMetadataModel resourceInformationModel) {
 		// Delete record:
 		try {
 			sessionFactory.getCurrentSession().delete(resourceInformationModel);
 		}
 		catch (HibernateException e) {
-			LOGGER.fatal("Couldn't delete ResourceInformationModel" + resourceInformationModel.toString(), e);
+			LOGGER.fatal("Couldn't delete ResourceMetadataModel" + resourceInformationModel.toString(), e);
 			return false;
 		}
 		return true;

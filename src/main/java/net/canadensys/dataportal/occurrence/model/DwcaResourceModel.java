@@ -18,11 +18,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * 
  */
 @Entity
-@Table(name = "resource_management")
-@SequenceGenerator(name = "resource_management_id_seq", sequenceName = "resource_management_id_seq", allocationSize = 1)
-public class ResourceModel {
+@Table(name = "dwca_resource")
+@SequenceGenerator(name = "dwca_resource_id_seq", sequenceName = "dwca_resource_id_seq", allocationSize = 1)
+public class DwcaResourceModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_management_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dwca_resource_id_seq")
 	private Integer id;
 	private String name;
 	private String sourcefileid;
@@ -32,8 +32,8 @@ public class ResourceModel {
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "publisher_information_fkey")
-	private PublisherInformationModel publisherInformation;
+	@JoinColumn(name = "publisher_fkey")
+	private PublisherModel publisher;
 
 	public Integer getId() {
 		return id;
@@ -83,11 +83,11 @@ public class ResourceModel {
 		this.record_count = record_count;
 	}
 
-	public PublisherInformationModel getPublisherInformation() {
-		return publisherInformation;
+	public PublisherModel getPublisher() {
+		return publisher;
 	}
 
-	public void setPublisherInformation(PublisherInformationModel publisherInformation) {
-		this.publisherInformation = publisherInformation;
+	public void setPublisher(PublisherModel publisher) {
+		this.publisher = publisher;
 	}
 }

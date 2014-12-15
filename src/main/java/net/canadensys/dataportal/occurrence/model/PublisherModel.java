@@ -17,12 +17,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "publisher_information")
-@SequenceGenerator(name = "publisher_information_id_seq", sequenceName = "publisher_information_id_seq", allocationSize = 1)
-public class PublisherInformationModel {
+@Table(name = "publisher")
+@SequenceGenerator(name = "publisher_id_seq", sequenceName = "publisher_id_seq", allocationSize = 1)
+public class PublisherModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisher_information_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisher_id_seq")
 	private Integer auto_id;
 	
 	private String name;
@@ -43,22 +43,22 @@ public class PublisherInformationModel {
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "publisher_information_fkey", nullable = true)
+	@JoinColumn(name = "publisher_fkey", nullable = true)
 	private Set<ContactModel> contacts;
 	
 	/**
 	 * FetchType.EAGER will make resources be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy = "publisherInformation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<ResourceModel> resources;
+	@OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<DwcaResourceModel> resources;
 
 	/**
 	 * Class constructor
 	 */
-	public PublisherInformationModel() {
+	public PublisherModel() {
 		// Initialize data structures:
-		resources = new HashSet<ResourceModel>();
+		resources = new HashSet<DwcaResourceModel>();
 		contacts = new HashSet<ContactModel>();
 	}
 
@@ -78,8 +78,8 @@ public class PublisherInformationModel {
 	 * 
 	 * @param contact
 	 */
-	public void addResource(ResourceModel resource) {
-		resource.setPublisherInformation(this);
+	public void addResource(DwcaResourceModel resource) {
+		resource.setPublisher(this);
 		resources.add(resource);
 	}
 
@@ -212,11 +212,11 @@ public class PublisherInformationModel {
 		this.record_count = record_count;
 	}
 
-	public Set<ResourceModel> getResources() {
+	public Set<DwcaResourceModel> getResources() {
 		return resources;
 	}
 
-	public void setResources(Set<ResourceModel> resources) {
+	public void setResources(Set<DwcaResourceModel> resources) {
 		this.resources = resources;
 	}
 }

@@ -16,26 +16,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author cgendreau
  * 
  */
-public class ResourceInformationModelTest {
+public class ResourceMetadataModelTest {
 
 	@Test
-	public void ResourceInformationModel() {
+	public void ResourceMetadataModel() {
 
-		ResourceInformationModel resourceInformationModel = new ResourceInformationModel();
-		resourceInformationModel.setResource_name("test resource name");
+		ResourceMetadataModel resourceMetadataModel = new ResourceMetadataModel();
+		resourceMetadataModel.setResource_name("test resource name");
 
 		ContactModel resourceContactModel = new ContactModel();
 		resourceContactModel.setName("Contact Name");
-		resourceInformationModel.addContact(resourceContactModel);
+		resourceMetadataModel.addContact(resourceContactModel);
 
 		ObjectMapper om = new ObjectMapper();
 		try {
 			// serialize as json
-			String json = om.writeValueAsString(resourceInformationModel);
+			String json = om.writeValueAsString(resourceMetadataModel);
 
 			// read to object back from json string
-			ResourceInformationModel resourceInformationModelFromJson = om.readValue(json, ResourceInformationModel.class);
-			ContactModel firstContactFromJson = resourceInformationModelFromJson.getContacts().iterator().next();
+			ResourceMetadataModel resourceMetadataModelFromJson = om.readValue(json, ResourceMetadataModel.class);
+			ContactModel firstContactFromJson = resourceMetadataModelFromJson.getContacts().iterator().next();
 
 			assertEquals("Contact Name", firstContactFromJson.getName());
 

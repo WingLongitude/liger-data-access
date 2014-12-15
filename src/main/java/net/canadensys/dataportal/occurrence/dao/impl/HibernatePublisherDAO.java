@@ -2,8 +2,8 @@ package net.canadensys.dataportal.occurrence.dao.impl;
 
 import java.util.List;
 
-import net.canadensys.dataportal.occurrence.dao.PublisherInformationDAO;
-import net.canadensys.dataportal.occurrence.model.PublisherInformationModel;
+import net.canadensys.dataportal.occurrence.dao.PublisherDAO;
+import net.canadensys.dataportal.occurrence.model.PublisherModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -18,39 +18,39 @@ import org.springframework.stereotype.Repository;
  * @author Pedro Guimarães
  * 
  */
-@Repository("publisherInformationDAO")
-public class HibernatePublisherInformationDAO implements PublisherInformationDAO {
+@Repository("publisherDAO")
+public class HibernatePublisherDAO implements PublisherDAO {
 
 	// get log4j handler
-	private static final Logger LOGGER = Logger.getLogger(HibernatePublisherInformationDAO.class);
+	private static final Logger LOGGER = Logger.getLogger(HibernatePublisherDAO.class);
 	private static final String MANAGED_ID = "auto_id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<PublisherInformationModel> loadPublishers() {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherInformationModel.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+	public List<PublisherModel> loadPublishers() {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherModel.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return searchCriteria.list();
 	}
 
 	@Override
-	public boolean save(PublisherInformationModel PublisherInformationModel) {
+	public boolean save(PublisherModel PublisherInformationModel) {
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(PublisherInformationModel);
 		}
 		catch (HibernateException e) {
-			LOGGER.fatal("Couldn't save PublisherInformationModel", e);
+			LOGGER.fatal("Couldn't save PublisherModel", e);
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public PublisherInformationModel load(Integer auto_id) {
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherInformationModel.class);
+	public PublisherModel load(Integer auto_id) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(PublisherModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
-		return (PublisherInformationModel) searchCriteria.uniqueResult();
+		return (PublisherModel) searchCriteria.uniqueResult();
 	}
 
 	public SessionFactory getSessionFactory() {
@@ -62,13 +62,13 @@ public class HibernatePublisherInformationDAO implements PublisherInformationDAO
 	}
 
 	@Override
-	public boolean delete(PublisherInformationModel PublisherInformationModel) {
+	public boolean delete(PublisherModel PublisherInformationModel) {
 		// Delete record:
 		try {
 			sessionFactory.getCurrentSession().delete(PublisherInformationModel);
 		}
 		catch (HibernateException e) {
-			LOGGER.fatal("Couldn't delete PublisherInformationModel" + PublisherInformationModel.toString(), e);
+			LOGGER.fatal("Couldn't delete PublisherModel" + PublisherInformationModel.toString(), e);
 			return false;
 		}
 		return true;

@@ -17,38 +17,38 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Pedro Guimarães
  * 
  */
-public class PublisherInformationModelTest {
+public class PublisherModelTest {
 
 	@Test
-	public void PublisherInformationModel() {
+	public void PublisherModel() {
 		
-		PublisherInformationModel publisherInformationModel = new PublisherInformationModel();
-		publisherInformationModel.setName("test Publisher name");
+		PublisherModel publisherModel = new PublisherModel();
+		publisherModel.setName("test Publisher name");
 
 		ContactModel publisherContactModel = new ContactModel();
 		publisherContactModel.setName("Contact Name");
-		publisherInformationModel.addContact(publisherContactModel);
+		publisherModel.addContact(publisherContactModel);
 		
-		ResourceModel resourceModel = new ResourceModel();
+		DwcaResourceModel resourceModel = new DwcaResourceModel();
 		resourceModel.setName("Resource 1");
-		publisherInformationModel.addResource(resourceModel);
+		publisherModel.addResource(resourceModel);
 		
 		ObjectMapper om = new ObjectMapper();
 		try {
 			// serialize as json
-			String json = om.writeValueAsString(publisherInformationModel);
+			String json = om.writeValueAsString(publisherModel);
 
 			// read to object back from json string
-			PublisherInformationModel publisherInformationModelFromJson = om.readValue(json, PublisherInformationModel.class);
+			PublisherModel publisherInformationModelFromJson = om.readValue(json, PublisherModel.class);
 			ContactModel firstContactFromJson = publisherInformationModelFromJson.getContacts().iterator().next();
-			ResourceModel resourceFromJson = publisherInformationModelFromJson.getResources().iterator().next();
+			DwcaResourceModel resourceFromJson = publisherInformationModelFromJson.getResources().iterator().next();
 					
 			assertEquals("Contact Name", firstContactFromJson.getName());
 			assertEquals("Resource 1", resourceFromJson.getName());
 
 			// check that the reference to 'parent' PublisherInformationModel is there
-			assertNotNull(resourceFromJson.getPublisherInformation());
-			assertEquals("test Publisher name", resourceFromJson.getPublisherInformation().getName());
+			assertNotNull(resourceFromJson.getPublisher());
+			assertEquals("test Publisher name", resourceFromJson.getPublisher().getName());
 		}
 		catch (JsonProcessingException e) {
 			e.printStackTrace();

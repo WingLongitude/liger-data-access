@@ -2,7 +2,7 @@ package net.canadensys.dataportal.occurrence.dao;
 
 import java.util.List;
 
-import net.canadensys.dataportal.occurrence.model.ResourceModel;
+import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
 
 public interface ResourceDAO {
 
@@ -11,7 +11,7 @@ public interface ResourceDAO {
 	 * 
 	 * @return ResourceModel list or null
 	 */
-	public List<ResourceModel> loadResources();
+	public List<DwcaResourceModel> loadResources();
 
 	/**
 	 * Load a ResourceModel from its auto_id
@@ -19,7 +19,7 @@ public interface ResourceDAO {
 	 * @param auto_id
 	 * @return ResourceModel or null if nothing is found
 	 */
-	public ResourceModel load(Integer auto_id);
+	public DwcaResourceModel load(Integer auto_id);
 	
 	/**
 	 * Load a ResourceModel from a resource_uuid
@@ -27,14 +27,14 @@ public interface ResourceDAO {
 	 * @param resource_uuid
 	 * @return ResourceModel or null if nothing is found
 	 */
-	public ResourceModel loadBySourceFileId(String resource_uuid);
+	public DwcaResourceModel loadBySourceFileId(String resource_uuid);
 
 	/**
 	 * Save a ResourceModel
 	 * 
-	 * @param ResourceModel
+	 * @param DwcaResourceModel
 	 * @return success or not
 	 */
-	public boolean save(ResourceModel resourceModel);
+	public boolean save(DwcaResourceModel resourceModel);
 
 }

@@ -16,12 +16,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "resource_information")
-@SequenceGenerator(name = "resource_information_id_seq", sequenceName = "resource_information_id_seq", allocationSize = 1)
-public class ResourceInformationModel {
+@Table(name = "resource_metadata")
+@SequenceGenerator(name = "resource_metadata_id_seq", sequenceName = "resource_metadata_id_seq", allocationSize = 1)
+public class ResourceMetadataModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_information_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_metadata_id_seq")
 	private Integer auto_id;
 
 	private String resource_uuid;
@@ -45,10 +45,10 @@ public class ResourceInformationModel {
 	 * FetchType.EAGER will make contacts be always loaded. TODO: Add deepLoad condition to load() in DAO
 	 */
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "resource_information_fkey", nullable = true)
+	@JoinColumn(name = "resource_metadata_fkey", nullable = true)
 	private Set<ContactModel> contacts;
 
-	public ResourceInformationModel() {
+	public ResourceMetadataModel() {
 		contacts = new HashSet<ContactModel>();
 	}
 

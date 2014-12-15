@@ -2,7 +2,7 @@ package net.canadensys.dataportal.occurrence.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import net.canadensys.dataportal.occurrence.model.ResourceModel;
+import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,17 +30,17 @@ public class ResourceDAOTest extends AbstractTransactionalJUnit4SpringContextTes
 
 	@Test
 	public void testSaveAndLoad() {
-		ResourceModel testModel = new ResourceModel();
+		DwcaResourceModel testModel = new DwcaResourceModel();
 		testModel.setSourcefileid("test_sourcefileid");
 		assertTrue(resourceDAO.save(testModel));
 
 		int id = testModel.getId();
 
-		ResourceModel loadedModel = resourceDAO.loadBySourceFileId("test_sourcefileid");
+		DwcaResourceModel loadedModel = resourceDAO.loadBySourceFileId("test_sourcefileid");
 		assertEquals(id, loadedModel.getId().intValue());
 		assertEquals("test_sourcefileid", loadedModel.getSourcefileid());
 
-		ResourceModel loadedById = resourceDAO.load(id);
+		DwcaResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);
 	}
 }

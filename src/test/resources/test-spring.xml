@@ -49,15 +49,15 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="resourceDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceDAO">
+	<bean id="dwcaResourceDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateDwcaResourceDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="resourceInformationDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceInformationDAO">
+	<bean id="resourceMetadataDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceMetadataDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="publisherInformationDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernatePublisherInformationDAO">
+	<bean id="publisherDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernatePublisherDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	

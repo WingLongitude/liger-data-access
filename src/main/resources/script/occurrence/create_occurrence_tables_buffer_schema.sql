@@ -253,10 +253,10 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
 
 
 /* Structure to persist resource metadata information: */
-CREATE SEQUENCE IF NOT EXISTS buffer.resource_information_id_seq;
-CREATE TABLE IF NOT EXISTS buffer.resource_information
+CREATE SEQUENCE IF NOT EXISTS buffer.resource_metadata_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.resource_metadata
 (
-	auto_id integer DEFAULT nextval('buffer.resource_information_id_seq') NOT NULL,
+	auto_id integer DEFAULT nextval('buffer.resource_metadata_id_seq') NOT NULL,
 	resource_uuid TEXT,
 	resource_name TEXT,
 	alternate_identifier TEXT,
@@ -273,28 +273,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_information
 	parent_collection_identifier TEXT,
 	collection_identifier TEXT,
 	collection_name TEXT,
-	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
-);
-
-/* Structure to persist publisher information: */
-CREATE SEQUENCE IF NOT EXISTS buffer.publisher_information_id_seq;
-CREATE TABLE IF NOT EXISTS buffer.publisher_information
-(
-	auto_id integer DEFAULT nextval('buffer.publisher_information_id_seq') NOT NULL,
-	name TEXT,
-	description TEXT,
-	address TEXT,
-	city TEXT,
-	administrative_area TEXT,
-	postal_code TEXT,
-	homepage TEXT,
-	email TEXT,
-	phone TEXT,
-	logo_url TEXT,
-	decimallatitude DOUBLE PRECISION,
-	decimallongitude DOUBLE PRECISION,
-	record_count integer,
-	CONSTRAINT publisher_information_pkey PRIMARY KEY (auto_id)
+	CONSTRAINT resource_metadata_pkey PRIMARY KEY (auto_id)
 );
 
 /* Structure to persist contacts information: */
