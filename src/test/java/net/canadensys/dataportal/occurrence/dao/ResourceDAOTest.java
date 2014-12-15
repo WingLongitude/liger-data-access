@@ -26,7 +26,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 public class ResourceDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
-	private ResourceDAO resourceDAO;
+	private DwcaResourceDAO resourceDAO;
 
 	@Test
 	public void testSaveAndLoad() {

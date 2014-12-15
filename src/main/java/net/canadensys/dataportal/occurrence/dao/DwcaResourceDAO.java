@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
 
-public interface ResourceDAO {
+public interface DwcaResourceDAO {
 
 	/**
 	 * Load all ResourceModel

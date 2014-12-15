@@ -2,7 +2,7 @@ package net.canadensys.dataportal.occurrence.dao.impl;
 
 import java.util.List;
 
-import net.canadensys.dataportal.occurrence.dao.ResourceDAO;
+import net.canadensys.dataportal.occurrence.dao.DwcaResourceDAO;
 import net.canadensys.dataportal.occurrence.model.OccurrenceFieldConstants;
 import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
 
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("dwcaResourceDAO")
-public class HibernateDwcaResourceDAO implements ResourceDAO {
+public class HibernateDwcaResourceDAO implements DwcaResourceDAO {
 
 	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateDwcaResourceDAO.class);
