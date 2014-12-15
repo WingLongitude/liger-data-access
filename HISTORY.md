@@ -1,7 +1,7 @@
 Version History from liger-data-access
 ===============
 
-Version 2.14.0 2014-12-25
+Version 2.11.3 2014-12-25
 
 * Renamed tables:
   * publisher_information → publisher;
@@ -10,7 +10,7 @@ Version 2.14.0 2014-12-25
 * Removed contact_type from contact table;
 * Renamed table ResourceContact to Contact, and PublisherContact also uses this structure now;
 
-Version 2.13.0 2014-10-31
+Version 2.11.2 2014-10-31
 
 * Addition of ResourceInformation to support EML metadata;
 * Addition of ResourceContact to support EML contact information;
