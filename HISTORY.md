@@ -1,5 +1,21 @@
-Version History from canadensys-data-access
+Version History from liger-data-access
 ===============
+
+Version 2.14.0 2014-12-25
+
+* Renamed tables:
+  * publisher_information → publisher;
+  * resource_management → dwca_resource;
+  * resource_information → resource_metadata;
+* Removed contact_type from contact table;
+* Renamed table ResourceContact to Contact, and PublisherContact also uses this structure now;
+
+Version 2.13.0 2014-10-31
+
+* Addition of ResourceInformation to support EML metadata;
+* Addition of ResourceContact to support EML contact information;
+* Addition of PublisherInformation to support publisher information;
+* Addition of collumns publishername and resourcename to occurrence tables to allow filtering;
 
 Version 2.10.0 2014-08-05
 * Added hasassociatedsequences to OccurrenceModel
