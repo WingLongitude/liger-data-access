@@ -263,29 +263,6 @@ CREATE TABLE IF NOT EXISTS import_log
   CONSTRAINT import_log_pkey PRIMARY KEY (id )
 );
 
-/* Structure to persist resource metadata information: */
-CREATE SEQUENCE IF NOT EXISTS resource_metadata_id_seq;
-CREATE TABLE IF NOT EXISTS resource_metadata
-(
-	auto_id integer DEFAULT nextval('resource_metadata_id_seq') NOT NULL,
-	resource_uuid TEXT,
-	resource_name TEXT,
-	alternate_identifier TEXT,
-	title TEXT,
-	publication_date date,
-	language TEXT,
-	_abstract TEXT,
-	keyword TEXT,
-	keyword_thesaurus TEXT,
-	intellectual_rights text,
-	citation TEXT,
-	hierarchy_level TEXT,
-	resource_logo_url TEXT,
-	parent_collection_identifier TEXT,
-	collection_identifier TEXT,
-	collection_name TEXT,
-	CONSTRAINT resource_metadata_pkey PRIMARY KEY (auto_id)
-);
 
 /* Structure to persist publisher information: */
 CREATE SEQUENCE IF NOT EXISTS publisher_id_seq;
@@ -308,6 +285,45 @@ CREATE TABLE IF NOT EXISTS publisher
 	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
 );
 
+CREATE SEQUENCE IF NOT EXISTS dwca_resource_id_seq;
+CREATE TABLE IF NOT EXISTS dwca_resource
+(
+  id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
+  name TEXT,
+  sourcefileid character varying(255),
+  resource_uuid TEXT,
+  archive_url TEXT,
+  record_count integer,
+  publisher_fkey integer references publisher(auto_id),
+  CONSTRAINT dwca_resource_pkey PRIMARY KEY ( id ),
+  CONSTRAINT dwca_resource_source_file_id_key UNIQUE (sourcefileid)
+);
+
+/* Structure to persist resource metadata information: */
+CREATE SEQUENCE IF NOT EXISTS resource_metadata_id_seq;
+CREATE TABLE IF NOT EXISTS resource_metadata
+(
+	auto_id integer DEFAULT nextval('resource_metadata_id_seq') NOT NULL,
+	resource_uuid TEXT,
+	resource_name TEXT,
+	alternate_identifier TEXT,
+	title TEXT,
+	publication_date date,
+	language TEXT,
+	_abstract TEXT,
+	keyword TEXT,
+	keyword_thesaurus TEXT,
+	intellectual_rights text,
+	citation TEXT,
+	hierarchy_level TEXT,
+	resource_logo_url TEXT,
+	parent_collection_identifier TEXT,
+	collection_identifier TEXT,
+	collection_name TEXT,
+	dwca_resource_fkey integer references dwca_resource(id),
+	CONSTRAINT resource_metadata_pkey PRIMARY KEY (auto_id)
+);
+
 /* Structure to persist contacts information: */
 CREATE SEQUENCE IF NOT EXISTS contact_id_seq;
 CREATE TABLE IF NOT EXISTS contact
@@ -327,21 +343,6 @@ CREATE TABLE IF NOT EXISTS contact
 	publisher_fkey integer references publisher(auto_id),
 	resource_metadata_fkey integer references resource_metadata(auto_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
-);
-
-CREATE SEQUENCE IF NOT EXISTS dwca_resource_id_seq;
-CREATE TABLE IF NOT EXISTS dwca_resource
-(
-  id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
-  name TEXT,
-  sourcefileid character varying(255),
-  resource_uuid TEXT,
-  archive_url TEXT,
-  record_count integer,
-  resource_metadata_fkey integer references resource_metadata(auto_id),
-  publisher_fkey integer references publisher(auto_id),
-  CONSTRAINT dwca_resource_pkey PRIMARY KEY ( id ),
-  CONSTRAINT dwca_resource_source_file_id_key UNIQUE (sourcefileid)
 );
 
 CREATE TABLE IF NOT EXISTS occurrence_extension

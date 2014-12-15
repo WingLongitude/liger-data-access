@@ -3,6 +3,7 @@ package net.canadensys.dataportal.occurrence.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
+import net.canadensys.dataportal.occurrence.model.ResourceMetadataModel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,22 +24,34 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-spring.xml" })
 @TransactionConfiguration(transactionManager = "hibernateTransactionManager")
-public class ResourceDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
 	private DwcaResourceDAO resourceDAO;
 
 	@Test
 	public void testSaveAndLoad() {
+
+		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
+		// Test ResourceInformation model:
+		ResourceMetadataModel testResourceMetadata = new ResourceMetadataModel();
+		testResourceMetadata.set_abstract("This is the lorem ipsum abstract");
+		testResourceMetadata.setTitle("TitleTitleTitle");
+		testResourceMetadata.setResource_uuid(resource_uuid);
+		
 		DwcaResourceModel testModel = new DwcaResourceModel();
-		testModel.setSourcefileid("test_sourcefileid");
+		testModel.setSourcefileid(resource_uuid);
+		testModel.setResourceMetadata(testResourceMetadata);
 		assertTrue(resourceDAO.save(testModel));
 
 		int id = testModel.getId();
 
-		DwcaResourceModel loadedModel = resourceDAO.loadBySourceFileId("test_sourcefileid");
-		assertEquals(id, loadedModel.getId().intValue());
-		assertEquals("test_sourcefileid", loadedModel.getSourcefileid());
+		DwcaResourceModel loadedModel = resourceDAO.loadBySourceFileId(resource_uuid);
+		assertEquals(resource_uuid, loadedModel.getSourcefileid());
+		
+		// Verify that the child ResourceMetadata was filled with the parent object.
+		DwcaResourceModel reference = loadedModel.getResourceMetadata().getDwcaResource();
+		assertEquals(loadedModel.getId(), reference.getId());
 
 		DwcaResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);

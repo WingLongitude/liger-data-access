@@ -1,15 +1,19 @@
 package net.canadensys.dataportal.occurrence.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Model to keep info about resources. Resource represents the source archive.
@@ -34,7 +38,11 @@ public class DwcaResourceModel {
 	@ManyToOne
 	@JoinColumn(name = "publisher_fkey")
 	private PublisherModel publisher;
-
+	
+	@JsonManagedReference
+	@OneToOne(mappedBy = "dwcaResource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private ResourceMetadataModel resourceMetadata;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -89,5 +97,13 @@ public class DwcaResourceModel {
 
 	public void setPublisher(PublisherModel publisher) {
 		this.publisher = publisher;
+	}
+
+	public ResourceMetadataModel getResourceMetadata() {
+		return resourceMetadata;
+	}
+
+	public void setResourceMetadata(ResourceMetadataModel resourceMetadata) {
+		this.resourceMetadata = resourceMetadata;
 	}
 }
