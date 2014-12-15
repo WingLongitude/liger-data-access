@@ -16,10 +16,6 @@ import javax.persistence.Table;
 @Table(name = "contact")
 @SequenceGenerator(name = "contact_id_seq", sequenceName = "contact_id_seq", allocationSize = 1)
 public class ContactModel {
-
-	public static final String CONTACT_TYPE_RESOURCE = "resource"; 
-	public static final String CONTACT_TYPE_PUBLISHER = "publisher";
-
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_id_seq")
@@ -35,8 +31,6 @@ public class ContactModel {
 	private String postal_code;
 	private String phone;
 	private String email;
-	// Tells if the contact is related to publisher or resource: 
-	private String contact_type;
 	// The role of the contact within its context (e.g. metadata_provider, resource_creator, agent, contact):
 	private String role;
 	
@@ -128,14 +122,6 @@ public class ContactModel {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getContact_type() {
-		return contact_type;
-	}
-
-	public void setContact_type(String contact_type) {
-		this.contact_type = contact_type;
 	}
 
 	public String getRole() {

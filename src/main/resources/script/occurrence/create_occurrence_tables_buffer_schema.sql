@@ -251,11 +251,8 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
   CONSTRAINT download_log_pkey PRIMARY KEY (id )
 );
 
-<<<<<<< HEAD
+
 /* Structure to persist resource metadata information: */
-=======
-/* Structure to persist resource eml information */
->>>>>>> dfca3fbe526585bae3825be83fd63eb6e8b6a5c2
 CREATE SEQUENCE IF NOT EXISTS buffer.resource_information_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.resource_information
 (
@@ -278,7 +275,6 @@ CREATE TABLE IF NOT EXISTS buffer.resource_information
 	collection_name TEXT,
 	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
 );
-
 
 /* Structure to persist publisher information: */
 CREATE SEQUENCE IF NOT EXISTS buffer.publisher_information_id_seq;
@@ -316,7 +312,6 @@ CREATE TABLE IF NOT EXISTS buffer.contact
 	postal_code TEXT,
 	phone TEXT,
 	email TEXT,
-	contact_type TEXT,
 	role TEXT,
 	publisher_information_fkey integer references publisher_information(auto_id),
 	resource_information_fkey integer references resource_information(auto_id),

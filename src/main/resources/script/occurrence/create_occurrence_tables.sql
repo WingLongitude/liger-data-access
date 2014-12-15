@@ -323,7 +323,6 @@ CREATE TABLE IF NOT EXISTS contact
 	postal_code TEXT,
 	phone TEXT,
 	email TEXT,
-	contact_type TEXT,
 	role TEXT,
 	publisher_information_fkey integer references publisher_information(auto_id),
 	resource_information_fkey integer references resource_information(auto_id),

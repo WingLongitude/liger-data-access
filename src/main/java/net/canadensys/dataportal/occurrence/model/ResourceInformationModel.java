@@ -59,8 +59,6 @@ public class ResourceInformationModel {
 	 * @param contact
 	 */
 	public void addContact(ContactModel contact) {
-		// Set contact type and parent foreigh key to publisher_information:
-		contact.setContact_type(ContactModel.CONTACT_TYPE_RESOURCE);
 		contacts.add(contact);
 	}
 
