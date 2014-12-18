@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS dwca_resource
 /* Structure to persist resource metadata information: */
 CREATE TABLE IF NOT EXISTS resource_metadata
 (
-	dwca_resource_id integer NOT NULL,
+	dwca_resource_id integer NOT NULL REFERENCES dwca_resource(id),
 	resource_uuid TEXT,
 	resource_name TEXT,
 	alternate_identifier TEXT,
