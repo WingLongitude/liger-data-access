@@ -300,10 +300,9 @@ CREATE TABLE IF NOT EXISTS dwca_resource
 );
 
 /* Structure to persist resource metadata information: */
-CREATE SEQUENCE IF NOT EXISTS resource_metadata_id_seq;
 CREATE TABLE IF NOT EXISTS resource_metadata
 (
-	auto_id integer DEFAULT nextval('resource_metadata_id_seq') NOT NULL,
+	dwca_resource_id integer NOT NULL,
 	resource_uuid TEXT,
 	resource_name TEXT,
 	alternate_identifier TEXT,
@@ -320,8 +319,7 @@ CREATE TABLE IF NOT EXISTS resource_metadata
 	parent_collection_identifier TEXT,
 	collection_identifier TEXT,
 	collection_name TEXT,
-	dwca_resource_fkey integer references dwca_resource(id),
-	CONSTRAINT resource_metadata_pkey PRIMARY KEY (auto_id)
+	CONSTRAINT resource_metadata_pkey PRIMARY KEY (dwca_resource_id)
 );
 
 /* Structure to persist contacts information: */
@@ -341,7 +339,7 @@ CREATE TABLE IF NOT EXISTS contact
 	email TEXT,
 	role TEXT,
 	publisher_fkey integer references publisher(auto_id),
-	resource_metadata_fkey integer references resource_metadata(auto_id),
+	resource_metadata_fkey integer references resource_metadata(dwca_resource_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 

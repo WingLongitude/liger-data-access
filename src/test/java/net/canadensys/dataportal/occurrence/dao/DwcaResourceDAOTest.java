@@ -15,9 +15,9 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
  * Test Coverage :
- * -Save ResourceModel
- * -Load ResourceModel from resource_uuid
- * -Load ResourceModel from auto_id
+ * -Save DwcaResourceModel
+ * -Load DwcaResourceModel from resource_uuid
+ * -Load DwcaResourceModel from auto_id
  * 
  * @author canadensys
  */
@@ -38,20 +38,20 @@ public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContex
 		testResourceMetadata.set_abstract("This is the lorem ipsum abstract");
 		testResourceMetadata.setTitle("TitleTitleTitle");
 		testResourceMetadata.setResource_uuid(resource_uuid);
-		
+
 		DwcaResourceModel testModel = new DwcaResourceModel();
 		testModel.setSourcefileid(resource_uuid);
-		testModel.setResourceMetadata(testResourceMetadata);
+		testModel.linkResourceMetadata(testResourceMetadata);
 		assertTrue(resourceDAO.save(testModel));
 
 		int id = testModel.getId();
 
 		DwcaResourceModel loadedModel = resourceDAO.loadBySourceFileId(resource_uuid);
 		assertEquals(resource_uuid, loadedModel.getSourcefileid());
-		
+
 		// Verify that the child ResourceMetadata was filled with the parent object.
-		DwcaResourceModel reference = loadedModel.getResourceMetadata().getDwcaResource();
-		assertEquals(loadedModel.getId(), reference.getId());
+		ResourceMetadataModel metadatModel = loadedModel.getResourceMetadata();
+		assertEquals(loadedModel.getId(), metadatModel.getDwca_resource_id());
 
 		DwcaResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);

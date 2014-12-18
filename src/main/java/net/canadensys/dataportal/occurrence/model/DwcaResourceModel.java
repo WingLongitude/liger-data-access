@@ -2,7 +2,6 @@ package net.canadensys.dataportal.occurrence.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,16 +32,16 @@ public class DwcaResourceModel {
 	private String resource_uuid;
 	private String archive_url;
 	private Integer record_count;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "publisher_fkey")
 	private PublisherModel publisher;
-	
+
 	@JsonManagedReference
-	@OneToOne(mappedBy = "dwcaResource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "dwcaResource", cascade = { CascadeType.ALL })
 	private ResourceMetadataModel resourceMetadata;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -104,6 +103,16 @@ public class DwcaResourceModel {
 	}
 
 	public void setResourceMetadata(ResourceMetadataModel resourceMetadata) {
+		this.resourceMetadata = resourceMetadata;
+	}
+
+	/**
+	 * This method allows to link ResourceMetadataModel with the current DwcaResourceModel.
+	 * 
+	 * @param resourceMetadata
+	 */
+	public void linkResourceMetadata(ResourceMetadataModel resourceMetadata) {
+		resourceMetadata.setDwcaResource(this);
 		this.resourceMetadata = resourceMetadata;
 	}
 }

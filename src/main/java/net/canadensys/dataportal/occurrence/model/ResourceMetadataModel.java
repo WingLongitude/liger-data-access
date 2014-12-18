@@ -8,26 +8,33 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+/**
+ * Represents a one-to-one relationship with DwcaResourceModel.
+ * This part is optional and updated on a more regular basis than DwcaResourceModel.
+ * 
+ * @author cgendreau
+ * 
+ */
 @Entity
 @Table(name = "resource_metadata")
-@SequenceGenerator(name = "resource_metadata_id_seq", sequenceName = "resource_metadata_id_seq", allocationSize = 1)
 public class ResourceMetadataModel {
 
+	// GenericGenerator used to synchronize the id with dwcaResource
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_metadata_id_seq")
-	private Integer auto_id;
+	@GeneratedValue(generator = "foreign")
+	@GenericGenerator(name = "foreign", strategy = "foreign", parameters = { @org.hibernate.annotations.Parameter(name = "property", value = "dwcaResource") })
+	private Integer dwca_resource_id;
 
 	private String resource_uuid;
 	private String resource_name;
@@ -52,16 +59,32 @@ public class ResourceMetadataModel {
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_metadata_fkey", nullable = true)
 	private Set<ContactModel> contacts;
-	
+
 	@JsonBackReference
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dwca_resource_fkey")
+	@PrimaryKeyJoinColumn(name = "dwca_resource_id", referencedColumnName = "id")
 	private DwcaResourceModel dwcaResource;
-	
+
+	public Integer getDwca_resource_id() {
+		return dwca_resource_id;
+	}
+
+	public void setDwca_resource_id(Integer dwca_resource_id) {
+		this.dwca_resource_id = dwca_resource_id;
+	}
+
+	public DwcaResourceModel getDwcaResource() {
+		return dwcaResource;
+	}
+
+	public void setDwcaResource(DwcaResourceModel dwcaResource) {
+		this.dwcaResource = dwcaResource;
+	}
+
 	public ResourceMetadataModel() {
 		contacts = new HashSet<ContactModel>();
 	}
-	
+
 	/**
 	 * Add a ResourceContactModel to the contact list.
 	 * The reference to this ResourceInformationModel instance will be set on the provided contact.
@@ -73,14 +96,6 @@ public class ResourceMetadataModel {
 	}
 
 	/** Getters and setters: **/
-
-	public Integer getAuto_id() {
-		return auto_id;
-	}
-
-	public void setAuto_id(Integer auto_id) {
-		this.auto_id = auto_id;
-	}
 
 	public String getResource_uuid() {
 		return resource_uuid;
@@ -222,13 +237,5 @@ public class ResourceMetadataModel {
 	 */
 	public void setContacts(Set<ContactModel> contacts) {
 		this.contacts = contacts;
-	}
-
-	public DwcaResourceModel getDwcaResource() {
-		return dwcaResource;
-	}
-
-	public void setDwcaResource(DwcaResourceModel dwcaResource) {
-		this.dwcaResource = dwcaResource;
 	}
 }
