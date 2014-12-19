@@ -251,12 +251,10 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
   CONSTRAINT download_log_pkey PRIMARY KEY (id )
 );
 
-
 /* Structure to persist resource metadata information: */
-CREATE SEQUENCE IF NOT EXISTS buffer.resource_metadata_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.resource_metadata
 (
-	auto_id integer DEFAULT nextval('buffer.resource_metadata_id_seq') NOT NULL,
+	dwca_resource_id integer,
 	resource_uuid TEXT,
 	resource_name TEXT,
 	alternate_identifier TEXT,
@@ -266,14 +264,14 @@ CREATE TABLE IF NOT EXISTS buffer.resource_metadata
 	_abstract TEXT,
 	keyword TEXT,
 	keyword_thesaurus TEXT,
-	intellectual_rights TEXT,
+	intellectual_rights text,
 	citation TEXT,
 	hierarchy_level TEXT,
 	resource_logo_url TEXT,
 	parent_collection_identifier TEXT,
 	collection_identifier TEXT,
 	collection_name TEXT,
-	CONSTRAINT resource_metadata_pkey PRIMARY KEY (auto_id)
+	CONSTRAINT resource_metadata_pkey PRIMARY KEY (dwca_resource_id)
 );
 
 /* Structure to persist contacts information: */
