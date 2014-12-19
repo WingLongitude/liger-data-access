@@ -22,7 +22,8 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 
 	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceMetadataDAO.class);
-	private static final String MANAGED_ID = "auto_id";
+	// the string "id" always points to the column annotated with @Id
+	private static final String MANAGED_ID = "id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -40,13 +41,12 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 	}
 
 	@Override
-	public ResourceMetadataModel load(Integer auto_id) {
+	public ResourceMetadataModel load(Integer dwca_resource_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);
-		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
+		searchCriteria.add(Restrictions.eq(MANAGED_ID, dwca_resource_id));
 		return (ResourceMetadataModel) searchCriteria.uniqueResult();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ResourceMetadataModel load(String resource_uuid) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);

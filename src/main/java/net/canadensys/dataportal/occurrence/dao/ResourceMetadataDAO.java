@@ -23,7 +23,7 @@ public interface ResourceMetadataDAO {
 	 * @param id
 	 * @return ResourceMetadataModel or null if nothing is found
 	 */
-	public ResourceMetadataModel load(Integer auto_id);
+	public ResourceMetadataModel load(Integer dwca_resource_id);
 
 	/**
 	 * Load a ResourceMetadataModel from a resource_uuid

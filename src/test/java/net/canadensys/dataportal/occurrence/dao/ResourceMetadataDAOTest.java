@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import net.canadensys.dataportal.occurrence.model.ContactModel;
+import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
 import net.canadensys.dataportal.occurrence.model.ResourceMetadataModel;
 
 import org.junit.Test;
@@ -36,6 +37,9 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
+	private DwcaResourceDAO resourceDAO;
+
+	@Autowired
 	private ResourceMetadataDAO resourceMetadataDAO;
 
 	private JdbcTemplate jdbcTemplate;
@@ -49,11 +53,19 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 	@Test
 	public void testSaveLoadDelete() {
 
+		// Save a parent DwcaResourceModel first
 		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
+		DwcaResourceModel testDwcaResourceModel = new DwcaResourceModel();
+		testDwcaResourceModel.setSourcefileid(resource_uuid);
+		assertTrue(resourceDAO.save(testDwcaResourceModel));
+		assertTrue(testDwcaResourceModel.getId() != null);
+
 		// Test ResourceInformation model:
 		ResourceMetadataModel testResourceMetadata = new ResourceMetadataModel();
+		testResourceMetadata.setDwca_resource_id(testDwcaResourceModel.getId());
 		testResourceMetadata.set_abstract("This is the lorem ipsum abstract");
 		testResourceMetadata.setTitle("TitleTitleTitle");
+
 		testResourceMetadata.setResource_uuid(resource_uuid);
 
 		// Create contact:
@@ -72,8 +84,7 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 		assertTrue(resourceMetadataDAO.save(testResourceMetadata));
 
 		// Fetch ids from saved objects:
-		Integer resourceInformationId = testResourceMetadata.getAuto_id();
-		assertTrue(resourceInformationId != null && resourceInformationId.intValue() >= 0);
+		Integer resourceInformationPk = testResourceMetadata.getDwca_resource_id();
 		int contact1Id = testResourceContact.getAuto_id();
 		int contact2Id = testResourceContact2.getAuto_id();
 
@@ -107,23 +118,23 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 
 		// Assert resource_metadata_fkey is being filled:
 		Integer fkey = jdbcTemplate.queryForObject("SELECT resource_metadata_fkey FROM contact WHERE name =\'Test Name\'", Integer.class);
-		assertEquals(fkey, resourceInformationId);
+		assertEquals(fkey, resourceInformationPk);
 
 		assertEquals("Test Name 2", loadedContact2.getName());
 		assertEquals("a2@a2.com", loadedContact2.getEmail());
 
 		// Assert resource_metadata_fkey is being filled:
 		fkey = jdbcTemplate.queryForObject("SELECT resource_metadata_fkey FROM contact WHERE name =\'Test Name 2\'", Integer.class);
-		assertEquals(fkey, resourceInformationId);
+		assertEquals(fkey, resourceInformationPk);
 
 		// Test cascade deletion of information and all contacts after information deletion:
 		assertTrue(resourceMetadataDAO.delete(loadedMetadata));
 		// Assert information was deleted:
-		assertNull(resourceMetadataDAO.load(resourceInformationId));
+		assertNull(resourceMetadataDAO.load(resourceInformationPk));
 
 		// Assert contacts were also deleted
-		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM contact WHERE auto_id=" + contact1Id + " OR auto_id ="
-				+ contact2Id, Long.class);
+		Long contactCount = jdbcTemplate.queryForObject("SELECT count(*) FROM contact WHERE auto_id=" + contact1Id + " OR auto_id =" + contact2Id,
+				Long.class);
 		assertEquals(0, contactCount.intValue());
 	}
 }

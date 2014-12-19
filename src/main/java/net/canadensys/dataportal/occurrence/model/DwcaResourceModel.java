@@ -1,18 +1,15 @@
 package net.canadensys.dataportal.occurrence.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Model to keep info about resources. Resource represents the source archive.
@@ -24,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "dwca_resource")
 @SequenceGenerator(name = "dwca_resource_id_seq", sequenceName = "dwca_resource_id_seq", allocationSize = 1)
 public class DwcaResourceModel {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dwca_resource_id_seq")
 	private Integer id;
@@ -37,10 +35,6 @@ public class DwcaResourceModel {
 	@ManyToOne
 	@JoinColumn(name = "publisher_fkey")
 	private PublisherModel publisher;
-
-	@JsonManagedReference
-	@OneToOne(mappedBy = "dwcaResource", cascade = { CascadeType.ALL })
-	private ResourceMetadataModel resourceMetadata;
 
 	public Integer getId() {
 		return id;
@@ -96,23 +90,5 @@ public class DwcaResourceModel {
 
 	public void setPublisher(PublisherModel publisher) {
 		this.publisher = publisher;
-	}
-
-	public ResourceMetadataModel getResourceMetadata() {
-		return resourceMetadata;
-	}
-
-	public void setResourceMetadata(ResourceMetadataModel resourceMetadata) {
-		this.resourceMetadata = resourceMetadata;
-	}
-
-	/**
-	 * This method allows to link ResourceMetadataModel with the current DwcaResourceModel.
-	 * 
-	 * @param resourceMetadata
-	 */
-	public void linkResourceMetadata(ResourceMetadataModel resourceMetadata) {
-		resourceMetadata.setDwcaResource(this);
-		this.resourceMetadata = resourceMetadata;
 	}
 }
