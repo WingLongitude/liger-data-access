@@ -290,8 +290,8 @@ CREATE TABLE IF NOT EXISTS buffer.contact
 	phone TEXT,
 	email TEXT,
 	role TEXT,
-	publisher_information_fkey integer references publisher_information(auto_id),
-	resource_information_fkey integer references resource_information(auto_id),
+	publisher_fkey integer REFERENCES publisher(auto_id),
+	resource_metadata_fkey integer REFERENCES resource_metadata(dwca_resource_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 

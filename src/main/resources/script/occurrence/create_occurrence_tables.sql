@@ -1,3 +1,8 @@
+CREATE TABLE IF NOT EXISTS db_metadata (
+schema_version TEXT,
+schema_version_date DATE
+);
+
 CREATE TABLE IF NOT EXISTS occurrence (
 auto_id INTEGER NOT NULL,
 associatedmedia TEXT,
@@ -338,8 +343,8 @@ CREATE TABLE IF NOT EXISTS contact
 	phone TEXT,
 	email TEXT,
 	role TEXT,
-	publisher_fkey integer references publisher(auto_id),
-	resource_metadata_fkey integer references resource_metadata(dwca_resource_id),
+	publisher_fkey integer REFERENCES publisher(auto_id),
+	resource_metadata_fkey integer REFERENCES resource_metadata(dwca_resource_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 
