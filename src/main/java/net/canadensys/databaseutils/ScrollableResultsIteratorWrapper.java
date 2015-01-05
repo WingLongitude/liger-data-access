@@ -18,6 +18,7 @@ public class ScrollableResultsIteratorWrapper<T> implements Iterator<T> {
 	private T next = null;
 	private Session session;
 	private int count = 0;
+	private boolean elementPulled = false;
 
 	public ScrollableResultsIteratorWrapper(ScrollableResults sr, Session session) {
 		this.sr = sr;
@@ -30,9 +31,15 @@ public class ScrollableResultsIteratorWrapper<T> implements Iterator<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean hasNext() {
+		// if we have a next element that was not pulled, just simply return true.
+		if (!elementPulled && next != null) {
+			return true;
+		}
+
 		if (sr.next()) {
 			// we remember the element
 			next = (T) sr.get()[0];
+			elementPulled = false;
 			return true;
 		}
 		return false;
@@ -67,6 +74,7 @@ public class ScrollableResultsIteratorWrapper<T> implements Iterator<T> {
 			}
 			count++;
 		}
+		elementPulled = true;
 		return toReturn;
 	}
 

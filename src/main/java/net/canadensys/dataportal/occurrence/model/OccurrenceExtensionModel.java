@@ -6,8 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import net.canadensys.databaseutils.hibernate.KeyValueType;
+
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 /**
  * Model containing data related to a DarwinCore occurrence extension. Data are stored in a key/value map allowing to abstract specific extension
@@ -18,6 +22,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "occurrence_extension")
+@TypeDefs({ @TypeDef(name = "KeyValueType", typeClass = KeyValueType.class) })
 public class OccurrenceExtensionModel {
 
 	@Id
@@ -27,11 +32,13 @@ public class OccurrenceExtensionModel {
 	private String dwcaid;
 	@NaturalId
 	private String sourcefileid;
+	@NaturalId
+	private String resource_uuid;
 
 	private String ext_type;
 	private String ext_version;
 
-	@Type(type = "net.canadensys.databaseutils.hibernate.KeyValueType")
+	@Type(type = "KeyValueType")
 	private Map<String, String> ext_data;
 
 	public long getAuto_id() {
@@ -48,6 +55,22 @@ public class OccurrenceExtensionModel {
 
 	public void setDwcaid(String dwcaid) {
 		this.dwcaid = dwcaid;
+	}
+
+	public String getSourcefileid() {
+		return sourcefileid;
+	}
+
+	public void setSourcefileid(String sourcefileid) {
+		this.sourcefileid = sourcefileid;
+	}
+
+	public String getResource_uuid() {
+		return resource_uuid;
+	}
+
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
 	}
 
 	public String getExt_type() {
@@ -72,14 +95,6 @@ public class OccurrenceExtensionModel {
 
 	public void setExt_data(Map<String, String> ext_data) {
 		this.ext_data = ext_data;
-	}
-
-	public String getSourcefileid() {
-		return sourcefileid;
-	}
-
-	public void setSourcefileid(String sourcefileid) {
-		this.sourcefileid = sourcefileid;
 	}
 
 }
