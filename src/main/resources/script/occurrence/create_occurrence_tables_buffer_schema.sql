@@ -274,6 +274,27 @@ CREATE TABLE IF NOT EXISTS buffer.resource_metadata
 	CONSTRAINT resource_metadata_pkey PRIMARY KEY (dwca_resource_id)
 );
 
+/* Structure to persist publisher information: */
+CREATE SEQUENCE IF NOT EXISTS buffer.publisher_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.publisher
+(
+	auto_id integer DEFAULT nextval('buffer.publisher_id_seq') NOT NULL,
+	name TEXT,
+	description TEXT,
+	address TEXT,
+	city TEXT,
+	administrative_area TEXT,
+	postal_code TEXT,
+	homepage TEXT,
+	email TEXT,
+	phone TEXT,
+	logo_url TEXT,
+	decimallatitude DOUBLE PRECISION,
+	decimallongitude DOUBLE PRECISION,
+	record_count integer,
+	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
+);
+
 /* Structure to persist contacts information: */
 CREATE SEQUENCE IF NOT EXISTS buffer.contact_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.contact

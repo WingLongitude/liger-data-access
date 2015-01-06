@@ -50,7 +50,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>4.0.9.RELEASE</spring.version>
 		<hibernate.version>4.3.7.Final</hibernate.version>
 		<jackson.version>2.2.3</jackson.version>
 		<canadensys.core.version>1.8</canadensys.core.version>

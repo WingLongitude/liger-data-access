@@ -232,7 +232,6 @@ CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
 CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwcaid , sourcefileid)
 );
 
-
 CREATE SEQUENCE IF NOT EXISTS unique_values_id_seq;
 CREATE TABLE IF NOT EXISTS unique_values
 (
