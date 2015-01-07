@@ -44,7 +44,7 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 		// make sure the table is empty
 		jdbcTemplate.update("DELETE FROM occurrence_extension");
 		jdbcTemplate
-				.update("INSERT INTO occurrence_extension (auto_id,dwcaid,sourcefileid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', toKeyValue('image_type=>png','author=>darwin','licence=>cc0'))");
+				.update("INSERT INTO occurrence_extension (auto_id,dwca_id,sourcefileid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', toKeyValue('image_type=>png','author=>darwin','licence=>cc0'))");
 	}
 
 	@Test

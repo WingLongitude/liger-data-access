@@ -2,6 +2,7 @@ package net.canadensys.dataportal.occurrence.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -20,6 +21,13 @@ public class OccurrenceModel {
 
 	@Id
 	private int auto_id;
+
+	// id used in the dwca
+	@Column(name = "dwca_id")
+	private String dwcaid;
+
+	private String resource_uuid;
+	private String sourcefileid;
 
 	@JoinColumn(name = "auto_id")
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -88,15 +96,9 @@ public class OccurrenceModel {
 	private String verbatimelevation;
 	private String habitat;
 
-	// id used in the dwca
-	private String dwcaid;
-
-	// name of the file that was read
-	private String sourcefileid;
-	
 	// name of the institution for filtering
 	private String publishername;
-	
+
 	// name of the resource for filtering
 	private String resourcename;
 
@@ -548,12 +550,25 @@ public class OccurrenceModel {
 		this.dwcaid = dwcaid;
 	}
 
+	@Deprecated
+	/**
+	 * Will be removed in favor of resource_uuid
+	 * @return
+	 */
 	public String getSourcefileid() {
 		return sourcefileid;
 	}
 
 	public void setSourcefileid(String sourcefileid) {
 		this.sourcefileid = sourcefileid;
+	}
+
+	public String getResource_uuid() {
+		return resource_uuid;
+	}
+
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
 	}
 
 	public String getPublishername() {

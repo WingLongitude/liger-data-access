@@ -1,12 +1,15 @@
 CREATE SCHEMA IF NOT EXISTS buffer;
 CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
+dwca_id TEXT,
+resource_uuid TEXT,
+sourcefileid TEXT,
+occurrenceid TEXT,
 associatedmedia TEXT,
 associatedsequences TEXT,
 basisofrecord TEXT,
 bibliographiccitation TEXT,
 catalogNumber TEXT,
-occurrenceid TEXT,
 _references TEXT,
 collectionCode TEXT,
 continent TEXT,
@@ -54,18 +57,17 @@ hascoordinates boolean,
 hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
-sourcefileid TEXT,
 publishername TEXT,
 resourcename TEXT,
-dwcaid TEXT,
-CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
+CONSTRAINT occurrence_pkey PRIMARY KEY ( auto_id )
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_raw_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
-dwcaid character varying(255),
-sourcefileid character varying(255) NOT NULL,
+dwca_id TEXT,
+resource_uuid TEXT,
+sourcefileid TEXT NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
 accessRights TEXT,
@@ -226,7 +228,7 @@ vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
-CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwcaid , sourcefileid)
+CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.unique_values_id_seq;
@@ -311,8 +313,8 @@ CREATE TABLE IF NOT EXISTS buffer.contact
 	phone TEXT,
 	email TEXT,
 	role TEXT,
-	publisher_fkey integer REFERENCES publisher(auto_id),
-	resource_metadata_fkey integer REFERENCES resource_metadata(dwca_resource_id),
+	publisher_fkey integer,
+	resource_metadata_fkey integer REFERENCES buffer.resource_metadata(dwca_resource_id),
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 
@@ -320,7 +322,7 @@ CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_extension_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_extension
 (
 	auto_id bigint NOT NULL,
-	dwcaid TEXT,
+	dwca_id TEXT,
 	sourcefileid TEXT,
 	resource_uuid TEXT,
 	ext_type TEXT, 

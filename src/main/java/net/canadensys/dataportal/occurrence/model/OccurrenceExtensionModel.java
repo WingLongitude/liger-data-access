@@ -2,6 +2,7 @@ package net.canadensys.dataportal.occurrence.model;
 
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -29,6 +30,7 @@ public class OccurrenceExtensionModel {
 	private long auto_id;
 
 	@NaturalId
+	@Column(name = "dwca_id")
 	private String dwcaid;
 	@NaturalId
 	private String sourcefileid;

@@ -1,5 +1,6 @@
 package net.canadensys.dataportal.occurrence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -22,8 +23,12 @@ public class OccurrenceRawModel {
 	@Transient
 	private String id;
 
-	// mapped to id in the dwca
+	// id used in the dwca
+	@Column(name = "dwca_id")
 	private String dwcaid;
+
+	private String resource_uuid;
+	private String sourcefileid;
 
 	private String acceptednameusage;
 	private String acceptednameusageid;
@@ -160,7 +165,6 @@ public class OccurrenceRawModel {
 	private String scientificnameauthorship;
 	private String scientificnameid;
 	private String sex;
-	private String sourcefileid;
 	private String specificepithet;
 	private String startdayofyear;
 	private String stateprovince;
@@ -1488,5 +1492,13 @@ public class OccurrenceRawModel {
 
 	public void setSourcefileid(String sourcefileid) {
 		this.sourcefileid = sourcefileid;
+	}
+
+	public String getResource_uuid() {
+		return resource_uuid;
+	}
+
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
 	}
 }
