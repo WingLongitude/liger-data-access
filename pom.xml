@@ -55,6 +55,7 @@
 		<jackson.version>2.2.3</jackson.version>
 		<canadensys.core.version>1.8</canadensys.core.version>
 		<dwca-reader.version>1.18</dwca-reader.version>
+		<h2.version>1.3.176</h2.version>
 	</properties>
 
 	<profiles>
@@ -195,7 +196,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.3.175</version>
+			<version>${h2.version}</version>
 			<scope>test</scope>
 		</dependency>
 

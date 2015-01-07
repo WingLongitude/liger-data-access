@@ -1,5 +1,6 @@
 package net.canadensys.dataportal.occurrence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,10 @@ public class DwcaResourceModel {
 	private String sourcefileid;
 	private String resource_uuid;
 	private String archive_url;
+
+	@Column(name = "is_local", nullable = false)
+	private Boolean local = false;
+
 	private Integer record_count;
 
 	@JsonBackReference
@@ -66,6 +71,14 @@ public class DwcaResourceModel {
 
 	public void setArchive_url(String archive_url) {
 		this.archive_url = archive_url;
+	}
+
+	public Boolean getLocal() {
+		return local;
+	}
+
+	public void setLocal(Boolean local) {
+		this.local = local;
 	}
 
 	public String getSourcefileid() {

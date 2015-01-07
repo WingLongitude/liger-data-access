@@ -294,11 +294,12 @@ CREATE TABLE IF NOT EXISTS dwca_resource
 (
   id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
   name TEXT,
-  sourcefileid character varying(255),
+  sourcefileid TEXT NOT NULL,
   resource_uuid TEXT,
   archive_url TEXT,
+  is_local boolean DEFAULT FALSE NOT NULL,
   record_count integer,
-  publisher_fkey integer references publisher(auto_id),
+  publisher_fkey integer REFERENCES publisher(auto_id),
   CONSTRAINT dwca_resource_pkey PRIMARY KEY ( id ),
   CONSTRAINT dwca_resource_source_file_id_key UNIQUE (sourcefileid)
 );

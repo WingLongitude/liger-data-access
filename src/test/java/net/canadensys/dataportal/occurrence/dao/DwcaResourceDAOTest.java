@@ -34,6 +34,7 @@ public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContex
 		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
 
 		DwcaResourceModel testModel = new DwcaResourceModel();
+		testModel.setResource_uuid(resource_uuid);
 		testModel.setSourcefileid(resource_uuid);
 		assertTrue(resourceDAO.save(testModel));
 
