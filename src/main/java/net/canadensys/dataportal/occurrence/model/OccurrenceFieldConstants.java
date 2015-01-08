@@ -1,7 +1,7 @@
 package net.canadensys.dataportal.occurrence.model;
 
 /**
- * Constants definitions for model fields(rows) name.
+ * Constants definitions for model fields name.
  * 
  * @author cgendreau
  * 
