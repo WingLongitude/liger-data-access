@@ -1,4 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS buffer;
+
+CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
@@ -62,7 +64,6 @@ resourcename TEXT,
 CONSTRAINT occurrence_pkey PRIMARY KEY ( auto_id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_raw_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
@@ -327,5 +328,6 @@ CREATE TABLE IF NOT EXISTS buffer.occurrence_extension
 	resource_uuid TEXT,
 	ext_type TEXT, 
 	ext_version TEXT, 
-	ext_data hstore
+	ext_data hstore,
+	CONSTRAINT occurrence_extension_pkey PRIMARY KEY (auto_id)
 );
