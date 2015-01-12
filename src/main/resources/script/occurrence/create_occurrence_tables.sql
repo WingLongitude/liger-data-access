@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS db_metadata (
 schema_version TEXT,
-schema_version_date DATE
+schema_version_date DATE,
+CONSTRAINT db_metadata_pkey PRIMARY KEY ( schema_version )
 );
 
 CREATE TABLE IF NOT EXISTS occurrence (
