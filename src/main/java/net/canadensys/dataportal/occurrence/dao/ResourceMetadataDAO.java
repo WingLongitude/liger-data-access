@@ -6,8 +6,48 @@ import net.canadensys.dataportal.occurrence.model.ResourceMetadataModel;
  * Interface for accessing resource information data.
  * 
  * @author Pedro Guimarães
+ * @author cgendreau
  */
 public interface ResourceMetadataDAO {
+
+	/**
+	 * Possible values for ContactModel role attribute
+	 * 
+	 * @author cgendreau
+	 * 
+	 */
+	public enum ContactRole {
+		CONTACT("contact"),
+		AGENT("agent"),
+		METADATA_PROVIDER("metadata_provider"),
+		RESOURCE_CREATOR("resource_creator");
+
+		private String key;
+
+		private ContactRole(String key) {
+			this.key = key;
+		}
+
+		public String getKey() {
+			return key;
+		}
+
+		/**
+		 * Return the matching ContactRole or null.
+		 * The matching is case insensitive.
+		 * 
+		 * @param key
+		 * @return
+		 */
+		public static ContactRole fromKey(String key) {
+			for (ContactRole curr : ContactRole.values()) {
+				if (curr.key.equalsIgnoreCase(key)) {
+					return curr;
+				}
+			}
+			return null;
+		}
+	};
 
 	/**
 	 * Save a ResourceMetadataModel
