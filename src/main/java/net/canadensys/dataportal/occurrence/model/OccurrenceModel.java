@@ -35,6 +35,7 @@ public class OccurrenceModel {
 
 	private String basisofrecord;
 	private String catalognumber;
+	private String othercatalognumbers;
 	private String occurrenceid;
 	private String collectioncode;
 	private String bibliographiccitation;
@@ -87,8 +88,9 @@ public class OccurrenceModel {
 
 	private Double decimallatitude;
 	private Double decimallongitude;
-
+	private String datageneralizations;
 	private Boolean hascoordinates;
+
 	private Boolean hasmedia;
 	private Boolean hastypestatus;
 	private Boolean hasassociatedsequences;
@@ -132,6 +134,14 @@ public class OccurrenceModel {
 
 	public void setCatalognumber(String catalognumber) {
 		this.catalognumber = catalognumber;
+	}
+
+	public String getOthercatalognumbers() {
+		return othercatalognumbers;
+	}
+
+	public void setOthercatalognumbers(String othercatalognumbers) {
+		this.othercatalognumbers = othercatalognumbers;
 	}
 
 	public String getOccurrenceid() {
@@ -196,6 +206,14 @@ public class OccurrenceModel {
 
 	public void setDecimallongitude(Double decimallongitude) {
 		this.decimallongitude = decimallongitude;
+	}
+
+	public String getDatageneralizations() {
+		return datageneralizations;
+	}
+
+	public void setDatageneralizations(String datageneralizations) {
+		this.datageneralizations = datageneralizations;
 	}
 
 	public String getEventdate() {
@@ -550,11 +568,6 @@ public class OccurrenceModel {
 		this.dwcaid = dwcaid;
 	}
 
-	@Deprecated
-	/**
-	 * Will be removed in favor of resource_uuid
-	 * @return
-	 */
 	public String getSourcefileid() {
 		return sourcefileid;
 	}

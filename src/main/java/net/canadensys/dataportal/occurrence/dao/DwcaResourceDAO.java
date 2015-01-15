@@ -20,14 +20,22 @@ public interface DwcaResourceDAO {
 	 * @return ResourceModel or null if nothing is found
 	 */
 	public DwcaResourceModel load(Integer auto_id);
-	
+
 	/**
-	 * Load a ResourceModel from a resource_uuid
+	 * Load a DwcaResourceModel from a sourceFileId
+	 * 
+	 * @param sourceFileId
+	 * @return ResourceModel or null if nothing is found
+	 */
+	public DwcaResourceModel loadBySourceFileId(String sourceFileId);
+
+	/**
+	 * Load a DwcaResourceModel from a resource_uuid
 	 * 
 	 * @param resource_uuid
 	 * @return ResourceModel or null if nothing is found
 	 */
-	public DwcaResourceModel loadBySourceFileId(String resource_uuid);
+	public DwcaResourceModel loadByResourceUUID(String resource_uuid);
 
 	/**
 	 * Save a ResourceModel

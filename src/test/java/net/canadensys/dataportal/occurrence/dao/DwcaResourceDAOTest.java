@@ -31,17 +31,21 @@ public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContex
 	@Test
 	public void testSaveAndLoad() {
 
+		String sourceFileId = "source-file";
 		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
 
 		DwcaResourceModel testModel = new DwcaResourceModel();
 		testModel.setResource_uuid(resource_uuid);
-		testModel.setSourcefileid(resource_uuid);
+		testModel.setSourcefileid(sourceFileId);
 		assertTrue(resourceDAO.save(testModel));
 
 		int id = testModel.getId();
 
-		DwcaResourceModel loadedModel = resourceDAO.loadBySourceFileId(resource_uuid);
-		assertEquals(resource_uuid, loadedModel.getSourcefileid());
+		DwcaResourceModel loadedModel = resourceDAO.loadBySourceFileId(sourceFileId);
+		assertEquals(id, loadedModel.getId().intValue());
+
+		loadedModel = resourceDAO.loadByResourceUUID(resource_uuid);
+		assertEquals(id, loadedModel.getId().intValue());
 
 		DwcaResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);

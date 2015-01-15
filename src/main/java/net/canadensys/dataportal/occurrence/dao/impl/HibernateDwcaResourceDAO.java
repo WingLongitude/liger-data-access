@@ -3,8 +3,8 @@ package net.canadensys.dataportal.occurrence.dao.impl;
 import java.util.List;
 
 import net.canadensys.dataportal.occurrence.dao.DwcaResourceDAO;
-import net.canadensys.dataportal.occurrence.model.OccurrenceFieldConstants;
 import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
+import net.canadensys.dataportal.occurrence.model.OccurrenceFieldConstants;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -40,6 +40,12 @@ public class HibernateDwcaResourceDAO implements DwcaResourceDAO {
 	public DwcaResourceModel loadBySourceFileId(String sourceFileId) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(DwcaResourceModel.class);
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
+		return (DwcaResourceModel) searchCriteria.uniqueResult();
+	}
+
+	public DwcaResourceModel loadByResourceUUID(String resource_uuid) {
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(DwcaResourceModel.class);
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
 		return (DwcaResourceModel) searchCriteria.uniqueResult();
 	}
 
