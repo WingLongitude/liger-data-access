@@ -1,43 +1,52 @@
 CREATE SCHEMA IF NOT EXISTS buffer;
+
+CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
+dwca_id TEXT,
+resource_uuid TEXT,
+sourcefileid TEXT,
+occurrenceid TEXT,
 associatedmedia TEXT,
 associatedsequences TEXT,
-basisofrecord VARCHAR(25),
+basisofrecord TEXT,
+bibliographiccitation TEXT,
 catalogNumber TEXT,
+othercatalognumbers TEXT,
 _references TEXT,
 collectionCode TEXT,
-continent VARCHAR(50),
-country VARCHAR(90),
-county VARCHAR(90),
-municipality VARCHAR(90),
-datasetName VARCHAR(50),
+continent TEXT,
+country TEXT,
+county TEXT,
+municipality TEXT,
+datasetName TEXT,
 habitat TEXT,
 locality TEXT,
-kingdom VARCHAR(25),
-phylum character varying(50),
-_class character varying(100),
+kingdom TEXT,
+phylum TEXT,
+_class TEXT,
 _order TEXT,
 family TEXT,
-genus character varying(100),
-specificepithet character varying(250),
-infraspecificepithet character varying(250),
-species character varying(200),
+genus TEXT,
+specificepithet TEXT,
+infraspecificepithet TEXT,
+species TEXT,
 recordedBy TEXT,
 recordNumber TEXT,
-institutioncode character varying(100),
+institutioncode TEXT,
 scientificName TEXT,
 rawscientificname TEXT,
 scientificnameauthorship TEXT,
 stateProvince TEXT,
 typeStatus TEXT,
-taxonRank VARCHAR(25),
+taxonRank TEXT,
 verbatimElevation TEXT,
 minimumelevationinmeters DOUBLE PRECISION,
 maximumelevationinmeters DOUBLE PRECISION,
 decimallatitude DOUBLE PRECISION,
 decimallongitude DOUBLE PRECISION,
-eventdate VARCHAR(50),
+datageneralizations TEXT,
+eventdate TEXT,
 starteventdate DATE,
 endeventdate DATE,
 sday smallint,
@@ -52,16 +61,16 @@ hascoordinates boolean,
 hasmedia boolean,
 hastypestatus boolean,
 hasassociatedsequences boolean,
-sourcefileid VARCHAR(50),
-dwcaid VARCHAR(100),
-CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
+publishername TEXT,
+resourcename TEXT,
+CONSTRAINT occurrence_pkey PRIMARY KEY ( auto_id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_raw_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
-dwcaid VARCHAR(100),
-sourcefileid character varying(50) NOT NULL,
+dwca_id TEXT,
+resource_uuid TEXT,
+sourcefileid TEXT NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
 accessRights TEXT,
@@ -222,17 +231,17 @@ vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
-CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwcaid , sourcefileid)
+CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.unique_values_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.unique_values
 (
   id integer DEFAULT nextval('buffer.unique_values_id_seq') NOT NULL,
-  key character varying(255) NOT NULL,
+  key TEXT NOT NULL,
   occurrence_count integer NOT NULL,
-  value character varying(255) NOT NULL,
-  unaccented_value character varying(255),
+  value TEXT NOT NULL,
+  unaccented_value TEXT,
   CONSTRAINT unique_values_pkey PRIMARY KEY (id )
 );
 
@@ -241,63 +250,86 @@ CREATE TABLE IF NOT EXISTS buffer.download_log
 (
   id integer DEFAULT nextval('buffer.download_log_id_seq') NOT NULL,
   event_date timestamp,
-  search_criteria text,
+  search_criteria TEXT,
   number_of_records integer,
-  email character varying(200),
+  email TEXT,
   CONSTRAINT download_log_pkey PRIMARY KEY (id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.resource_information_id_seq;
-CREATE TABLE IF NOT EXISTS buffer.resource_information
+/* Structure to persist resource metadata information: */
+CREATE TABLE IF NOT EXISTS buffer.resource_metadata
 (
-	auto_id integer DEFAULT nextval('buffer.resource_information_id_seq') NOT NULL,
-	resource_uuid character varying(50),
-	resource_name character varying(100),
-	alternate_identifier character varying(100),
-	title character varying(100),
+	dwca_resource_id integer,
+	resource_uuid TEXT,
+	resource_name TEXT,
+	alternate_identifier TEXT,
+	title TEXT,
 	publication_date date,
-	language character varying(30),
-	_abstract text,
-	keyword character varying(200),
-	keyword_thesaurus character varying(100),
+	language TEXT,
+	_abstract TEXT,
+	keyword TEXT,
+	keyword_thesaurus TEXT,
 	intellectual_rights text,
-	citation character varying(200),
-	hierarchy_level character varying(100),
-	resource_logo_url character varying(150),
-	parent_collection_identifier character varying(50),
-	collection_identifier character varying(150),
-	collection_name character varying(150),
-	CONSTRAINT resource_information_pkey PRIMARY KEY (auto_id)
+	citation TEXT,
+	hierarchy_level TEXT,
+	resource_logo_url TEXT,
+	parent_collection_identifier TEXT,
+	collection_identifier TEXT,
+	collection_name TEXT,
+	CONSTRAINT resource_metadata_pkey PRIMARY KEY (dwca_resource_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.resource_contact_id_seq;
-CREATE TABLE IF NOT EXISTS buffer.resource_contact
+/* Structure to persist publisher information: */
+CREATE SEQUENCE IF NOT EXISTS buffer.publisher_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.publisher
 (
-	auto_id integer DEFAULT nextval('buffer.resource_contact_id_seq') NOT NULL,
-	resource_uuid character varying(50),
-	resource_name character varying(100),
-	name character varying(100),
-	position_name character varying(100),
-	organization_name character varying(100),
-	address text,
-	city character varying(100),
-	administrative_area character varying(100),
-	country character varying(100),
-	postal_code character varying(10),
-	phone character varying(20),
-	email character varying(200),
-	resource_information_fkey integer references resource_information(auto_id),
-	CONSTRAINT resource_contact_pkey PRIMARY KEY (auto_id)
+	auto_id integer DEFAULT nextval('buffer.publisher_id_seq') NOT NULL,
+	name TEXT,
+	description TEXT,
+	address TEXT,
+	city TEXT,
+	administrative_area TEXT,
+	postal_code TEXT,
+	homepage TEXT,
+	email TEXT,
+	phone TEXT,
+	logo_url TEXT,
+	decimallatitude DOUBLE PRECISION,
+	decimallongitude DOUBLE PRECISION,
+	record_count integer,
+	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
+);
+
+/* Structure to persist contacts information: */
+CREATE SEQUENCE IF NOT EXISTS buffer.contact_id_seq;
+CREATE TABLE IF NOT EXISTS buffer.contact
+(
+	auto_id integer DEFAULT nextval('buffer.contact_id_seq') NOT NULL,
+	name TEXT,
+	position_name TEXT,
+	organization_name TEXT,
+	address TEXT,
+	city TEXT,
+	administrative_area TEXT,
+	country TEXT,
+	postal_code TEXT,
+	phone TEXT,
+	email TEXT,
+	role TEXT,
+	publisher_fkey integer,
+	resource_metadata_fkey integer REFERENCES buffer.resource_metadata(dwca_resource_id),
+	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_extension_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_extension
 (
 	auto_id bigint NOT NULL,
-	dwcaid character varying(75),
-	sourcefileid character varying(50),
-	resource_uuid character varying(50),
-	ext_type character varying(25), 
-	ext_version character varying(10), 
-	ext_data hstore
+	dwca_id TEXT,
+	sourcefileid TEXT,
+	resource_uuid TEXT,
+	ext_type TEXT, 
+	ext_version TEXT, 
+	ext_data hstore,
+	CONSTRAINT occurrence_extension_pkey PRIMARY KEY (auto_id)
 );

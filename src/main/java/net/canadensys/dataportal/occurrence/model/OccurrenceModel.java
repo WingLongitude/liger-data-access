@@ -2,6 +2,7 @@ package net.canadensys.dataportal.occurrence.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,14 +22,23 @@ public class OccurrenceModel {
 	@Id
 	private int auto_id;
 
+	// id used in the dwca
+	@Column(name = "dwca_id")
+	private String dwcaid;
+
+	private String resource_uuid;
+	private String sourcefileid;
+
 	@JoinColumn(name = "auto_id")
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	private OccurrenceRawModel rawModel;
 
 	private String basisofrecord;
 	private String catalognumber;
+	private String othercatalognumbers;
+	private String occurrenceid;
 	private String collectioncode;
-
+	private String bibliographiccitation;
 	private String associatedmedia;
 	private String _references;
 
@@ -78,8 +88,9 @@ public class OccurrenceModel {
 
 	private Double decimallatitude;
 	private Double decimallongitude;
-
+	private String datageneralizations;
 	private Boolean hascoordinates;
+
 	private Boolean hasmedia;
 	private Boolean hastypestatus;
 	private Boolean hasassociatedsequences;
@@ -87,11 +98,11 @@ public class OccurrenceModel {
 	private String verbatimelevation;
 	private String habitat;
 
-	// id used in the dwca
-	private String dwcaid;
+	// name of the institution for filtering
+	private String publishername;
 
-	// name of the file that was read
-	private String sourcefileid;
+	// name of the resource for filtering
+	private String resourcename;
 
 	public int getAuto_id() {
 		return auto_id;
@@ -125,6 +136,22 @@ public class OccurrenceModel {
 		this.catalognumber = catalognumber;
 	}
 
+	public String getOthercatalognumbers() {
+		return othercatalognumbers;
+	}
+
+	public void setOthercatalognumbers(String othercatalognumbers) {
+		this.othercatalognumbers = othercatalognumbers;
+	}
+
+	public String getOccurrenceid() {
+		return occurrenceid;
+	}
+
+	public void setOccurrenceid(String occurrenceid) {
+		this.occurrenceid = occurrenceid;
+	}
+
 	public String getCollectioncode() {
 		return collectioncode;
 	}
@@ -153,6 +180,14 @@ public class OccurrenceModel {
 		return datasetname;
 	}
 
+	public String getBibliographiccitation() {
+		return bibliographiccitation;
+	}
+
+	public void setBibliographiccitation(String bibliographiccitation) {
+		this.bibliographiccitation = bibliographiccitation;
+	}
+
 	public void setDatasetname(String datasetname) {
 		this.datasetname = datasetname;
 	}
@@ -171,6 +206,14 @@ public class OccurrenceModel {
 
 	public void setDecimallongitude(Double decimallongitude) {
 		this.decimallongitude = decimallongitude;
+	}
+
+	public String getDatageneralizations() {
+		return datageneralizations;
+	}
+
+	public void setDatageneralizations(String datageneralizations) {
+		this.datageneralizations = datageneralizations;
 	}
 
 	public String getEventdate() {
@@ -531,5 +574,29 @@ public class OccurrenceModel {
 
 	public void setSourcefileid(String sourcefileid) {
 		this.sourcefileid = sourcefileid;
+	}
+
+	public String getResource_uuid() {
+		return resource_uuid;
+	}
+
+	public void setResource_uuid(String resource_uuid) {
+		this.resource_uuid = resource_uuid;
+	}
+
+	public String getPublishername() {
+		return publishername;
+	}
+
+	public void setPublishername(String publishername) {
+		this.publishername = publishername;
+	}
+
+	public String getResourcename() {
+		return resourcename;
+	}
+
+	public void setResourcename(String resourcename) {
+		this.resourcename = resourcename;
 	}
 }

@@ -52,399 +52,409 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Implementation for accessing occurrence data through Hibernate technology.
  * TODO setter for max result
+ * 
  * @author canadensys
- *
+ * 
  */
 @Repository("occurrenceDAO")
 public class HibernateOccurrenceDAO implements OccurrenceDAO {
 	private static final String OCCURRENCE_TABLE = OccurrenceModel.class.getAnnotation(Table.class).name();
 	private static final String MANAGED_ID = "auto_id";
-	
+
 	private static final String RAW_MODEL = "rawModel";
-	
-	//get log4j handler
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateOccurrenceDAO.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	//this object is expensive to create so only create one and reuse it. This object
-	//is thread safe after configuration.
+
+	// this object is expensive to create so only create one and reuse it. This object
+	// is thread safe after configuration.
 	private ObjectMapper jacksonMapper = new ObjectMapper();
-	
+
 	@Override
-	public OccurrenceModel load(int auto_id){
+	public OccurrenceModel load(int auto_id) {
 		return load(auto_id, false);
-	}	
-	
+	}
+
 	/**
-	* Fetch occurrence from auto_id
-	*/
+	 * Fetch occurrence from auto_id
+	 */
 	@Override
 	public OccurrenceModel load(int auto_id, boolean deepLoad) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
-		if(deepLoad) {
+		if (deepLoad) {
 			searchCriteria.setFetchMode(RAW_MODEL, FetchMode.JOIN);
 		}
-		return (OccurrenceModel)searchCriteria.uniqueResult();
+		return (OccurrenceModel) searchCriteria.uniqueResult();
 	}
 
 	@Override
-	public OccurrenceModel load(String sourceFileId, String dwcaId, boolean deepLoad){
+	public OccurrenceModel load(String sourceFileId, String dwcaId, boolean deepLoad) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
 		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.DWCA_ID, dwcaId));
-		
-		if(deepLoad){
+
+		if (deepLoad) {
 			searchCriteria.setFetchMode(RAW_MODEL, FetchMode.JOIN);
 		}
-		return (OccurrenceModel)searchCriteria.uniqueResult();
+		return (OccurrenceModel) searchCriteria.uniqueResult();
 	}
-	
+
 	@Override
-	public OccurrenceModel loadOccurrenceSummary(int auto_id, List<String> columnList){
+	public OccurrenceModel loadOccurrenceSummary(int auto_id, List<String> columnList) {
 		Criteria occCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
 		occCriteria.add(Restrictions.eq(MANAGED_ID, auto_id));
-		if(columnList != null && !columnList.isEmpty()){
+		if (columnList != null && !columnList.isEmpty()) {
 			ProjectionList projectionsList = Projections.projectionList();
-			for(String fieldName : columnList){
-				projectionsList.add(Projections.property(fieldName),fieldName);
+			for (String fieldName : columnList) {
+				projectionsList.add(Projections.property(fieldName), fieldName);
 			}
 			occCriteria.setProjection(projectionsList);
 		}
 		occCriteria.setResultTransformer(Transformers.aliasToBean(OccurrenceModel.class));
-		return (OccurrenceModel)occCriteria.uniqueResult();
+		return (OccurrenceModel) occCriteria.uniqueResult();
 	}
-	
-	@Override
-	public List<OccurrenceModel> search(OccurrenceModel searchCriteria, Integer limit){
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class)
-				.add( Example.create(searchCriteria));
 
-		if(limit != null){
+	@Override
+	public List<OccurrenceModel> search(OccurrenceModel searchCriteria, Integer limit) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class).add(Example.create(searchCriteria));
+
+		if (limit != null) {
 			criteria.setMaxResults(limit);
 		}
 		@SuppressWarnings("unchecked")
 		List<OccurrenceModel> results = criteria.list();
 		return results;
 	}
-			
+
 	@Override
-	public List<OccurrenceModel> search(
-			HashMap<String, List<String>> searchCriteriaMap) {
-		
-		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class)
-				.setMaxResults(10);
-		
+	public List<OccurrenceModel> search(HashMap<String, List<String>> searchCriteriaMap) {
+
+		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class).setMaxResults(10);
+
 		Iterator<String> fieldIt = searchCriteriaMap.keySet().iterator();
 		String fieldName;
 		List<String> valueList;
-		while(fieldIt.hasNext()){
+		while (fieldIt.hasNext()) {
 			fieldName = fieldIt.next();
 			valueList = searchCriteriaMap.get(fieldName);
-			for(String value : valueList){
+			for (String value : valueList) {
 				searchCriteria.add(Restrictions.eq(fieldName, value));
 			}
 		}
-		
-		@SuppressWarnings("unchecked")    
+
+		@SuppressWarnings("unchecked")
 		List<OccurrenceModel> occurrenceList = searchCriteria.list();
 		return occurrenceList;
 	}
-	
+
 	@Override
-	public Iterator<OccurrenceModel> searchIterator(Map<String, List<SearchQueryPart>> searchCriteriaMap){
+	public Iterator<OccurrenceModel> searchIterator(Map<String, List<SearchQueryPart>> searchCriteriaMap) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria searchCriteria = session.createCriteria(OccurrenceModel.class);
-		
-		//put searchCriteriaMap into the Criteria object
-		fillCriteria(searchCriteria,searchCriteriaMap);
-		searchCriteria.setFetchSize(DEFAULT_FLUSH_LIMIT);  // experiment with this to optimize performance vs. memory
-		return new ScrollableResultsIteratorWrapper<OccurrenceModel>(searchCriteria.scroll(ScrollMode.FORWARD_ONLY),session);
+
+		// put searchCriteriaMap into the Criteria object
+		fillCriteria(searchCriteria, searchCriteriaMap);
+		searchCriteria.setFetchSize(DEFAULT_FLUSH_LIMIT); // experiment with this to optimize performance vs. memory
+		return new ScrollableResultsIteratorWrapper<OccurrenceModel>(searchCriteria.scroll(ScrollMode.FORWARD_ONLY), session);
 	}
-	
+
 	/**
-	 * This will preload the rawModel 
+	 * This will preload the rawModel
 	 * TODO : find a way to load the OccurrenceRawModel only
 	 * Doc in Hibernate scroll : http://docs.jboss.org/hibernate/orm/4.1/devguide/en-US/html_single/#d5e986
+	 * 
 	 * @param searchCriteriaMap
-	 * @param orderBy (optional) descending order property
+	 * @param orderBy
+	 *            (optional) descending order property
 	 * @return
 	 */
-	public Iterator<OccurrenceModel> searchIteratorRaw(Map<String, List<SearchQueryPart>> searchCriteriaMap, String orderBy){
+	public Iterator<OccurrenceModel> searchIteratorRaw(Map<String, List<SearchQueryPart>> searchCriteriaMap, String orderBy) {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria searchCriteria = session.createCriteria(OccurrenceModel.class,"occ");
+		Criteria searchCriteria = session.createCriteria(OccurrenceModel.class, "occ");
 		searchCriteria.setFetchMode("rawModel", FetchMode.JOIN);
-		
-		//would be nice to add a projection but the projection will remove the FetchMode.JOIN
-//		ProjectionList projectionsList = Projections.projectionList();
-//		projectionsList.add(Projections.property("rawModel"));
-//		searchCriteria.setProjection(projectionsList);
-		
-		//put searchCriteriaMap into the Criteria object
-		fillCriteria(searchCriteria,searchCriteriaMap);
+
+		// would be nice to add a projection but the projection will remove the FetchMode.JOIN
+		// ProjectionList projectionsList = Projections.projectionList();
+		// projectionsList.add(Projections.property("rawModel"));
+		// searchCriteria.setProjection(projectionsList);
+
+		// put searchCriteriaMap into the Criteria object
+		fillCriteria(searchCriteria, searchCriteriaMap);
 		searchCriteria.setFetchSize(DEFAULT_FLUSH_LIMIT);
 		searchCriteria.setCacheMode(CacheMode.IGNORE);
-		if(orderBy != null){
-			//we always use desc, maybe we should let the caller decide
+		if (orderBy != null) {
+			// we always use desc, maybe we should let the caller decide
 			searchCriteria.addOrder(Order.desc(orderBy));
-		}		
-		return new ScrollableResultsIteratorWrapper<OccurrenceModel>(searchCriteria.scroll(ScrollMode.FORWARD_ONLY),session);
+		}
+		return new ScrollableResultsIteratorWrapper<OccurrenceModel>(searchCriteria.scroll(ScrollMode.FORWARD_ONLY), session);
 	}
 
 	@Override
-	public LimitedResult<List<Map<String, String>>> searchWithLimit(
-			Map<String, List<SearchQueryPart>> searchCriteriaMap, List<String> columnList) {
+	public LimitedResult<List<Map<String, String>>> searchWithLimit(Map<String, List<SearchQueryPart>> searchCriteriaMap, List<String> columnList) {
 		return searchWithLimit(searchCriteriaMap, columnList, null);
 	}
-	
+
 	@Override
-	public LimitedResult<List<Map<String, String>>> searchWithLimit(
-			Map<String, List<SearchQueryPart>> searchCriteriaMap, List<String> columnList, SearchSortPart sorting) {
-		
+	public LimitedResult<List<Map<String, String>>> searchWithLimit(Map<String, List<SearchQueryPart>> searchCriteriaMap, List<String> columnList,
+			SearchSortPart sorting) {
+
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
-		
-		fillCriteria(searchCriteria,searchCriteriaMap);
-		
-		//First, count all rows
+
+		fillCriteria(searchCriteria, searchCriteriaMap);
+
+		// First, count all rows
 		searchCriteria.setProjection(Projections.count(MANAGED_ID));
-		Long total_rows = (Long)searchCriteria.uniqueResult();
-		
-		//Then set our projection, paging, order by ...
-		if(sorting != null){
+		Long total_rows = (Long) searchCriteria.uniqueResult();
+
+		// Then set our projection, paging, order by ...
+		if (sorting != null) {
 			handleSorting(searchCriteria, sorting);
 		}
-		else{
+		else {
 			searchCriteria.setMaxResults(DEFAULT_LIMIT);
 		}
 
 		ProjectionList projectionsList = Projections.projectionList();
-		for(String fieldName : columnList){
+		for (String fieldName : columnList) {
 			projectionsList.add(Projections.property(fieldName));
 		}
 		searchCriteria.setProjection(projectionsList);
-		
-		@SuppressWarnings("unchecked")    
+
+		@SuppressWarnings("unchecked")
 		List<Object[]> occurrenceList = searchCriteria.list();
-		List<Map<String, String>> searchResult = new ArrayList<Map<String,String>>(occurrenceList.size());
-		
-		//Put the result into a hashmap
-		for(Object[] row : occurrenceList){
-			HashMap<String,String> hm = new HashMap<String,String>();
-			for(int i=0;i<columnList.size();i++){
-				hm.put(columnList.get(i),ObjectUtils.toString(row[i]));
+		List<Map<String, String>> searchResult = new ArrayList<Map<String, String>>(occurrenceList.size());
+
+		// Put the result into a hashmap
+		for (Object[] row : occurrenceList) {
+			HashMap<String, String> hm = new HashMap<String, String>();
+			for (int i = 0; i < columnList.size(); i++) {
+				hm.put(columnList.get(i), ObjectUtils.toString(row[i]));
 			}
 			searchResult.add(hm);
 		}
-		
+
 		LimitedResult<List<Map<String, String>>> qr = new LimitedResult<List<Map<String, String>>>();
 		qr.setRows(searchResult);
 		qr.setTotal_rows(total_rows);
 		return qr;
 	}
-	
+
 	@Override
 	public int getOccurrenceCount(Map<String, List<SearchQueryPart>> searchCriteriaMap) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
 		searchCriteria.setProjection(Projections.count(MANAGED_ID));
-		//put searchCriteriaMap into the Criteria object
-		fillCriteria(searchCriteria,searchCriteriaMap);
-		
-		Long total_rows = (Long)searchCriteria.uniqueResult();
+		// put searchCriteriaMap into the Criteria object
+		fillCriteria(searchCriteria, searchCriteriaMap);
+
+		Long total_rows = (Long) searchCriteria.uniqueResult();
 		return total_rows.intValue();
 	}
-	
+
 	@Override
-	public List<String> getDistinctInstitutionCode(Map<String,List<SearchQueryPart>> searchCriteriaMap){
+	public List<String> getDistinctInstitutionCode(Map<String, List<SearchQueryPart>> searchCriteriaMap) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
-		searchCriteria.setProjection(Projections.distinct( Projections.projectionList()
-				.add( Projections.property("institutioncode"), "institutioncode")));
-		//put searchCriteriaMap into the Criteria object
-		fillCriteria(searchCriteria,searchCriteriaMap);
-		
+		searchCriteria.setProjection(Projections.distinct(Projections.projectionList()
+				.add(Projections.property("institutioncode"), "institutioncode")));
+		// put searchCriteriaMap into the Criteria object
+		fillCriteria(searchCriteria, searchCriteriaMap);
+
 		@SuppressWarnings("unchecked")
 		List<String> distinctIntitutionCode = searchCriteria.list();
 		return distinctIntitutionCode;
 	}
-	
+
 	/**
 	 * Optimized for PostgreSQL
 	 */
 	@Override
-	public Integer getCountDistinct(Map<String,List<SearchQueryPart>> searchCriteriaMap, String column){
+	public Integer getCountDistinct(Map<String, List<SearchQueryPart>> searchCriteriaMap, String column) {
 		String whereClause = SearchQueryPartUtils.searchCriteriaToSQLWhereClause(searchCriteriaMap);
-		String sqlQuery = PostgresUtils.getOptimizedCountDistinctQuery(column, whereClause, OCCURRENCE_TABLE,"cu");
-		Integer count = (Integer)sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).addScalar("cu", IntegerType.INSTANCE).uniqueResult();
+		String sqlQuery = PostgresUtils.getOptimizedCountDistinctQuery(column, whereClause, OCCURRENCE_TABLE, "cu");
+		Integer count = (Integer) sessionFactory.getCurrentSession().createSQLQuery(sqlQuery).addScalar("cu", IntegerType.INSTANCE).uniqueResult();
 		return count;
 	}
 
 	@Override
 	public String getOccurrenceSummaryJson(int auto_id, String idColumnName, List<String> columnList) {
-		
+
 		Criteria occCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
 		occCriteria.add(Restrictions.eq(idColumnName, auto_id));
 		ProjectionList projectionsList = Projections.projectionList();
-		for(String fieldName : columnList){
+		for (String fieldName : columnList) {
 			projectionsList.add(Projections.property(fieldName));
 		}
 		occCriteria.setProjection(projectionsList);
-		
+
 		@SuppressWarnings("unchecked")
 		List<Object[]> occurrence = occCriteria.list();
 		String json = "";
-		///Json
-		if(!occurrence.isEmpty()){
+		// /Json
+		if (!occurrence.isEmpty()) {
 			Object[] row = occurrence.get(0);
 			Map<String, Object> occurrenceInMap = new HashMap<String, Object>();
-			
-			for(int i=0;i<columnList.size();i++){
+
+			for (int i = 0; i < columnList.size(); i++) {
 				occurrenceInMap.put(columnList.get(i), row[i]);
 			}
 			try {
 				json = jacksonMapper.writeValueAsString(occurrenceInMap);
-			} catch (JsonGenerationException e) {
+			}
+			catch (JsonGenerationException e) {
 				LOGGER.error("JSON generation error", e);
-			} catch (JsonMappingException e) {
+			}
+			catch (JsonMappingException e) {
 				LOGGER.error("JSON generation error", e);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				LOGGER.error("JSON generation error", e);
 			}
 		}
-		else{
+		else {
 			LOGGER.error("Occurrence auto_id " + auto_id + " not found");
 		}
 		return json;
 	}
-	
+
 	@Override
-	public List<AbstractMap.SimpleImmutableEntry<String,Integer>> getValueCount(Map<String, List<SearchQueryPart>> searchCriteriaMap, String column, Integer max){
+	public List<AbstractMap.SimpleImmutableEntry<String, Integer>> getValueCount(Map<String, List<SearchQueryPart>> searchCriteriaMap, String column,
+			Integer max) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(OccurrenceModel.class);
-		List<SimpleImmutableEntry<String,Integer>> countList = new ArrayList<SimpleImmutableEntry<String,Integer>>();
-		searchCriteria.setProjection(Projections.projectionList()
-				.add(Projections.alias(Projections.rowCount(),"rowCount"))
+		List<SimpleImmutableEntry<String, Integer>> countList = new ArrayList<SimpleImmutableEntry<String, Integer>>();
+		searchCriteria.setProjection(Projections.projectionList().add(Projections.alias(Projections.rowCount(), "rowCount"))
 				.add(Projections.groupProperty(column)));
 		searchCriteria.add(Restrictions.isNotNull(column));
 		searchCriteria.addOrder(Order.desc("rowCount"));
-		if(max != null){
+		if (max != null) {
 			searchCriteria.setMaxResults(max);
 		}
-		//put searchCriteriaMap into the Criteria object
-		fillCriteria(searchCriteria,searchCriteriaMap);
-		
+		// put searchCriteriaMap into the Criteria object
+		fillCriteria(searchCriteria, searchCriteriaMap);
+
 		@SuppressWarnings("unchecked")
 		List<Object[]> count = searchCriteria.list();
-		SimpleImmutableEntry<String,Integer> entry;
-		for(Object[] row : count){
-			entry = new SimpleImmutableEntry<String, Integer>(row[1].toString(), ((Long)row[0]).intValue());
+		SimpleImmutableEntry<String, Integer> entry;
+		for (Object[] row : count) {
+			entry = new SimpleImmutableEntry<String, Integer>(row[1].toString(), ((Long) row[0]).intValue());
 			countList.add(entry);
 		}
 		return countList;
 	}
-	
+
 	/**
 	 * Fills the Criteria object from the criteria in searchCriteriaMap.
 	 * All different fields from the searchCriteriaMap key will be separated with an AND and
 	 * all different values in the list will be separated with an OR.
+	 * 
 	 * @param citeria
 	 * @param searchCriteriaMap
 	 * @return same instance of Criteria, could be used in method chaining
 	 */
-	protected Criteria fillCriteria(Criteria citeria, Map<String, List<SearchQueryPart>> searchCriteriaMap){
+	protected Criteria fillCriteria(Criteria citeria, Map<String, List<SearchQueryPart>> searchCriteriaMap) {
 		Iterator<String> fieldIt = searchCriteriaMap.keySet().iterator();
 		Criterion fieldCriterion = null;
 		List<SearchQueryPart> queryPartList;
 		String fieldName;
-		
-		while(fieldIt.hasNext()){
+
+		while (fieldIt.hasNext()) {
 			fieldName = fieldIt.next();
 			queryPartList = searchCriteriaMap.get(fieldName);
-			for(SearchQueryPart qp : queryPartList){
-				if(fieldCriterion == null){
+			for (SearchQueryPart qp : queryPartList) {
+				if (fieldCriterion == null) {
 					fieldCriterion = convertIntoCriterion(qp);
 				}
-				else{ //separate different values with an OR statement
+				else { // separate different values with an OR statement
 					fieldCriterion = Restrictions.or(fieldCriterion, convertIntoCriterion(qp));
 				}
 			}
-			//skip invalid criterion
-			if(fieldCriterion != null){
+			// skip invalid criterion
+			if (fieldCriterion != null) {
 				citeria.add(fieldCriterion);
 			}
 			fieldCriterion = null;
 		}
 		return citeria;
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * Converts a SearchQueryPart into a Hibernate Criterion
-	 * @param queryPart  a valid SearchQueryPart object
+	 * 
+	 * @param queryPart
+	 *            a valid SearchQueryPart object
 	 * @return Criterion representing this SearchQueryPart or null if no Criterion can be created
 	 */
-	private Criterion convertIntoCriterion(SearchQueryPart queryPart){
+	private Criterion convertIntoCriterion(SearchQueryPart queryPart) {
 		QueryPartInterpreter intepreter = QueryPartInterpreterResolver.getQueryPartInterpreter(queryPart);
-		if(intepreter == null){
+		if (intepreter == null) {
 			LOGGER.fatal("No interpreter found for " + queryPart);
 			return null;
 		}
 		return intepreter.toCriterion(queryPart);
 	}
-	
+
 	/**
 	 * Handle paging and ORDER BY clause together.
 	 * The main reason is that paging requires a stable ordering.
 	 * Null values are always last in the ordering.
+	 * 
 	 * @param searchCriteria
 	 * @param sorting
 	 * @param pageSize
 	 */
-	private void handleSorting(Criteria searchCriteria, SearchSortPart sorting){
-		
+	private void handleSorting(Criteria searchCriteria, SearchSortPart sorting) {
+
 		Integer pageNumber = sorting.getPageNumber();
 		Integer pageSize = sorting.getPageSize();
 		String orderByColumn = sorting.getOrderByColumn();
 		OrderEnum direction = sorting.getOrder();
-		
-		if(pageSize == null){
+
+		if (pageSize == null) {
 			pageSize = DEFAULT_LIMIT;
 		}
-		if(direction == null){
+		if (direction == null) {
 			direction = OrderEnum.ASC;
 		}
 		searchCriteria.setMaxResults(pageSize);
-		
-		//if no paging and no ordering, there is nothing to do.
-		if(pageNumber == null && StringUtils.isBlank(orderByColumn)){
+
+		// if no paging and no ordering, there is nothing to do.
+		if (pageNumber == null && StringUtils.isBlank(orderByColumn)) {
 			return;
 		}
-		
-		//if we ask for paging, ensure the order by clause for consistent results
-		if(pageNumber != null && StringUtils.isBlank(orderByColumn)){
-			//paging requires order by
-			if(StringUtils.isBlank(orderByColumn)){
+
+		// if we ask for paging, ensure the order by clause for consistent results
+		if (pageNumber != null && StringUtils.isBlank(orderByColumn)) {
+			// paging requires order by
+			if (StringUtils.isBlank(orderByColumn)) {
 				orderByColumn = MANAGED_ID;
 			}
 		}
-		
-		//Handle paging
-		if(pageNumber != null && pageNumber.intValue() > 0){
-			//page number to record shift
-			searchCriteria.setFirstResult((pageNumber-1)*pageSize);
+
+		// Handle paging
+		if (pageNumber != null && pageNumber.intValue() > 0) {
+			// page number to record shift
+			searchCriteria.setFirstResult((pageNumber - 1) * pageSize);
 		}
-		
-		switch(direction){
-			case ASC: searchCriteria.addOrder(Order.asc(orderByColumn).nulls(NullPrecedence.LAST));
-			break;
-			case DESC: searchCriteria.addOrder(Order.desc(orderByColumn).nulls(NullPrecedence.LAST));
-			break;
-			default: throw new IllegalArgumentException("Direction must be ASC or DESC");
+
+		switch (direction) {
+			case ASC:
+				searchCriteria.addOrder(Order.asc(orderByColumn).nulls(NullPrecedence.LAST));
+				break;
+			case DESC:
+				searchCriteria.addOrder(Order.desc(orderByColumn).nulls(NullPrecedence.LAST));
+				break;
+			default:
+				throw new IllegalArgumentException("Direction must be ASC or DESC");
 		}
 	}
 }

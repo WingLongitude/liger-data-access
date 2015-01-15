@@ -27,8 +27,9 @@ import freemarker.template.TemplateException;
  * The declaration will allow to specify the order of the columns and will also avoid a second
  * writing of the archive to fix missing data when a new column is 'discovered' in a later row.
  * Written from GBIF DwcaWriter.
+ * 
  * @author canadensys
- *
+ * 
  */
 public class FixedHeadersDwcaWriter {
 	private File dir;
@@ -50,18 +51,18 @@ public class FixedHeadersDwcaWriter {
 	public FixedHeadersDwcaWriter(Term coreRowType, List<Term> coreTermList, File dir) throws IOException {
 		this.dir = dir;
 		this.coreRowType = coreRowType;
-		addRowType(coreRowType,coreTermList);
+		addRowType(coreRowType, coreTermList);
 	}
 
 	public static String dataFileName(Term rowType) {
 		return rowType.simpleName().toLowerCase() + ".txt";
 	}
 
-	private void addRowType(Term rowType,List<Term> conceptTermList) throws IOException {
-		if(conceptTermList != null){
+	private void addRowType(Term rowType, List<Term> conceptTermList) throws IOException {
+		if (conceptTermList != null) {
 			terms.put(rowType, conceptTermList);
 		}
-		else{
+		else {
 			terms.put(rowType, new ArrayList<Term>());
 		}
 
@@ -72,8 +73,8 @@ public class FixedHeadersDwcaWriter {
 		OutputStream out = new FileOutputStream(df);
 		TabWriter wr = new TabWriter(out);
 		writers.put(rowType, wr);
-		
-		//write headers
+
+		// write headers
 		writeHeaders(rowType);
 	}
 
@@ -83,10 +84,10 @@ public class FixedHeadersDwcaWriter {
 		// start new
 		recordNum++;
 		coreId = id;
-		if(coreRow == null){
+		if (coreRow == null) {
 			coreRow = new HashMap<Term, String>();
 		}
-		else{
+		else {
 			coreRow.clear();
 		}
 	}
@@ -101,8 +102,7 @@ public class FixedHeadersDwcaWriter {
 		return recordNum;
 	}
 
-	private void writeRow(Map<Term, String> rowMap, Term rowType)
-			throws IOException {
+	private void writeRow(Map<Term, String> rowMap, Term rowType) throws IOException {
 		TabWriter writer = writers.get(rowType);
 		List<Term> coreTerms = terms.get(rowType);
 		String[] row = new String[coreTerms.size() + 1];
@@ -129,11 +129,10 @@ public class FixedHeadersDwcaWriter {
 		return Maps.newHashMap(dataFileNames);
 	}
 
-	public void addExtensionRecord(Term rowType,
-			Map<Term, String> row) throws IOException {
+	public void addExtensionRecord(Term rowType, Map<Term, String> row) throws IOException {
 		// make sure we know the extension rowtype
 		if (!terms.containsKey(rowType)) {
-			addRowType(rowType,null);
+			addRowType(rowType, null);
 		}
 		// make sure we know all terms
 		List<Term> knownTerms = terms.get(rowType);
@@ -171,9 +170,9 @@ public class FixedHeadersDwcaWriter {
 			File emlFile = new File(dir, "eml.xml");
 			try {
 				EmlWriter.writeEmlFile(emlFile, eml);
-			} catch (TemplateException e) {
-				throw new IOException("EML template exception: "
-						+ e.getMessage(), e);
+			}
+			catch (TemplateException e) {
+				throw new IOException("EML template exception: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -193,17 +192,17 @@ public class FixedHeadersDwcaWriter {
 		}
 		try {
 			MetaDescriptorWriter.writeMetaFile(metaFile, arch);
-		} catch (TemplateException e) {
-			throw new IOException("Meta.xml template exception: "
-					+ e.getMessage(), e);
+		}
+		catch (TemplateException e) {
+			throw new IOException("Meta.xml template exception: " + e.getMessage(), e);
 		}
 	}
-	
-	private void writeHeaders(Term rowType) throws IOException{
+
+	private void writeHeaders(Term rowType) throws IOException {
 		TabWriter writer = writers.get(rowType);
 		List<Term> coreTerms = terms.get(rowType);
-		String[] row = new String[coreTerms.size()+1];
-		int i=1;
+		String[] row = new String[coreTerms.size() + 1];
+		int i = 1;
 		row[0] = "id";
 		for (Term term : coreTerms) {
 			row[i] = term.simpleName();
@@ -218,7 +217,7 @@ public class FixedHeadersDwcaWriter {
 		af.addLocation(dataFileNames.get(rowType));
 
 		af.setEncoding("utf-8");
-		//do not ignore header line
+		// do not ignore header line
 		af.setIgnoreHeaderLines(1);
 		af.setRowType(rowType.qualifiedName());
 

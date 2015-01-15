@@ -14,19 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("importLogDAO")
-public class HibernateImportLogDAO implements ImportLogDAO{
-	
-	//get log4j handler
+public class HibernateImportLogDAO implements ImportLogDAO {
+
+	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateImportLogDAO.class);
-	
+
 	private static final String MANAGED_ID = "id";
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
 	public boolean save(ImportLogModel importLogModel) {
-		try{
+		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(importLogModel);
 		}
 		catch (HibernateException e) {
@@ -40,34 +40,36 @@ public class HibernateImportLogDAO implements ImportLogDAO{
 	public ImportLogModel load(Integer id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ImportLogModel.class);
 		searchCriteria.add(Restrictions.eq(MANAGED_ID, id));
-		return (ImportLogModel)searchCriteria.uniqueResult();
+		return (ImportLogModel) searchCriteria.uniqueResult();
 	}
-	
+
 	/**
 	 * Last ImportLogModel is defined as the one with the highest id.
 	 * It assumes records were inserted normally and that the sequence was used.
+	 * 
 	 * @return ImportLogModel or null if nothing is found
 	 */
 	@Override
-	public ImportLogModel loadLast(){
+	public ImportLogModel loadLast() {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(ImportLogModel.class);
 		c.addOrder(Order.desc(MANAGED_ID));
 		c.setMaxResults(1);
-		return (ImportLogModel)c.uniqueResult();
+		return (ImportLogModel) c.uniqueResult();
 	}
-	
+
 	@Override
-	public ImportLogModel loadLastFrom(String sourceFileId){
+	public ImportLogModel loadLastFrom(String sourceFileId) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(ImportLogModel.class);
 		c.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
 		c.addOrder(Order.desc(MANAGED_ID));
 		c.setMaxResults(1);
-		return (ImportLogModel)c.uniqueResult();
+		return (ImportLogModel) c.uniqueResult();
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

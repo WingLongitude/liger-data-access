@@ -1,1 +1,0 @@
-ALTER TABLE lookup ADD COLUMN parentid INTEGER;

@@ -16,45 +16,46 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
- * Test Coverage : 
+ * Test Coverage :
  * -Save ImportLogModel
  * -Get generated id
  * -Load ImportLogModel from id
+ * 
  * @author canadensys
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-spring.xml" })
-@TransactionConfiguration(transactionManager="hibernateTransactionManager")
-public class ImportLogDAOTest extends AbstractTransactionalJUnit4SpringContextTests{
+@TransactionConfiguration(transactionManager = "hibernateTransactionManager")
+public class ImportLogDAOTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
 	private ImportLogDAO importLogDAO;
-	
+
 	@Test
-	public void testSaveAndLoad(){
+	public void testSaveAndLoad() {
 		ImportLogModel testModel = new ImportLogModel();
 		Date now = new Date();
 		testModel.setSourcefileid("test_sourcefileid");
 		testModel.setUpdated_by("me");
 		testModel.setEvent_end_date_time(now);
 		assertTrue(importLogDAO.save(testModel));
-		
+
 		int id = testModel.getId();
-		
+
 		ImportLogModel loadedModel = importLogDAO.load(id);
-		assertEquals("test_sourcefileid",loadedModel.getSourcefileid());
-		assertEquals("me",loadedModel.getUpdated_by());
-		assertEquals(now,loadedModel.getEvent_end_date_time());
-		
-		//test importLogDAO.loadLastFrom
+		assertEquals("test_sourcefileid", loadedModel.getSourcefileid());
+		assertEquals("me", loadedModel.getUpdated_by());
+		assertEquals(now, loadedModel.getEvent_end_date_time());
+
+		// test importLogDAO.loadLastFrom
 		testModel = new ImportLogModel();
 		now = new Date();
 		testModel.setSourcefileid("test_sourcefileid");
 		testModel.setUpdated_by("me");
 		testModel.setEvent_end_date_time(now);
 		importLogDAO.save(testModel);
-		
+
 		loadedModel = importLogDAO.loadLastFrom("test_sourcefileid");
-		assertEquals(now,loadedModel.getEvent_end_date_time());
+		assertEquals(now, loadedModel.getEvent_end_date_time());
 	}
 }

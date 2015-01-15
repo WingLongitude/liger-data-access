@@ -27,8 +27,9 @@
 	<jdbc:initialize-database data-source="dataSource">
 		<jdbc:script location="classpath:h2/h2setup.sql" />
     	<jdbc:script location="classpath:script/occurrence/create_occurrence_tables.sql" />
+    	<jdbc:script location="classpath:occurrence/insert-test-occurrence-data.sql" />
   	</jdbc:initialize-database>
-
+  	
   	<bean id="occurrenceDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateOccurrenceDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
@@ -49,15 +50,16 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="resourceDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceDAO">
+	<bean id="dwcaResourceDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateDwcaResourceDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="resourceInformationDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceInformationDAO">
+	<bean id="resourceMetadataDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernateResourceMetadataDAO">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
-	<bean id="nameDAO" class="net.canadensys.dataportal.vascan.dao.impl.ElasticSearchNameDAO">
-		<property name="client" ref="esClient"/>
+	<bean id="publisherDAO" class="net.canadensys.dataportal.occurrence.dao.impl.HibernatePublisherDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+
 </beans>
