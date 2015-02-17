@@ -6,6 +6,11 @@ SELECT AddGeometryColumn('public','occurrence','the_geom_webmercator', 3857, 'PO
 --WSG84 shifted latitude/longitude (result of ST_Shift_Longitude)
 SELECT AddGeometryColumn('public','occurrence','the_shifted_geom', 4326, 'POINT', 2 );
 
+--Geospatial Indices
+CREATE INDEX occurrence_the_geom_idx ON occurrence USING gist (the_geom);
+CREATE INDEX occurrence_the_geom_webmercator_idx ON occurrence USING gist (the_geom_webmercator);
+CREATE INDEX occurrence_the_shifted_geom_idx ON occurrence USING gist (the_shifted_geom);
+
 -- Buffer schema:
 --WSG84 latitude/longitude
 SELECT AddGeometryColumn('buffer','occurrence','the_geom', 4326, 'POINT', 2 );
