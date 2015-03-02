@@ -54,9 +54,9 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 	public void testSaveLoadDelete() {
 
 		// Save a parent DwcaResourceModel first
-		String resource_uuid = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
+		String gbif_package_id = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
 		DwcaResourceModel testDwcaResourceModel = new DwcaResourceModel();
-		testDwcaResourceModel.setSourcefileid(resource_uuid);
+		testDwcaResourceModel.setSourcefileid(gbif_package_id);
 		assertTrue(resourceDAO.save(testDwcaResourceModel));
 		assertTrue(testDwcaResourceModel.getId() != null);
 
@@ -66,7 +66,7 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 		testResourceMetadata.set_abstract("This is the lorem ipsum abstract");
 		testResourceMetadata.setTitle("TitleTitleTitle");
 
-		testResourceMetadata.setResource_uuid(resource_uuid);
+		testResourceMetadata.setGbif_package_id(gbif_package_id);
 
 		// Create contact:
 		ContactModel testResourceContact = new ContactModel();
@@ -91,7 +91,7 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 		assertTrue(contact1Id >= 0);
 		assertTrue(contact2Id != contact1Id);
 
-		ResourceMetadataModel loadedMetadata = resourceMetadataDAO.load(resource_uuid);
+		ResourceMetadataModel loadedMetadata = resourceMetadataDAO.load(gbif_package_id);
 		assertEquals("This is the lorem ipsum abstract", loadedMetadata.get_abstract());
 		assertEquals("TitleTitleTitle", loadedMetadata.getTitle());
 

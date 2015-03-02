@@ -48,9 +48,9 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 	}
 
 	@Override
-	public ResourceMetadataModel load(String resource_uuid) {
+	public ResourceMetadataModel load(String gbif_package_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.GBIF_PACKAGE_ID, gbif_package_id));
 		return (ResourceMetadataModel) searchCriteria.uniqueResult();
 	}
 

@@ -26,7 +26,7 @@ public class ResourceMetadataModel {
 	@Id
 	private Integer dwca_resource_id;
 
-	private String resource_uuid;
+	private String gbif_package_id;
 	private String resource_name;
 	private String alternate_identifier;
 	private String title;
@@ -73,14 +73,6 @@ public class ResourceMetadataModel {
 	}
 
 	/** Getters and setters: **/
-
-	public String getResource_uuid() {
-		return resource_uuid;
-	}
-
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
-	}
 
 	public String getResource_name() {
 		return resource_name;
@@ -214,5 +206,13 @@ public class ResourceMetadataModel {
 	 */
 	public void setContacts(Set<ContactModel> contacts) {
 		this.contacts = contacts;
+	}
+
+	public String getGbif_package_id() {
+		return gbif_package_id;
+	}
+
+	public void setGbif_package_id(String gbif_package_id) {
+		this.gbif_package_id = gbif_package_id;
 	}
 }

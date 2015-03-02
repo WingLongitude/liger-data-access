@@ -28,7 +28,7 @@ public class DwcaResourceModel {
 	private Integer id;
 	private String name;
 	private String sourcefileid;
-	private String resource_uuid;
+	private String gbif_package_id;
 	private String archive_url;
 
 	@Column(name = "is_local", nullable = false)
@@ -47,14 +47,6 @@ public class DwcaResourceModel {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getResource_uuid() {
-		return resource_uuid;
-	}
-
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
 	}
 
 	public String getName() {
@@ -103,5 +95,13 @@ public class DwcaResourceModel {
 
 	public void setPublisher(PublisherModel publisher) {
 		this.publisher = publisher;
+	}
+
+	public String getGbif_package_id() {
+		return gbif_package_id;
+	}
+
+	public void setGbif_package_id(String gbif_package_id) {
+		this.gbif_package_id = gbif_package_id;
 	}
 }

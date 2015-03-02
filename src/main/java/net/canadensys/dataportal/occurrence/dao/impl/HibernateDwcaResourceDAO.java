@@ -43,9 +43,9 @@ public class HibernateDwcaResourceDAO implements DwcaResourceDAO {
 		return (DwcaResourceModel) searchCriteria.uniqueResult();
 	}
 
-	public DwcaResourceModel loadByResourceUUID(String resource_uuid) {
+	public DwcaResourceModel loadByResourceUUID(String gbif_package_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(DwcaResourceModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.RESOURCE_UUID, resource_uuid));
+		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.GBIF_PACKAGE_ID, gbif_package_id));
 		return (DwcaResourceModel) searchCriteria.uniqueResult();
 	}
 

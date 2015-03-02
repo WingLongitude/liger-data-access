@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS dwca_resource
   id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
   name TEXT,
   sourcefileid TEXT NOT NULL,
-  resource_uuid TEXT,
+  gbif_package_id TEXT,
   archive_url TEXT,
   is_local boolean DEFAULT FALSE NOT NULL,
   record_count integer,
@@ -313,7 +313,7 @@ CREATE TABLE IF NOT EXISTS dwca_resource
 CREATE TABLE IF NOT EXISTS resource_metadata
 (
 	dwca_resource_id integer NOT NULL REFERENCES dwca_resource(id),
-	resource_uuid TEXT,
+	gbif_package_id TEXT,
 	resource_name TEXT,
 	alternate_identifier TEXT,
 	title TEXT,
