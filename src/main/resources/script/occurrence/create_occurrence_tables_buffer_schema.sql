@@ -4,7 +4,7 @@ CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
-resource_uuid TEXT,
+resource_id integer,
 sourcefileid TEXT,
 occurrenceid TEXT,
 associatedmedia TEXT,
@@ -63,13 +63,14 @@ hastypestatus boolean,
 hasassociatedsequences boolean,
 publishername TEXT,
 resourcename TEXT,
+CONSTRAINT fk_occurrence_resource FOREIGN KEY (resource_id) REFERENCES dwca_resource(id) ON UPDATE RESTRICT ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
 CONSTRAINT occurrence_pkey PRIMARY KEY ( auto_id )
 );
 
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
-resource_uuid TEXT,
+resource_id integer,
 sourcefileid TEXT NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
@@ -230,6 +231,7 @@ verbatimTaxonRank TEXT,
 vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
+CONSTRAINT fk_occurrence_raw_resource FOREIGN KEY (resource_id) REFERENCES dwca_resource(id) ON UPDATE RESTRICT ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
 CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );

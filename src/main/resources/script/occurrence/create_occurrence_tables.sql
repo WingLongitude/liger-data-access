@@ -66,6 +66,7 @@ hastypestatus boolean,
 hasassociatedsequences boolean,
 publishername TEXT,
 resourcename TEXT,
+CONSTRAINT fk_occurrence_resource FOREIGN KEY (resource_id) REFERENCES dwca_resource(id) ON UPDATE RESTRICT ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
 
@@ -233,6 +234,7 @@ verbatimTaxonRank TEXT,
 vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
+CONSTRAINT fk_occurrence_raw_resource FOREIGN KEY (resource_id) REFERENCES dwca_resource(id) ON UPDATE RESTRICT ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
 CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );

@@ -22,7 +22,8 @@
 			onDelete="CASCADE"
 			onUpdate="RESTRICT"
 			referencedColumnNames="id"
-			referencedTableName="public.dwca_resource"/>
+			referencedTableSchemaName="public"
+			referencedTableName="dwca_resource"/>
 	</changeSet>
     <changeSet author="pedro" id="321123638655-4">    
    	    <comment>Delete from occurrence_raw</comment>
@@ -46,6 +47,7 @@
 			onDelete="CASCADE"
 			onUpdate="RESTRICT"
 			referencedColumnNames="id"
-			referencedTableName="public.dwca_resource"/>
+			referencedTableName="dwca_resource"
+			referencedTableSchemaName="public"/>
 	</changeSet>
 </databaseChangeLog>
