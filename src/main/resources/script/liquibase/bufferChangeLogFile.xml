@@ -1,372 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="pedro (generated)" id="1425321817931-1">
-        <createSequence sequenceName="occurrence_auto_id_seq"/>
+    <changeSet author="pedro" id="321123638655-0">
+   	    <comment>Delete from occurrence:</comment>
+   	    <sql>delete from occurrence</sql>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-2">
-        <createSequence sequenceName="occurrence_extension_id_seq"/>
+   	<changeSet author="pedro" id="321132687654-9">
+    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate buffer.occurrence and dwca_resource:</comment>
+   	    <renameColumn tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-3">
-        <createTable tableName="contact">
-            <column autoIncrement="true" name="auto_id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="contact_pkey"/>
-            </column>
-            <column name="name" type="TEXT"/>
-            <column name="position_name" type="TEXT"/>
-            <column name="organization_name" type="TEXT"/>
-            <column name="address" type="TEXT"/>
-            <column name="city" type="TEXT"/>
-            <column name="administrative_area" type="TEXT"/>
-            <column name="country" type="TEXT"/>
-            <column name="postal_code" type="TEXT"/>
-            <column name="phone" type="TEXT"/>
-            <column name="email" type="TEXT"/>
-            <column name="role" type="TEXT"/>
-            <column name="publisher_fkey" type="INT4"/>
-            <column name="resource_metadata_fkey" type="INT4"/>
-        </createTable>
+    <changeSet author="pedro" id="321123638655-1"> 
+   	    <comment>Alter data type from column resource_id from text to int:</comment>
+   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
+	</changeSet>
+    <changeSet author="pedro" id="321123638655-2">    
+   	    <comment>Add the foreign key constraint:</comment>
+   	    <addForeignKeyConstraint baseColumnNames="resource_id"
+        	baseTableName="occurrence"
+        	constraintName="fk_occurrence_resource"
+			deferrable="true"
+			initiallyDeferred="true"
+			onDelete="CASCADE"
+			onUpdate="RESTRICT"
+			referencedColumnNames="id"
+			referencedTableName="public.dwca_resource"/>
+	</changeSet>
+    <changeSet author="pedro" id="321123638655-4">    
+   	    <comment>Delete from occurrence_raw</comment>
+   	    <sql>delete from occurrence_raw</sql>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-4">
-        <createTable tableName="download_log">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="download_log_pkey"/>
-            </column>
-            <column name="event_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
-            <column name="search_criteria" type="TEXT"/>
-            <column name="number_of_records" type="INT4"/>
-            <column name="email" type="TEXT"/>
-        </createTable>
+    <changeSet author="pedro" id="321123638655-3">
+    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate buffer.occurrence_raw and dwca_resource:</comment>
+   	    <renameColumn tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
+	</changeSet>
+    <changeSet author="pedro" id="321123638655-5">   	    
+   	    <comment>Alter data type from column resource_id from text to int:</comment>
+   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-5">
-        <createTable tableName="occurrence">
-            <column name="auto_id" type="INT4">
-                <constraints nullable="false"/>
-            </column>
-            <column name="dwca_id" type="TEXT"/>
-            <column name="resource_uuid" type="TEXT"/>
-            <column name="sourcefileid" type="TEXT"/>
-            <column name="occurrenceid" type="TEXT"/>
-            <column name="associatedmedia" type="TEXT"/>
-            <column name="associatedsequences" type="TEXT"/>
-            <column name="basisofrecord" type="TEXT"/>
-            <column name="bibliographiccitation" type="TEXT"/>
-            <column name="catalognumber" type="TEXT"/>
-            <column name="othercatalognumbers" type="TEXT"/>
-            <column name="_references" type="TEXT"/>
-            <column name="collectioncode" type="TEXT"/>
-            <column name="continent" type="TEXT"/>
-            <column name="country" type="TEXT"/>
-            <column name="county" type="TEXT"/>
-            <column name="municipality" type="TEXT"/>
-            <column name="datasetname" type="TEXT"/>
-            <column name="habitat" type="TEXT"/>
-            <column name="locality" type="TEXT"/>
-            <column name="kingdom" type="TEXT"/>
-            <column name="phylum" type="TEXT"/>
-            <column name="_class" type="TEXT"/>
-            <column name="_order" type="TEXT"/>
-            <column name="family" type="TEXT"/>
-            <column name="genus" type="TEXT"/>
-            <column name="specificepithet" type="TEXT"/>
-            <column name="infraspecificepithet" type="TEXT"/>
-            <column name="species" type="TEXT"/>
-            <column name="recordedby" type="TEXT"/>
-            <column name="recordnumber" type="TEXT"/>
-            <column name="institutioncode" type="TEXT"/>
-            <column name="scientificname" type="TEXT"/>
-            <column name="rawscientificname" type="TEXT"/>
-            <column name="scientificnameauthorship" type="TEXT"/>
-            <column name="stateprovince" type="TEXT"/>
-            <column name="typestatus" type="TEXT"/>
-            <column name="taxonrank" type="TEXT"/>
-            <column name="verbatimelevation" type="TEXT"/>
-            <column name="minimumelevationinmeters" type="FLOAT8"/>
-            <column name="maximumelevationinmeters" type="FLOAT8"/>
-            <column name="decimallatitude" type="FLOAT8"/>
-            <column name="decimallongitude" type="FLOAT8"/>
-            <column name="datageneralizations" type="TEXT"/>
-            <column name="eventdate" type="TEXT"/>
-            <column name="starteventdate" type="date"/>
-            <column name="endeventdate" type="date"/>
-            <column name="sday" type="SMALLINT"/>
-            <column name="smonth" type="SMALLINT"/>
-            <column name="syear" type="SMALLINT"/>
-            <column name="eday" type="SMALLINT"/>
-            <column name="emonth" type="SMALLINT"/>
-            <column name="eyear" type="SMALLINT"/>
-            <column name="decade" type="SMALLINT"/>
-            <column name="averagealtituderounded" type="INT4"/>
-            <column name="hascoordinates" type="BOOL"/>
-            <column name="hasmedia" type="BOOL"/>
-            <column name="hastypestatus" type="BOOL"/>
-            <column name="hasassociatedsequences" type="BOOL"/>
-            <column name="publishername" type="TEXT"/>
-            <column name="resourcename" type="TEXT"/>
-            <column name="the_geom" type="GEOMETRY(2147483647)"/>
-            <column name="the_geom_webmercator" type="GEOMETRY(2147483647)"/>
-            <column name="the_shifted_geom" type="GEOMETRY(2147483647)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-6">
-        <createTable tableName="occurrence_extension">
-            <column name="auto_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="dwca_id" type="TEXT"/>
-            <column name="sourcefileid" type="TEXT"/>
-            <column name="resource_uuid" type="TEXT"/>
-            <column name="ext_type" type="TEXT"/>
-            <column name="ext_version" type="TEXT"/>
-            <column name="ext_data" type="HSTORE(2147483647)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-7">
-        <createTable tableName="occurrence_raw">
-            <column name="auto_id" type="INT4">
-                <constraints nullable="false"/>
-            </column>
-            <column name="dwca_id" type="TEXT"/>
-            <column name="resource_uuid" type="TEXT"/>
-            <column name="sourcefileid" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="acceptednameusage" type="TEXT"/>
-            <column name="acceptednameusageid" type="TEXT"/>
-            <column name="accessrights" type="TEXT"/>
-            <column name="associatedmedia" type="TEXT"/>
-            <column name="associatedoccurrences" type="TEXT"/>
-            <column name="associatedreferences" type="TEXT"/>
-            <column name="associatedsequences" type="TEXT"/>
-            <column name="associatedtaxa" type="TEXT"/>
-            <column name="basisofrecord" type="TEXT"/>
-            <column name="bed" type="TEXT"/>
-            <column name="behavior" type="TEXT"/>
-            <column name="bibliographiccitation" type="TEXT"/>
-            <column name="catalognumber" type="TEXT"/>
-            <column name="_class" type="TEXT"/>
-            <column name="collectioncode" type="TEXT"/>
-            <column name="collectionid" type="TEXT"/>
-            <column name="continent" type="TEXT"/>
-            <column name="coordinateprecision" type="TEXT"/>
-            <column name="coordinateuncertaintyinmeters" type="TEXT"/>
-            <column name="country" type="TEXT"/>
-            <column name="countrycode" type="TEXT"/>
-            <column name="county" type="TEXT"/>
-            <column name="datageneralizations" type="TEXT"/>
-            <column name="datasetid" type="TEXT"/>
-            <column name="datasetname" type="TEXT"/>
-            <column name="dateidentified" type="TEXT"/>
-            <column name="day" type="TEXT"/>
-            <column name="decimallatitude" type="TEXT"/>
-            <column name="decimallongitude" type="TEXT"/>
-            <column name="disposition" type="TEXT"/>
-            <column name="dynamicproperties" type="TEXT"/>
-            <column name="earliestageorloweststage" type="TEXT"/>
-            <column name="earliesteonorlowesteonothem" type="TEXT"/>
-            <column name="earliestepochorlowestseries" type="TEXT"/>
-            <column name="earliesteraorlowesterathem" type="TEXT"/>
-            <column name="earliestperiodorlowestsystem" type="TEXT"/>
-            <column name="enddayofyear" type="TEXT"/>
-            <column name="establishmentmeans" type="TEXT"/>
-            <column name="eventdate" type="TEXT"/>
-            <column name="eventid" type="TEXT"/>
-            <column name="eventremarks" type="TEXT"/>
-            <column name="eventtime" type="TEXT"/>
-            <column name="family" type="TEXT"/>
-            <column name="fieldnotes" type="TEXT"/>
-            <column name="fieldnumber" type="TEXT"/>
-            <column name="footprintspatialfit" type="TEXT"/>
-            <column name="footprintsrs" type="TEXT"/>
-            <column name="footprintwkt" type="TEXT"/>
-            <column name="formation" type="TEXT"/>
-            <column name="genus" type="TEXT"/>
-            <column name="geodeticdatum" type="TEXT"/>
-            <column name="geologicalcontextid" type="TEXT"/>
-            <column name="georeferencedby" type="TEXT"/>
-            <column name="georeferenceddate" type="TEXT"/>
-            <column name="georeferenceprotocol" type="TEXT"/>
-            <column name="georeferenceremarks" type="TEXT"/>
-            <column name="georeferencesources" type="TEXT"/>
-            <column name="georeferenceverificationstatus" type="TEXT"/>
-            <column name="_group" type="TEXT"/>
-            <column name="habitat" type="TEXT"/>
-            <column name="higherclassification" type="TEXT"/>
-            <column name="highergeography" type="TEXT"/>
-            <column name="highergeographyid" type="TEXT"/>
-            <column name="highestbiostratigraphiczone" type="TEXT"/>
-            <column name="identificationid" type="TEXT"/>
-            <column name="identificationqualifier" type="TEXT"/>
-            <column name="identificationreferences" type="TEXT"/>
-            <column name="identificationremarks" type="TEXT"/>
-            <column name="identificationverificationstatus" type="TEXT"/>
-            <column name="identifiedby" type="TEXT"/>
-            <column name="individualcount" type="TEXT"/>
-            <column name="individualid" type="TEXT"/>
-            <column name="informationwithheld" type="TEXT"/>
-            <column name="infraspecificepithet" type="TEXT"/>
-            <column name="institutioncode" type="TEXT"/>
-            <column name="institutionid" type="TEXT"/>
-            <column name="island" type="TEXT"/>
-            <column name="islandgroup" type="TEXT"/>
-            <column name="kingdom" type="TEXT"/>
-            <column name="language" type="TEXT"/>
-            <column name="latestageorhigheststage" type="TEXT"/>
-            <column name="latesteonorhighesteonothem" type="TEXT"/>
-            <column name="latestepochorhighestseries" type="TEXT"/>
-            <column name="latesteraorhighesterathem" type="TEXT"/>
-            <column name="latestperiodorhighestsystem" type="TEXT"/>
-            <column name="lifestage" type="TEXT"/>
-            <column name="lithostratigraphicterms" type="TEXT"/>
-            <column name="locality" type="TEXT"/>
-            <column name="locationaccordingto" type="TEXT"/>
-            <column name="locationid" type="TEXT"/>
-            <column name="locationremarks" type="TEXT"/>
-            <column name="lowestbiostratigraphiczone" type="TEXT"/>
-            <column name="maximumdepthinmeters" type="TEXT"/>
-            <column name="maximumdistanceabovesurfaceinmeters" type="TEXT"/>
-            <column name="maximumelevationinmeters" type="TEXT"/>
-            <column name="member" type="TEXT"/>
-            <column name="minimumdepthinmeters" type="TEXT"/>
-            <column name="minimumdistanceabovesurfaceinmeters" type="TEXT"/>
-            <column name="minimumelevationinmeters" type="TEXT"/>
-            <column name="modified" type="TEXT"/>
-            <column name="month" type="TEXT"/>
-            <column name="municipality" type="TEXT"/>
-            <column name="nameaccordingto" type="TEXT"/>
-            <column name="nameaccordingtoid" type="TEXT"/>
-            <column name="namepublishedin" type="TEXT"/>
-            <column name="namepublishedinid" type="TEXT"/>
-            <column name="namepublishedinyear" type="TEXT"/>
-            <column name="nomenclaturalcode" type="TEXT"/>
-            <column name="nomenclaturalstatus" type="TEXT"/>
-            <column name="occurrenceid" type="TEXT"/>
-            <column name="occurrenceremarks" type="TEXT"/>
-            <column name="occurrencestatus" type="TEXT"/>
-            <column name="_order" type="TEXT"/>
-            <column name="originalnameusage" type="TEXT"/>
-            <column name="originalnameusageid" type="TEXT"/>
-            <column name="othercatalognumbers" type="TEXT"/>
-            <column name="ownerinstitutioncode" type="TEXT"/>
-            <column name="parentnameusage" type="TEXT"/>
-            <column name="parentnameusageid" type="TEXT"/>
-            <column name="phylum" type="TEXT"/>
-            <column name="pointradiusspatialfit" type="TEXT"/>
-            <column name="preparations" type="TEXT"/>
-            <column name="previousidentifications" type="TEXT"/>
-            <column name="recordedby" type="TEXT"/>
-            <column name="recordnumber" type="TEXT"/>
-            <column name="_references" type="TEXT"/>
-            <column name="reproductivecondition" type="TEXT"/>
-            <column name="rights" type="TEXT"/>
-            <column name="rightsholder" type="TEXT"/>
-            <column name="samplingeffort" type="TEXT"/>
-            <column name="samplingprotocol" type="TEXT"/>
-            <column name="scientificname" type="TEXT"/>
-            <column name="scientificnameauthorship" type="TEXT"/>
-            <column name="scientificnameid" type="TEXT"/>
-            <column name="sex" type="TEXT"/>
-            <column name="specificepithet" type="TEXT"/>
-            <column name="startdayofyear" type="TEXT"/>
-            <column name="stateprovince" type="TEXT"/>
-            <column name="subgenus" type="TEXT"/>
-            <column name="taxonconceptid" type="TEXT"/>
-            <column name="taxonid" type="TEXT"/>
-            <column name="taxonomicstatus" type="TEXT"/>
-            <column name="taxonrank" type="TEXT"/>
-            <column name="taxonremarks" type="TEXT"/>
-            <column name="type" type="TEXT"/>
-            <column name="typestatus" type="TEXT"/>
-            <column name="verbatimcoordinates" type="TEXT"/>
-            <column name="verbatimcoordinatesystem" type="TEXT"/>
-            <column name="verbatimdepth" type="TEXT"/>
-            <column name="verbatimelevation" type="TEXT"/>
-            <column name="verbatimeventdate" type="TEXT"/>
-            <column name="verbatimlatitude" type="TEXT"/>
-            <column name="verbatimlocality" type="TEXT"/>
-            <column name="verbatimlongitude" type="TEXT"/>
-            <column name="verbatimsrs" type="TEXT"/>
-            <column name="verbatimtaxonrank" type="TEXT"/>
-            <column name="vernacularname" type="TEXT"/>
-            <column name="waterbody" type="TEXT"/>
-            <column name="year" type="TEXT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-8">
-        <createTable tableName="publisher">
-            <column autoIncrement="true" name="auto_id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="publisher_pkey"/>
-            </column>
-            <column name="name" type="TEXT"/>
-            <column name="description" type="TEXT"/>
-            <column name="address" type="TEXT"/>
-            <column name="city" type="TEXT"/>
-            <column name="administrative_area" type="TEXT"/>
-            <column name="postal_code" type="TEXT"/>
-            <column name="homepage" type="TEXT"/>
-            <column name="email" type="TEXT"/>
-            <column name="phone" type="TEXT"/>
-            <column name="logo_url" type="TEXT"/>
-            <column name="decimallatitude" type="FLOAT8"/>
-            <column name="decimallongitude" type="FLOAT8"/>
-            <column name="record_count" type="INT4"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-9">
-        <createTable tableName="resource_metadata">
-            <column name="dwca_resource_id" type="INT4">
-                <constraints nullable="false"/>
-            </column>
-            <column name="resource_uuid" type="TEXT"/>
-            <column name="resource_name" type="TEXT"/>
-            <column name="alternate_identifier" type="TEXT"/>
-            <column name="title" type="TEXT"/>
-            <column name="publication_date" type="date"/>
-            <column name="language" type="TEXT"/>
-            <column name="_abstract" type="TEXT"/>
-            <column name="keyword" type="TEXT"/>
-            <column name="keyword_thesaurus" type="TEXT"/>
-            <column name="intellectual_rights" type="TEXT"/>
-            <column name="citation" type="TEXT"/>
-            <column name="hierarchy_level" type="TEXT"/>
-            <column name="resource_logo_url" type="TEXT"/>
-            <column name="parent_collection_identifier" type="TEXT"/>
-            <column name="collection_identifier" type="TEXT"/>
-            <column name="collection_name" type="TEXT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-10">
-        <createTable tableName="unique_values">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="unique_values_pkey"/>
-            </column>
-            <column name="key" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="occurrence_count" type="INT4">
-                <constraints nullable="false"/>
-            </column>
-            <column name="value" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="unaccented_value" type="TEXT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-11">
-        <addPrimaryKey columnNames="auto_id" constraintName="occurrence_extension_pkey" tableName="occurrence_extension"/>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-12">
-        <addPrimaryKey columnNames="auto_id" constraintName="occurrence_pkey" tableName="occurrence"/>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-13">
-        <addPrimaryKey columnNames="auto_id" constraintName="occurrence_raw_pkey" tableName="occurrence_raw"/>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-14">
-        <addPrimaryKey columnNames="dwca_resource_id" constraintName="resource_metadata_pkey" tableName="resource_metadata"/>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-15">
-        <addUniqueConstraint columnNames="dwca_id, sourcefileid" constraintName="occurrence_raw_dwcaid_sourcefileid_key" deferrable="false" disabled="false" initiallyDeferred="false" tableName="occurrence_raw"/>
-    </changeSet>
-    <changeSet author="pedro (generated)" id="1425321817931-16">
-        <addForeignKeyConstraint baseColumnNames="resource_metadata_fkey" baseTableName="contact" constraintName="contact_resource_metadata_fkey_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="dwca_resource_id" referencedTableName="resource_metadata"/>
-    </changeSet>
+    <changeSet author="pedro" id="321123638655-6">   	    
+   	    <comment>Add the foreign key constraint:</comment>
+   	    <addForeignKeyConstraint baseColumnNames="resource_id"
+        	baseTableName="occurrence_raw"
+        	constraintName="fk_occurrence_raw_resource"
+			deferrable="true"
+			initiallyDeferred="true"
+			onDelete="CASCADE"
+			onUpdate="RESTRICT"
+			referencedColumnNames="id"
+			referencedTableName="public.dwca_resource"/>
+	</changeSet>
 </databaseChangeLog>
