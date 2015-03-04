@@ -105,10 +105,10 @@ public class SQLStatementBuilder {
 						values.add(SQLHelper.NULL);
 					}
 					else {
-						if (propObj.getClass().equals(String.class)) {
+						if (String.class.isAssignableFrom(propObj.getClass())) {
 							values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
 						}
-						else if (propObj.getClass().equals(Integer.class) || propObj.getClass().equals(Long.class)) {
+						else if (Integer.class.isAssignableFrom(propObj.getClass()) || Long.class.isAssignableFrom(propObj.getClass())) {
 							values.add(propObj.toString());
 						}
 					}
@@ -174,10 +174,10 @@ public class SQLStatementBuilder {
 				propObj = beanDescription.get(property);
 				if (propObj != null && propObj.getClass() != Class.class) {
 					columnName.add(property);
-					if (propObj.getClass().equals(String.class)) {
+					if (String.class.isAssignableFrom(propObj.getClass())) {
 						values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
 					}
-					else if (propObj.getClass().equals(Integer.class) || propObj.getClass().equals(Long.class)) {
+					else if (Integer.class.isAssignableFrom(propObj.getClass()) || Long.class.isAssignableFrom(propObj.getClass())) {
 						values.add(propObj.toString());
 					}
 				}
