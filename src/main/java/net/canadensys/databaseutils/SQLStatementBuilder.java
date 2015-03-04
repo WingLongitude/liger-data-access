@@ -108,7 +108,7 @@ public class SQLStatementBuilder {
 						if (propObj.getClass().equals(String.class)) {
 							values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
 						}
-						else if (propObj.getClass().equals(Integer.class)) {
+						else if (propObj.getClass().equals(Integer.class) || propObj.getClass().equals(Long.class)) {
 							values.add(propObj.toString());
 						}
 					}
@@ -177,7 +177,7 @@ public class SQLStatementBuilder {
 					if (propObj.getClass().equals(String.class)) {
 						values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
 					}
-					else if (propObj.getClass().equals(Integer.class)) {
+					else if (propObj.getClass().equals(Integer.class) || propObj.getClass().equals(Long.class)) {
 						values.add(propObj.toString());
 					}
 				}
@@ -207,5 +207,4 @@ public class SQLStatementBuilder {
 		}
 		return sqlInsert;
 	}
-
 }

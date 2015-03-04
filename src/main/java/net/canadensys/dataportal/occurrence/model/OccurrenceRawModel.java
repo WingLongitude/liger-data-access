@@ -27,7 +27,7 @@ public class OccurrenceRawModel {
 	@Column(name = "dwca_id")
 	private String dwcaid;
 
-	private String resource_uuid;
+	private long resource_id;
 	private String sourcefileid;
 
 	private String acceptednameusage;
@@ -1494,11 +1494,11 @@ public class OccurrenceRawModel {
 		this.sourcefileid = sourcefileid;
 	}
 
-	public String getResource_uuid() {
-		return resource_uuid;
+	public long getResource_id() {
+		return resource_id;
 	}
 
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
+	public void setResource_id(long resource_id) {
+		this.resource_id = resource_id;
 	}
 }

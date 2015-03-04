@@ -70,23 +70,27 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		columnList.add("auto_id");
 		columnList.add("country");
 		columnList.add("locality");
+		columnList.add("resource_id");
 		// make sure the table is empty
 		jdbcTemplate.update("DELETE FROM occurrence");
+		// add dwca_resource
+		jdbcTemplate
+		.update("INSERT INTO dwca_resource (id,name,sourcefileid) VALUES (1,'Test Dataset', 'uom-occurrence')");
 		// add controlled rows
 		jdbcTemplate
-				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (1,'Mexico','Mexico','uom-occurrence','MT')");
+				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (1,'Mexico','Mexico','uom-occurrence','MT', 1)");
 		jdbcTemplate
-				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (2,'Sweden','Stockholm','uos-occurrence','MT')");
+				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (2,'Sweden','Stockholm','uos-occurrence','MT', 1)");
 		jdbcTemplate
-				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (3,'Sweden','Uppsala','uou-occurrence','UBC')");
+				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (3,'Sweden','Uppsala','uou-occurrence','UBC', 1)");
 		jdbcTemplate
-				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (4,'United States','Mexico','uow-occurrence','UBC')");
+				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (4,'United States','Mexico','uow-occurrence','UBC', 1)");
 		// record with no locality
 		jdbcTemplate
-				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (5,'Sweden',NULL,'uou-occurrence','UBC')");
+				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (5,'Sweden',NULL,'uou-occurrence','UBC', 1)");
 		// record with empty locality
 		jdbcTemplate
-				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode) VALUES (6,'Sweden','','uow-occurrence','UBC')");
+				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (6,'Sweden','','uow-occurrence','UBC', 1)");
 
 		sqpCountryMexico = new SearchQueryPart();
 		sqpCountryMexico.setSearchableField(TestSearchableFieldBuilder.buildSingleValueSearchableField(1, "country", "country"));
@@ -350,6 +354,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 	@Test
 	public void testSearchFromModel() {
 		OccurrenceModel model = new OccurrenceModel();
+		model.setResource_id(1);
 		model.setLocality("Stockholm");
 
 		List<OccurrenceModel> result = occurrenceDAO.search(model, null);

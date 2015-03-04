@@ -12,19 +12,6 @@
    	    <comment>Alter data type from column resource_id from text to int:</comment>
    	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
 	</changeSet>
-    <changeSet author="pedro" id="321123638655-2">    
-   	    <comment>Add the foreign key constraint:</comment>
-   	    <addForeignKeyConstraint baseColumnNames="resource_id"
-        	baseTableName="occurrence"
-        	constraintName="fk_occurrence_resource"
-			deferrable="true"
-			initiallyDeferred="true"
-			onDelete="CASCADE"
-			onUpdate="RESTRICT"
-			referencedColumnNames="id"
-			referencedTableSchemaName="public"
-			referencedTableName="dwca_resource"/>
-	</changeSet>
     <changeSet author="pedro" id="321123638655-4">    
    	    <comment>Delete from occurrence_raw</comment>
    	    <sql>delete from occurrence_raw</sql>
@@ -37,17 +24,4 @@
    	    <comment>Alter data type from column resource_id from text to int:</comment>
    	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
     </changeSet>
-    <changeSet author="pedro" id="321123638655-6">   	    
-   	    <comment>Add the foreign key constraint:</comment>
-   	    <addForeignKeyConstraint baseColumnNames="resource_id"
-        	baseTableName="occurrence_raw"
-        	constraintName="fk_occurrence_raw_resource"
-			deferrable="true"
-			initiallyDeferred="true"
-			onDelete="CASCADE"
-			onUpdate="RESTRICT"
-			referencedColumnNames="id"
-			referencedTableName="dwca_resource"
-			referencedTableSchemaName="public"/>
-	</changeSet>
 </databaseChangeLog>

@@ -55,9 +55,12 @@ public class OccurrenceModelAndRawTest extends AbstractTransactionalJUnit4Spring
 	public void setup() {
 		// make sure the table is empty
 		jdbcTemplate.update("DELETE FROM occurrence");
+		// add dwca_resource
+		jdbcTemplate
+		.update("INSERT INTO dwca_resource (id,name,sourcefileid) VALUES (1,'Test Dataset', 'uom-occurrence')");
 		// add controlled rows
-		jdbcTemplate.update("INSERT INTO occurrence_raw (auto_id,country,locality,sourcefileid) VALUES (1,'Mexico','Mexicco','uom-occurrence')");
-		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid) VALUES (1,'Mexico','Mexico','uom-occurrence')");
+		jdbcTemplate.update("INSERT INTO occurrence_raw (auto_id,country,locality,sourcefileid, resource_id) VALUES (1,'Mexico','Mexicco','uom-occurrence', 1)");
+		jdbcTemplate.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid, resource_id) VALUES (1,'Mexico','Mexico','uom-occurrence', 1)");
 	}
 
 	@Test

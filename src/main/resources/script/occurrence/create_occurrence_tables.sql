@@ -4,6 +4,42 @@ schema_version_date DATE,
 CONSTRAINT db_metadata_pkey PRIMARY KEY ( schema_version )
 );
 
+/* Structure to persist publisher information: */
+CREATE SEQUENCE IF NOT EXISTS publisher_id_seq;
+CREATE TABLE IF NOT EXISTS publisher
+(
+	auto_id integer DEFAULT nextval('publisher_id_seq') NOT NULL,
+	name TEXT,
+	description TEXT,
+	address TEXT,
+	city TEXT,
+	administrative_area TEXT,
+	postal_code TEXT,
+	homepage TEXT,
+	email TEXT,
+	phone TEXT,
+	logo_url TEXT,
+	decimallatitude DOUBLE PRECISION,
+	decimallongitude DOUBLE PRECISION,
+	record_count integer,
+	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS dwca_resource_id_seq;
+CREATE TABLE IF NOT EXISTS dwca_resource
+(
+  id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
+  name TEXT,
+  sourcefileid TEXT NOT NULL,
+  gbif_package_id TEXT,
+  archive_url TEXT,
+  is_local boolean DEFAULT FALSE NOT NULL,
+  record_count integer,
+  publisher_fkey integer REFERENCES publisher(auto_id),
+  CONSTRAINT dwca_resource_pkey PRIMARY KEY ( id ),
+  CONSTRAINT dwca_resource_source_file_id_key UNIQUE (sourcefileid)
+);
+
 CREATE TABLE IF NOT EXISTS occurrence (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
@@ -66,7 +102,7 @@ hastypestatus boolean,
 hasassociatedsequences boolean,
 publishername TEXT,
 resourcename TEXT,
-CONSTRAINT fk_occurrence_resource FOREIGN KEY (resource_id) REFERENCES dwca_resource(id) ON UPDATE RESTRICT ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
+resource_id integer REFERENCES dwca_resource(id),
 CONSTRAINT occurrence_pkey PRIMARY KEY (auto_id )
 );
 
@@ -234,7 +270,7 @@ verbatimTaxonRank TEXT,
 vernacularName TEXT,
 waterBody TEXT,
 year TEXT,
-CONSTRAINT fk_occurrence_raw_resource FOREIGN KEY (resource_id) REFERENCES dwca_resource(id) ON UPDATE RESTRICT ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
+resource_id integer REFERENCES dwca_resource(id),
 CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
 CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );
@@ -272,43 +308,6 @@ CREATE TABLE IF NOT EXISTS import_log
   import_process_duration_ms integer,
   event_end_date_time timestamp,
   CONSTRAINT import_log_pkey PRIMARY KEY (id )
-);
-
-
-/* Structure to persist publisher information: */
-CREATE SEQUENCE IF NOT EXISTS publisher_id_seq;
-CREATE TABLE IF NOT EXISTS publisher
-(
-	auto_id integer DEFAULT nextval('publisher_id_seq') NOT NULL,
-	name TEXT,
-	description TEXT,
-	address TEXT,
-	city TEXT,
-	administrative_area TEXT,
-	postal_code TEXT,
-	homepage TEXT,
-	email TEXT,
-	phone TEXT,
-	logo_url TEXT,
-	decimallatitude DOUBLE PRECISION,
-	decimallongitude DOUBLE PRECISION,
-	record_count integer,
-	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
-);
-
-CREATE SEQUENCE IF NOT EXISTS dwca_resource_id_seq;
-CREATE TABLE IF NOT EXISTS dwca_resource
-(
-  id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
-  name TEXT,
-  sourcefileid TEXT NOT NULL,
-  gbif_package_id TEXT,
-  archive_url TEXT,
-  is_local boolean DEFAULT FALSE NOT NULL,
-  record_count integer,
-  publisher_fkey integer REFERENCES publisher(auto_id),
-  CONSTRAINT dwca_resource_pkey PRIMARY KEY ( id ),
-  CONSTRAINT dwca_resource_source_file_id_key UNIQUE (sourcefileid)
 );
 
 /* Structure to persist resource metadata information: */
