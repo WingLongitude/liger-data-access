@@ -105,11 +105,11 @@ public class SQLStatementBuilder {
 						values.add(SQLHelper.NULL);
 					}
 					else {
-						if (String.class.isAssignableFrom(propObj.getClass())) {
-							values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
-						}
-						else if (Integer.class.isAssignableFrom(propObj.getClass()) || Long.class.isAssignableFrom(propObj.getClass())) {
+						if (Number.class.isAssignableFrom(propObj.getClass()) || Boolean.class.equals(propObj.getClass())) {
 							values.add(propObj.toString());
+						}
+						else {
+							values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
 						}
 					}
 				}
@@ -174,11 +174,11 @@ public class SQLStatementBuilder {
 				propObj = beanDescription.get(property);
 				if (propObj != null && propObj.getClass() != Class.class) {
 					columnName.add(property);
-					if (String.class.isAssignableFrom(propObj.getClass())) {
-						values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
-					}
-					else if (Integer.class.isAssignableFrom(propObj.getClass()) || Long.class.isAssignableFrom(propObj.getClass())) {
+					if (Number.class.isAssignableFrom(propObj.getClass()) || Boolean.class.equals(propObj.getClass())) {
 						values.add(propObj.toString());
+					}
+					else {
+						values.add(SQLHelper.STRING_QUOTE + SQLHelper.escapeSQLString(propObj.toString()) + SQLHelper.STRING_QUOTE);
 					}
 				}
 			}
