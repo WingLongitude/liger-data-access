@@ -4,10 +4,8 @@
 	    <preConditions onFail="MARK_RAN">
 			<changeSetExecuted id="1" author="pedro" changeLogFile="src/main/resources/script/liquibase/bufferChangeLogFile.xml"/>
 		</preConditions>
-    	<rollback>
-	   	    <comment>Delete from occurrence:</comment>
-   		    <sql>delete from occurrence</sql>
-		</rollback> 
+		<comment>Delete from occurrence:</comment>
+   		<sql>delete from occurrence</sql>
     </changeSet>
    	<changeSet author="pedro" id="2">
    		<preConditions onFail="MARK_RAN">
@@ -20,19 +18,15 @@
     	<preConditions onFail="MARK_RAN">
 			<changeSetExecuted id="3" author="pedro" changeLogFile="src/main/resources/script/liquibase/bufferChangeLogFile.xml"/>
 		</preConditions>
-    	<rollback>
-	   	    <comment>Alter data type from column resource_id from text to int:</comment>
-	   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
-	   	</rollback>   
+   	    <comment>Alter data type from column resource_id from text to int:</comment>
+   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
 	</changeSet>
     <changeSet author="pedro" id="4">
    	    <preConditions onFail="MARK_RAN">
 			<changeSetExecuted id="4" author="pedro" changeLogFile="src/main/resources/script/liquibase/bufferChangeLogFile.xml"/>
 		</preConditions>
-    	<rollback>  
-	   	    <comment>Delete from occurrence_raw</comment>
-	   	    <sql>delete from occurrence_raw</sql>
-		</rollback>
+   	    <comment>Delete from occurrence_raw</comment>
+   	    <sql>delete from occurrence_raw</sql>
     </changeSet>
     <changeSet author="pedro" id="5">
    	    <preConditions onFail="MARK_RAN">
@@ -45,9 +39,7 @@
     	<preConditions onFail="MARK_RAN">
 			<changeSetExecuted id="6" author="pedro" changeLogFile="src/main/resources/script/liquibase/bufferChangeLogFile.xml"/>
 		</preConditions>
-    	<rollback>
-	   	    <comment>Alter data type from column resource_id from text to int:</comment>
-	   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
-	   	</rollback>    
+   	    <comment>Alter data type from column resource_id from text to int:</comment>
+   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
     </changeSet>
 </databaseChangeLog>

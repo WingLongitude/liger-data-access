@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <include file="src/main/resources/script/liquibase/publicChangeLogFile-generated.xml"/> 
-    <include file="src/main/resources/script/liquibase/publicChangeLogFile-2.13.xml"/>    	
+	<changeSet author="pedro" id="1">
+		<comment>Creating extensions:</comment>
+		<sql>CREATE EXTENSION POSTGIS</sql>
+		<sql>CREATE EXTENSION POSTGIS_TOPOLOGY</sql>
+		<sql>CREATE EXTENSION HSTORE</sql>
+	</changeSet>
+    <include file="./publicChangeLogFile-generated.xml"/> 
+    <include file="./publicChangeLogFile-2.13.xml"/>    	
 </databaseChangeLog>

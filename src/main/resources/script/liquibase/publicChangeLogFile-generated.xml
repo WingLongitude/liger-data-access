@@ -135,9 +135,9 @@
             <column name="hasassociatedsequences" type="BOOL"/>
             <column name="publishername" type="TEXT"/>
             <column name="resourcename" type="TEXT"/>
-            <column name="the_geom" type="GEOMETRY(2147483647)"/>
-            <column name="the_geom_webmercator" type="GEOMETRY(2147483647)"/>
-            <column name="the_shifted_geom" type="GEOMETRY(2147483647)"/>
+            <column name="the_geom" type="GEOMETRY"/>
+            <column name="the_geom_webmercator" type="GEOMETRY"/>
+            <column name="the_shifted_geom" type="GEOMETRY"/>
         </createTable>
     </changeSet>
     <changeSet author="pedro (generated)" id="1425320964738-7">
@@ -150,7 +150,7 @@
             <column name="sourcefileid" type="TEXT"/>
             <column name="ext_type" type="TEXT"/>
             <column name="ext_version" type="TEXT"/>
-            <column name="ext_data" type="HSTORE(2147483647)"/>
+            <column name="ext_data" type="HSTORE"/>
         </createTable>
     </changeSet>
     <changeSet author="pedro (generated)" id="1425320964738-8">
