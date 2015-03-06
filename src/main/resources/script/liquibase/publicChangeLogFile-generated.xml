@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="pedro (generated)" id="1425320964738-1">
+    <changeSet author="pedro" id="public-generated-1">
+		<comment>Create contact table</comment>
         <createTable tableName="contact">
             <column autoIncrement="true" name="auto_id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="contact_pkey"/>
@@ -20,7 +21,8 @@
             <column name="resource_metadata_fkey" type="INT4"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-2">
+    <changeSet author="pedro" id="public-generated-2">
+	    <comment>Create db_metadata table</comment>
         <createTable tableName="db_metadata">
             <column name="schema_version" type="TEXT">
                 <constraints nullable="false"/>
@@ -28,7 +30,8 @@
             <column name="schema_version_date" type="date"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-3">
+    <changeSet author="pedro" id="public-generated-3">
+        <comment>Create download_log table</comment>
         <createTable tableName="download_log">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="download_log_pkey"/>
@@ -39,7 +42,8 @@
             <column name="email" type="TEXT"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-4">
+    <changeSet author="pedro" id="public-generated-4">
+    <comment>Create dwca_resource table</comment>
         <createTable tableName="dwca_resource">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="dwca_resource_pkey"/>
@@ -57,7 +61,8 @@
             <column name="publisher_fkey" type="INT4"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-5">
+    <changeSet author="pedro" id="public-generated-5">
+    	<comment>Create import_log table</comment>
         <createTable tableName="import_log">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="import_log_pkey"/>
@@ -70,7 +75,8 @@
             <column name="event_end_date_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-6">
+    <changeSet author="pedro" id="public-generated-6">
+	    <comment>Create occurrence table</comment>
         <createTable tableName="occurrence">
             <column name="auto_id" type="INT4">
                 <constraints nullable="false"/>
@@ -140,7 +146,8 @@
             <column name="the_shifted_geom" type="GEOMETRY"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-7">
+    <changeSet author="pedro" id="public-generated-7">
+	    <comment>Create occurrence_extension table</comment>
         <createTable tableName="occurrence_extension">
             <column name="auto_id" type="BIGINT">
                 <constraints nullable="false"/>
@@ -153,7 +160,8 @@
             <column name="ext_data" type="HSTORE"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-8">
+    <changeSet author="pedro" id="public-generated-8">
+    	<comment>Create occurrence_raw table</comment>
         <createTable tableName="occurrence_raw">
             <column name="auto_id" type="INT4">
                 <constraints nullable="false"/>
@@ -322,7 +330,8 @@
             <column name="year" type="TEXT"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-9">
+    <changeSet author="pedro" id="public-generated-9">
+    	<comment>Create publisher table</comment>
         <createTable tableName="publisher">
             <column autoIncrement="true" name="auto_id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="publisher_pkey"/>
@@ -342,7 +351,8 @@
             <column name="record_count" type="INT4"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-10">
+    <changeSet author="pedro" id="public-generated-10">
+    	<comment>Create resource_metadata table</comment>
         <createTable tableName="resource_metadata">
             <column name="dwca_resource_id" type="INT4">
                 <constraints nullable="false"/>
@@ -365,7 +375,11 @@
             <column name="collection_name" type="TEXT"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-11">
+    <changeSet author="pedro" id="public-generated-11">
+   	    <preConditions onFail="MARK_RAN">
+			<changeSetExecuted id="public-generated-11" author="pedro" changeLogFile="src/main/resources/script/liquibase/generated.xml"/>
+		</preConditions>
+		<comment>Create spatial_ref_sys table</comment>
         <createTable tableName="spatial_ref_sys">
             <column name="srid" type="INT4">
                 <constraints nullable="false"/>
@@ -376,7 +390,8 @@
             <column name="proj4text" type="VARCHAR(2048)"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-12">
+    <changeSet author="pedro" id="public-generated-12">
+    <comment>Create unique_values table</comment>
         <createTable tableName="unique_values">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="unique_values_pkey"/>
@@ -393,43 +408,59 @@
             <column name="unaccented_value" type="TEXT"/>
         </createTable>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-13">
+    <changeSet author="pedro" id="public-generated-13">
+    	<comment>Add db_metadata PK constaint</comment>
         <addPrimaryKey columnNames="schema_version" constraintName="db_metadata_pkey" tableName="db_metadata"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-14">
+    <changeSet author="pedro" id="public-generated-14">
+       	<comment>Add occurrence_extension PK constaint</comment>
         <addPrimaryKey columnNames="auto_id" constraintName="occurrence_extension_pkey" tableName="occurrence_extension"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-15">
+    <changeSet author="pedro" id="public-generated-15">
+       	<comment>Add occurrence PK constaint</comment>
         <addPrimaryKey columnNames="auto_id" constraintName="occurrence_pkey" tableName="occurrence"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-16">
+    <changeSet author="pedro" id="public-generated-16">
+    	<comment>Add occurrence_raw PK constaint</comment>
         <addPrimaryKey columnNames="auto_id" constraintName="occurrence_raw_pkey" tableName="occurrence_raw"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-17">
+    <changeSet author="pedro" id="public-generated-17">
+		<comment>Add resource_metadata PK constaint</comment>
         <addPrimaryKey columnNames="dwca_resource_id" constraintName="resource_metadata_pkey" tableName="resource_metadata"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-18">
+    <changeSet author="pedro" id="public-generated-18">
+        <preConditions onFail="MARK_RAN">
+			<changeSetExecuted id="public-generated-18" author="pedro" changeLogFile="src/main/resources/script/liquibase/generated.xml"/>
+		</preConditions>
+		<comment>Add spatial_ref_sys PK constaint</comment>
         <addPrimaryKey columnNames="srid" constraintName="spatial_ref_sys_pkey" tableName="spatial_ref_sys"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-19">
+    <changeSet author="pedro" id="public-generated-19">
+    	<comment>Add dwca_resource unique constaint</comment>
         <addUniqueConstraint columnNames="sourcefileid" constraintName="dwca_resource_source_file_id_key" deferrable="false" disabled="false" initiallyDeferred="false" tableName="dwca_resource"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-20">
+    <changeSet author="pedro" id="public-generated-20">
+    	<comment>Add occurrence_raw combined field constaint</comment>
         <addUniqueConstraint columnNames="dwca_id, sourcefileid" constraintName="occurrence_raw_dwcaid_sourcefileid_key" deferrable="false" disabled="false" initiallyDeferred="false" tableName="occurrence_raw"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-21">
+    <changeSet author="pedro" id="public-generated-21">
+    	<comment>Add contact/publisher FK constaint</comment>
         <addForeignKeyConstraint baseColumnNames="publisher_fkey" baseTableName="contact" constraintName="contact_publisher_fkey_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="auto_id" referencedTableName="publisher"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-22">
+    <changeSet author="pedro" id="public-generated-22">
+       	<comment>Add contact/resource_metadata FK constaint</comment>
         <addForeignKeyConstraint baseColumnNames="resource_metadata_fkey" baseTableName="contact" constraintName="contact_resource_metadata_fkey_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="dwca_resource_id" referencedTableName="resource_metadata"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-23">
+    <changeSet author="pedro" id="public-generated-23">
+       	<comment>Add dwca_resource/publisher FK constaint</comment>
         <addForeignKeyConstraint baseColumnNames="publisher_fkey" baseTableName="dwca_resource" constraintName="dwca_resource_publisher_fkey_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="auto_id" referencedTableName="publisher"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-24">
+    <changeSet author="pedro" id="public-generated-24">
+	   	<comment>Add resource_metadata/dwca_resource FK constaint</comment>
         <addForeignKeyConstraint baseColumnNames="dwca_resource_id" baseTableName="resource_metadata" constraintName="resource_metadata_dwca_resource_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="dwca_resource"/>
     </changeSet>
-    <changeSet author="pedro (generated)" id="1425320964738-25">
+    <changeSet author="pedro" id="public-generated-25">
+    	<comment>Create complete_occurrence_view view</comment>
         <createView fullDefinition="false" viewName="complete_occurrence_view"> SELECT occ.catalognumber AS p_catalognumber, 
     occ.collectioncode AS p_collectioncode, 
     occ.continent AS p_continent, 

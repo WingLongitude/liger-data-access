@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="pedro" id="1">
+    <changeSet author="pedro" id="public-2.13-1">
     	<comment>Rename resource_uuid field in dwca_resource table to gbif_package_id</comment>
 	    <renameColumn tableName="dwca_resource" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
 	</changeSet>
-	<changeSet author="pedro" id="2">
+	<changeSet author="pedro" id="public-2.13-2">
 		<comment>Changing the resource_metadata column resource_uuid to gbif_package_id</comment>
 		<renameColumn tableName="resource_metadata" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
  	</changeSet>
-    <changeSet author="pedro" id="3">
-		<rollback>
-			<comment>Change the resource_uuid field to resource_id, a foreign key to relate occurrence and dwca_resource:</comment>
-			<renameColumn tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
-	   	    <comment>Update values in resource_id field to match the id field in dwca_resource table:</comment>
-	   	    <sql>update occurrence o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_id)</sql>
-	   	    <comment>Alter data type from column resource_id from text to int:</comment>
-	   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
-	   	    <comment>Add the foreign key constraint:</comment>
-	   	    <addForeignKeyConstraint baseColumnNames="resource_id"
-	        	baseTableName="occurrence"
-	        	constraintName="fk_occurrence_resource"
-				deferrable="true"
-				initiallyDeferred="true"
-				onDelete="CASCADE"
-				onUpdate="RESTRICT"
-				referencedColumnNames="id"
-				referencedTableName="dwca_resource"/>
-		</rollback>
+    <changeSet author="pedro" id="public-2.13-3">
+		<comment>Change the resource_uuid field to resource_id, a foreign key to relate occurrence and dwca_resource:</comment>
+		<renameColumn tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
+   	    <comment>Update values in resource_id field to match the id field in dwca_resource table:</comment>
+   	    <sql>update occurrence o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_id)</sql>
+   	    <comment>Alter data type from column resource_id from text to int:</comment>
+   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
+   	    <comment>Add the foreign key constraint:</comment>
+   	    <addForeignKeyConstraint baseColumnNames="resource_id"
+        	baseTableName="occurrence"
+        	constraintName="fk_occurrence_resource"
+			deferrable="true"
+			initiallyDeferred="true"
+			onDelete="CASCADE"
+			onUpdate="RESTRICT"
+			referencedColumnNames="id"
+			referencedTableName="dwca_resource"/>	
 	</changeSet>
-    <changeSet author="pedro" id="4">
-		<rollback>
-	    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate occurrence_raw and dwca_resource:</comment>
-	   	    <renameColumn tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
-	   	    <comment>Update values in resource_id field to match the id field in dwca_resource table:</comment>
-	   	    <sql>update occurrence_raw o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_id)</sql>
-	   	    <comment>Alter data type from column resource_id from text to int:</comment>
-	   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
-	   	    <comment>Add the foreign key constraint:</comment>
-	   	    <addForeignKeyConstraint baseColumnNames="resource_id"
-	        	baseTableName="occurrence_raw"
-	        	constraintName="fk_occurrence_raw_resource"
-				deferrable="true"
-				initiallyDeferred="true"
-				onDelete="CASCADE"
-				onUpdate="RESTRICT"
-				referencedColumnNames="id"
-				referencedTableName="dwca_resource"/>
-		</rollback>	
+    <changeSet author="pedro" id="public-2.13-4">
+    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate occurrence_raw and dwca_resource:</comment>
+   	    <renameColumn tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
+   	    <comment>Update values in resource_id field to match the id field in dwca_resource table:</comment>
+   	    <sql>update occurrence_raw o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_id)</sql>
+   	    <comment>Alter data type from column resource_id from text to int:</comment>
+   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
+   	    <comment>Add the foreign key constraint:</comment>
+   	    <addForeignKeyConstraint baseColumnNames="resource_id"
+        	baseTableName="occurrence_raw"
+        	constraintName="fk_occurrence_raw_resource"
+			deferrable="true"
+			initiallyDeferred="true"
+			onDelete="CASCADE"
+			onUpdate="RESTRICT"
+			referencedColumnNames="id"
+			referencedTableName="dwca_resource"/>
 	</changeSet>
 </databaseChangeLog>
-
