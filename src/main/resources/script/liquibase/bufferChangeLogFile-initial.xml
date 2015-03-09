@@ -5,7 +5,7 @@
 	
 	<changeSet author="christian" id="buffer-initial-1" context="buffer">
 		<preConditions onFail="MARK_RAN">
-	        <tableExists schemaName="buffer" tableName="occurrence"/>
+			<not><tableExists schemaName="buffer" tableName="occurrence"/></not>
 	    </preConditions>
 		<comment>Create initial database structure</comment>
 		<sqlFile dbms="h2, postgresql" encoding="utf8"

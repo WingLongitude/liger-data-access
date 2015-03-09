@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet author="christian" id="public-initial-1">
     	<preConditions onFail="MARK_RAN">
-	        <tableExists schemaName="public" tableName="occurrence"/>
+	        <not><tableExists schemaName="public" tableName="occurrence"/></not>
 	    </preConditions>
 		<comment>Create initial database structure</comment>
         <sqlFile dbms="h2, postgresql"
