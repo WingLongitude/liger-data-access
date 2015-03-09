@@ -11,6 +11,20 @@
 		<property name="url" value="${database.url}" />
 	</bean>
 	
+	<!-- H2 config -->
+	<bean id="springLiquibase"
+		class="liquibase.integration.spring.SpringLiquibase">
+		<property name="dataSource" ref="dataSource" />
+		<property name="changeLog" value="classpath:script/liquibase/publicChangeLogFile-master.xml"/>
+	</bean>
+	
+	<bean id="springLiquibaseBuffer"
+		class="liquibase.integration.spring.SpringLiquibase">
+		<property name="dataSource" ref="dataSource" />
+		<property name="contexts" value="buffer" />
+		<property name="changeLog" value="classpath:script/liquibase/bufferChangeLogFile-master.xml"/>
+	</bean>
+	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

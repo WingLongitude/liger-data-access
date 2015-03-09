@@ -2,7 +2,13 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
-	<include file="script/liquibase/bufferChangeLogFile-initial.xml" />
-	<include file="script/liquibase/bufferChangeLogFile-2.13.xml" />
+	
+	<changeSet author="christian" id="buffer-initial-1" context="buffer">
+		<preConditions onFail="MARK_RAN">
+	        <tableExists schemaName="buffer" tableName="occurrence"/>
+	    </preConditions>
+		<comment>Create initial database structure</comment>
+		<sqlFile dbms="h2, postgresql" encoding="utf8"
+			path="script/occurrence/create_occurrence_tables_buffer_schema.sql" stripComments="true" />
+	</changeSet>
 </databaseChangeLog>

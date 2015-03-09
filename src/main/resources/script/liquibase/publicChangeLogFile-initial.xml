@@ -3,6 +3,14 @@
 xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-	<include file="script/liquibase/publicChangeLogFile-initial.xml"/>
-	<include file="script/liquibase/publicChangeLogFile-2.13.xml"/>
+    <changeSet author="christian" id="public-initial-1">
+    	<preConditions onFail="MARK_RAN">
+	        <tableExists schemaName="public" tableName="occurrence"/>
+	    </preConditions>
+		<comment>Create initial database structure</comment>
+        <sqlFile dbms="h2, postgresql"
+            encoding="utf8"
+            path="script/occurrence/create_occurrence_tables.sql"
+            stripComments="true"/>
+    </changeSet>
 </databaseChangeLog>

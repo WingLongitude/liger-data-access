@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="pedro" id="buffer-2.13-1">
-		<comment>Delete from occurrence:</comment>
-   		<sql>delete from occurrence</sql>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="pedro" id="buffer-2.13-1" context="buffer">
+		<comment>Delete content of buffer occurrence table</comment>
+   		<sql>DELETE FROM buffer.occurrence</sql>
     </changeSet>
-   	<changeSet author="pedro" id="buffer-2.13-2">
-    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate buffer.occurrence and dwca_resource:</comment>
-   	    <renameColumn tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
+   	<changeSet author="pedro" id="buffer-2.13-2" context="buffer">
+    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate buffer.occurrence and dwca_resource</comment>
+   	    <renameColumn schemaName="buffer" tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
     </changeSet>
-    <changeSet author="pedro" id="buffer-2.13-3">
-   	    <comment>Alter data type from column resource_id from text to int:</comment>
-   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
+    <changeSet author="pedro" id="buffer-2.13-3" context="buffer">
+   	    <comment>Alter data type from column resource_id from text to int</comment>
+   	    <modifyDataType schemaName="buffer" tableName="occurrence" columnName="resource_id" newDataType="int"/>
 	</changeSet>
-    <changeSet author="pedro" id="buffer-2.13-4">
-   	    <comment>Delete from occurrence_raw</comment>
-   	    <sql>delete from occurrence_raw</sql>
+	
+    <changeSet author="pedro" id="buffer-2.13-4" context="buffer">
+   	    <comment>Delete content of occurrence_raw table</comment>
+   	    <sql>DELETE FROM buffer.occurrence_raw</sql>
     </changeSet>
-    <changeSet author="pedro" id="buffer-2.13-5">
-    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate buffer.occurrence_raw and dwca_resource:</comment>
-   	    <renameColumn tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
+    <changeSet author="pedro" id="buffer-2.13-5" context="buffer">
+    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate buffer.occurrence_raw and dwca_resource</comment>
+   	    <renameColumn schemaName="buffer" tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
 	</changeSet>
-    <changeSet author="pedro" id="buffer-2.13-6">
-   	    <comment>Alter data type from column resource_id from text to int:</comment>
-   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
+    <changeSet author="pedro" id="buffer-2.13-6" context="buffer">
+   	    <comment>Alter data type from column resource_id from text to int</comment>
+   	    <modifyDataType schemaName="buffer" tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
     </changeSet>
 </databaseChangeLog>

@@ -4,7 +4,7 @@ CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
-resource_id integer,
+resource_uuid TEXT,
 sourcefileid TEXT,
 occurrenceid TEXT,
 associatedmedia TEXT,
@@ -69,7 +69,7 @@ CONSTRAINT occurrence_pkey PRIMARY KEY ( auto_id )
 CREATE TABLE IF NOT EXISTS buffer.occurrence_raw (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
-resource_id integer,
+resource_uuid TEXT,
 sourcefileid TEXT NOT NULL,
 acceptedNameUsage TEXT,
 acceptedNameUsageID TEXT,
