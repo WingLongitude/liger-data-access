@@ -19,6 +19,7 @@ public class HibernateDwcaResourceDAO implements DwcaResourceDAO {
 
 	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(HibernateDwcaResourceDAO.class);
+	private static final String GBIF_PACKAGE_ID = "gbif_package_id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -45,7 +46,7 @@ public class HibernateDwcaResourceDAO implements DwcaResourceDAO {
 
 	public DwcaResourceModel loadByResourceUUID(String gbif_package_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(DwcaResourceModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.GBIF_PACKAGE_ID, gbif_package_id));
+		searchCriteria.add(Restrictions.eq(GBIF_PACKAGE_ID, gbif_package_id));
 		return (DwcaResourceModel) searchCriteria.uniqueResult();
 	}
 

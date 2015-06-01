@@ -1,7 +1,6 @@
 package net.canadensys.dataportal.occurrence.dao.impl;
 
 import net.canadensys.dataportal.occurrence.dao.ResourceMetadataDAO;
-import net.canadensys.dataportal.occurrence.model.OccurrenceFieldConstants;
 import net.canadensys.dataportal.occurrence.model.ResourceMetadataModel;
 
 import org.apache.log4j.Logger;
@@ -24,6 +23,7 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 	private static final Logger LOGGER = Logger.getLogger(HibernateResourceMetadataDAO.class);
 	// the string "id" always points to the column annotated with @Id
 	private static final String MANAGED_ID = "id";
+	private static final String GBIF_PACKAGE_ID = "gbif_package_id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -50,7 +50,7 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 	@Override
 	public ResourceMetadataModel load(String gbif_package_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);
-		searchCriteria.add(Restrictions.eq(OccurrenceFieldConstants.GBIF_PACKAGE_ID, gbif_package_id));
+		searchCriteria.add(Restrictions.eq(GBIF_PACKAGE_ID, gbif_package_id));
 		return (ResourceMetadataModel) searchCriteria.uniqueResult();
 	}
 

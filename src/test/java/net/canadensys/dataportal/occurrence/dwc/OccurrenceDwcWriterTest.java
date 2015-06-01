@@ -1,7 +1,7 @@
 package net.canadensys.dataportal.occurrence.dwc;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class OccurrenceDwcWriterTest {
 
 		try {
 			List<String> expectedLines = FileUtils.readLines(expectedFile, "UTF-8");
-			List<String> actualLines = FileUtils.readLines(expectedFile, "UTF-8");
+			List<String> actualLines = FileUtils.readLines(generatedFile, "UTF-8");
 			// use StringUtils.chomp to ignore the EOL char
 			for (int i = 0; i < expectedLines.size(); i++) {
 				assertEquals(StringUtils.chomp(expectedLines.get(i)), StringUtils.chomp(actualLines.get(i)));
