@@ -10,28 +10,27 @@ import java.util.List;
 import java.util.Map;
 
 import org.gbif.dwc.terms.Term;
-import org.gbif.dwc.text.Archive;
-import org.gbif.dwc.text.ArchiveField;
-import org.gbif.dwc.text.ArchiveFile;
-import org.gbif.dwc.text.MetaDescriptorWriter;
-import org.gbif.file.TabWriter;
-import org.gbif.metadata.eml.Eml;
-import org.gbif.metadata.eml.EmlWriter;
+import org.gbif.dwca.io.Archive;
+import org.gbif.dwca.io.ArchiveField;
+import org.gbif.dwca.io.ArchiveFile;
+import org.gbif.dwca.io.MetaDescriptorWriter;
+import org.gbif.io.TabWriter;
 
 import com.google.common.collect.Maps;
 
-import freemarker.template.TemplateException;
-
 /**
+ * WARNING: before using this class for new project consider using GBIF dwca-io library directly.
+ * 
  * DarwinCore archive writer that handles headers declaration.
  * The declaration will allow to specify the order of the columns and will also avoid a second
  * writing of the archive to fix missing data when a new column is 'discovered' in a later row.
- * Written from GBIF DwcaWriter.
+ * Written from GBIF DwcaWriter with no EML file.
  * 
  * @author canadensys
  * 
  */
 public class FixedHeadersDwcaWriter {
+
 	private File dir;
 	private long recordNum;
 	private String coreId;
@@ -40,7 +39,6 @@ public class FixedHeadersDwcaWriter {
 	private Map<Term, TabWriter> writers = new HashMap<Term, TabWriter>();
 	private Map<Term, String> dataFileNames = new HashMap<Term, String>();
 	private Map<Term, List<Term>> terms = new HashMap<Term, List<Term>>();
-	private Eml eml;
 
 	/**
 	 * @param coreRowType
@@ -145,19 +143,13 @@ public class FixedHeadersDwcaWriter {
 		writeRow(row, rowType);
 	}
 
-	public void setEml(Eml eml) {
-		this.eml = eml;
-	}
-
 	/**
 	 * writes meta.xml and eml.xml to the archive and closes tab writers.
 	 */
 	public void finalize() throws IOException {
-		addEml();
 		addMeta();
 		// flush last record
 		flushLastCoreRecord();
-		// TODO: add missing columns in second iteration of data files
 
 		// close writers
 		for (TabWriter w : writers.values()) {
@@ -165,25 +157,10 @@ public class FixedHeadersDwcaWriter {
 		}
 	}
 
-	private void addEml() throws IOException {
-		if (eml != null) {
-			File emlFile = new File(dir, "eml.xml");
-			try {
-				EmlWriter.writeEmlFile(emlFile, eml);
-			}
-			catch (TemplateException e) {
-				throw new IOException("EML template exception: " + e.getMessage(), e);
-			}
-		}
-	}
-
 	private void addMeta() throws IOException {
 		File metaFile = new File(dir, "meta.xml");
 
 		Archive arch = new Archive();
-		if (eml != null) {
-			arch.setMetadataLocation("eml.xml");
-		}
 		arch.setCore(buildArchiveFile(arch, coreRowType));
 		for (Term rowType : this.terms.keySet()) {
 			if (!coreRowType.equals(rowType)) {
@@ -193,8 +170,8 @@ public class FixedHeadersDwcaWriter {
 		try {
 			MetaDescriptorWriter.writeMetaFile(metaFile, arch);
 		}
-		catch (TemplateException e) {
-			throw new IOException("Meta.xml template exception: " + e.getMessage(), e);
+		catch (IOException ioEx) {
+			throw new IOException("Meta.xml template exception: " + ioEx.getMessage(), ioEx);
 		}
 	}
 
@@ -219,7 +196,7 @@ public class FixedHeadersDwcaWriter {
 		af.setEncoding("utf-8");
 		// do not ignore header line
 		af.setIgnoreHeaderLines(1);
-		af.setRowType(rowType.qualifiedName());
+		af.setRowType(rowType);
 
 		ArchiveField id = new ArchiveField();
 		id.setIndex(0);
