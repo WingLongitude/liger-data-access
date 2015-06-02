@@ -35,7 +35,7 @@ public class OccurrenceExtensionModel {
 	@NaturalId
 	private String sourcefileid;
 	@NaturalId
-	private String resource_id;
+	private long resource_id;
 
 	private String ext_type;
 	private String ext_version;
@@ -67,11 +67,11 @@ public class OccurrenceExtensionModel {
 		this.sourcefileid = sourcefileid;
 	}
 
-	public String getResource_id() {
+	public long getResource_id() {
 		return resource_id;
 	}
 
-	public void setResource_id(String resource_id) {
+	public void setResource_id(long resource_id) {
 		this.resource_id = resource_id;
 	}
 

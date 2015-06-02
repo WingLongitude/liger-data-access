@@ -43,10 +43,11 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 	@Before
 	public void setup() {
 		// make sure the table is empty
-		Map<String, String> map = H2Decode.toKeyValue("image_type=>png","author=>darwin","licence=>cc0");
+		Map<String, String> map = H2Decode.toKeyValue("image_type=>png", "author=>darwin", "licence=>cc0");
 		jdbcTemplate.update("DELETE FROM occurrence_extension");
 		jdbcTemplate
-				.update("INSERT INTO occurrence_extension (auto_id,dwca_id,sourcefileid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', ?)", map);
+				.update("INSERT INTO occurrence_extension (auto_id,dwca_id,sourcefileid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', ?)",
+						map);
 	}
 
 	@Test
@@ -54,6 +55,7 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 
 		OccurrenceExtensionModel occExtModel = new OccurrenceExtensionModel();
 		occExtModel.setAuto_id(2l);
+		occExtModel.setResource_id(2l);
 		occExtModel.setDwcaid("2");
 		occExtModel.setSourcefileid("source");
 		occExtModel.setExt_type("image");
@@ -71,6 +73,7 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 		List<OccurrenceExtensionModel> extModelList = occurrenceExtDAO.load("image", "source", "2");
 		assertFalse(extModelList.isEmpty());
 		assertEquals("cc-by", extModelList.get(0).getExt_data().get("licence"));
+		assertEquals(2l, extModelList.get(0).getResource_id());
 
 		// test that loading a non existing extension return an empty list and not null
 		assertNotNull(occurrenceExtDAO.load("null", "????", "-7"));
