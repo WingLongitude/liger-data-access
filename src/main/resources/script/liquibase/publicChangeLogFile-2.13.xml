@@ -47,12 +47,12 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 		<comment>Changing the import_log.resource_uuid to import_log.gbif_package_id</comment>
 		<renameColumn tableName="import_log" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
  	</changeSet>
- 	<changeSet author="pedro" id="public-2.13-6">
+ 	<changeSet author="chrsitian" id="public-2.13-6">
 		<comment>Changing the occurrence_extension.resource_uuid to occurrence_extension.resource_id</comment>
 		<addColumn schemaName="public" tableName="occurrence_extension">
 	        <column name="resource_id" type="int"/>
 	    </addColumn>
-	    <comment>Update values in occurrente_raw.resource_id field to match the dwca_resource.id field:</comment>
+	    <comment>Update values in occurrente_extension.resource_id field to match the dwca_resource.id field:</comment>
    	    <sql>UPDATE occurrence_extension o SET resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_uuid)</sql>
 		<dropColumn columnName="resource_uuid" schemaName="public" tableName="occurrence_extension"/>
  	</changeSet>	
