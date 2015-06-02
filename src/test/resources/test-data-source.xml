@@ -40,7 +40,6 @@
 				<value>net.canadensys.dataportal.occurrence.model.ImportLogModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.DwcaResourceModel</value>
 				<value>net.canadensys.dataportal.occurrence.model.OccurrenceExtensionModel</value>
-				<value>net.canadensys.databaseutils.model.DBMetadata</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
