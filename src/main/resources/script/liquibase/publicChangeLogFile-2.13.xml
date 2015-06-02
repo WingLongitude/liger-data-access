@@ -48,7 +48,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 		<renameColumn tableName="import_log" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
  	</changeSet>
  		<changeSet author="pedro" id="public-2.13-6">
-		<comment>Changing the import_log.resource_uuid to import_log.gbif_package_id</comment>
-		<renameColumn tableName="occurrence_extension" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
+		<comment>Changing the occurrence_extension.resource_uuid to occurrence_extension.resource_id</comment>
+		<renameColumn tableName="occurrence_extension" oldColumnName="resource_uuid" newColumnName="resource_id"/>
  	</changeSet>	
 </databaseChangeLog>
