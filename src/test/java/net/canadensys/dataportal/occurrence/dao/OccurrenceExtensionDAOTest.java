@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.canadensys.databaseutils.H2Decode;
 import net.canadensys.dataportal.occurrence.model.OccurrenceExtensionModel;
 
 import org.junit.Before;
@@ -42,9 +43,10 @@ public class OccurrenceExtensionDAOTest extends AbstractTransactionalJUnit4Sprin
 	@Before
 	public void setup() {
 		// make sure the table is empty
+		Map<String, String> map = H2Decode.toKeyValue("image_type=>png","author=>darwin","licence=>cc0");
 		jdbcTemplate.update("DELETE FROM occurrence_extension");
 		jdbcTemplate
-				.update("INSERT INTO occurrence_extension (auto_id,dwca_id,sourcefileid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', toKeyValue('image_type=>png','author=>darwin','licence=>cc0'))");
+				.update("INSERT INTO occurrence_extension (auto_id,dwca_id,sourcefileid,ext_type,ext_data) VALUES (1,'1','1111-1111','image', ?)", map);
 	}
 
 	@Test

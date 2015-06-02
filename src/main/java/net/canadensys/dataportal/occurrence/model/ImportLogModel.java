@@ -30,7 +30,7 @@ public class ImportLogModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "import_log_id_seq")
 	private Integer id;
 	private String sourcefileid;
-	private String resource_uuid;
+	private String gbif_package_id;
 	private Integer record_quantity;
 	private String updated_by;
 	private Integer import_process_duration_ms;
@@ -77,16 +77,16 @@ public class ImportLogModel implements Serializable {
 	}
 
 	public String toString() {
-		return new ToStringBuilder(this).append("id", id).append("resource_uuid", resource_uuid).append("recordQuantity", record_quantity)
+		return new ToStringBuilder(this).append("id", id).append("resource_uuid", gbif_package_id).append("recordQuantity", record_quantity)
 				.append("updated_by", updated_by).toString();
 	}
 
-	public String getResource_uuid() {
-		return resource_uuid;
+	public String getGbif_package_id() {
+		return gbif_package_id;
 	}
 
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
+	public void setGbif_package_id(String gbif_package_id) {
+		this.gbif_package_id = gbif_package_id;
 	}
 
 	public static long getSerialversionuid() {

@@ -3,41 +3,52 @@
 xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="pedro" id="public-2.13-1">
-		<comment>Change the resource_uuid field to resource_id, a foreign key to relate occurrence and dwca_resource:</comment>
-		<renameColumn tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
-   	    <comment>Update values in resource_id field to match the id field in dwca_resource table:</comment>
-   	    <sql>update occurrence o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_id)</sql>
-   	    <comment>Alter data type from column resource_id from text to int:</comment>
-   	    <modifyDataType tableName="occurrence" columnName="resource_id" newDataType="int"/>
-   	    <comment>Add the foreign key constraint:</comment>
+	<changeSet author="pedro" id="public-2.13-1">
+    	<comment>Rename resource_uuid field in table dwca_resource to gbif_package_id</comment>
+	    <renameColumn tableName="dwca_resource" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
+	</changeSet>
+	<changeSet author="pedro" id="public-2.13-2">
+		<comment>Changing the resource_metadata column resource_uuid to gbif_package_id</comment>
+		<renameColumn tableName="resource_metadata" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
+ 	</changeSet>
+    <changeSet author="pedro" id="public-2.13-3">
+		<comment>Create resource_id field, a foreign key to relate occurrence and dwca_resource:</comment>
+		<addColumn schemaName="public" tableName="occurrence">
+	        <column name="resource_id" type="int"/>
+	    </addColumn>
+	    <comment>Add the foreign key constraint:</comment>
    	    <addForeignKeyConstraint baseColumnNames="resource_id"
         	baseTableName="occurrence"
         	constraintName="fk_occurrence_resource"
 			referencedColumnNames="id"
 			referencedTableName="dwca_resource"/>	
+		<comment>Update values in occurrente.resource_id field to match the dwca_resource.id field:</comment>
+   	    <sql>update occurrence o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_uuid)</sql>
+   	    <comment>Drop column occurrence.resource_uuid:</comment>
+   	    <dropColumn columnName="resource_uuid" schemaName="public" tableName="occurrence"/>
 	</changeSet>
-    <changeSet author="pedro" id="public-2.13-2">
-    	<comment>Change the resource_uuid field to resource_id, a foreign key to relate occurrence_raw and dwca_resource:</comment>
-   	    <renameColumn tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
-   	    <comment>Update values in resource_id field to match the id field in dwca_resource table:</comment>
-   	    <sql>update occurrence_raw o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_id)</sql>
-   	    <comment>Alter data type from column resource_id from text to int:</comment>
-   	    <modifyDataType tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
-   	    <comment>Add the foreign key constraint:</comment>
+    <changeSet author="pedro" id="public-2.13-4">
+		<comment>Create resource_id field, a foreign key to relate occurrence_raw and dwca_resource:</comment>
+		<addColumn schemaName="public" tableName="occurrence_raw">
+	        <column name="resource_id" type="int"/>
+	    </addColumn>
+	    <comment>Add the foreign key constraint:</comment>
    	    <addForeignKeyConstraint baseColumnNames="resource_id"
         	baseTableName="occurrence_raw"
         	constraintName="fk_occurrence_raw_resource"
 			referencedColumnNames="id"
 			referencedTableName="dwca_resource"/>
+		<comment>Update values in occurrente_raw.resource_id field to match the dwca_resource.id field:</comment>
+   	    <sql>update occurrence_raw o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_uuid)</sql>
+   	    <comment>Drop column occurrence_raw.resource_uuid:</comment>
+   	    <dropColumn columnName="resource_uuid" schemaName="public" tableName="occurrence_raw"/>
 	</changeSet>
-	    <changeSet author="pedro" id="public-2.13-3">
-    	<comment>Rename resource_uuid field in dwca_resource table to gbif_package_id</comment>
-	    <renameColumn tableName="dwca_resource" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
-	</changeSet>
-	<changeSet author="pedro" id="public-2.13-4">
-		<comment>Changing the resource_metadata column resource_uuid to gbif_package_id</comment>
-		<renameColumn tableName="resource_metadata" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
+	<changeSet author="pedro" id="public-2.13-5">
+		<comment>Changing the import_log.resource_uuid to import_log.gbif_package_id</comment>
+		<renameColumn tableName="import_log" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
  	</changeSet>
-	
+ 		<changeSet author="pedro" id="public-2.13-6">
+		<comment>Changing the import_log.resource_uuid to import_log.gbif_package_id</comment>
+		<renameColumn tableName="occurrence_extension" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
+ 	</changeSet>	
 </databaseChangeLog>

@@ -35,7 +35,7 @@ public class OccurrenceExtensionModel {
 	@NaturalId
 	private String sourcefileid;
 	@NaturalId
-	private String resource_uuid;
+	private String gbif_package_id;
 
 	private String ext_type;
 	private String ext_version;
@@ -67,12 +67,12 @@ public class OccurrenceExtensionModel {
 		this.sourcefileid = sourcefileid;
 	}
 
-	public String getResource_uuid() {
-		return resource_uuid;
+	public String getGbif_package_id() {
+		return gbif_package_id;
 	}
 
-	public void setResource_uuid(String resource_uuid) {
-		this.resource_uuid = resource_uuid;
+	public void setGbif_package_id(String gbif_package_id) {
+		this.gbif_package_id = gbif_package_id;
 	}
 
 	public String getExt_type() {
