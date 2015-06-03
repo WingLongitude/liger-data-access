@@ -6,18 +6,22 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
     <changeSet author="pedro" id="buffer-2.13-1" context="buffer">
 		<comment>Delete content of buffer occurrence table</comment>
    		<sql>DELETE FROM buffer.occurrence</sql>
-    	<comment>Change the resource_uuid field to resource_id on the occurrence table, turning it into a foreign key to relate buffer.occurrence and dwca_resource:</comment>
-   	    <renameColumn schemaName="buffer" tableName="occurrence" oldColumnName="resource_uuid" newColumnName="resource_id"/>
-   	    <comment>Alter data type from column resource_id from text to int</comment>
-   	    <modifyDataType schemaName="buffer" tableName="occurrence" columnName="resource_id" newDataType="int"/>
+    	<comment>Drop resource_uuid field on the occurrence table</comment>
+    	<dropColumn columnName="resource_uuid" schemaName="buffer" tableName="occurrence"/>
+    	<comment>Create new column resource_id</comment>
+   	    <addColumn schemaName="buffer" tableName="occurrence">
+	        <column name="resource_id" type="int"/>
+	    </addColumn>
 	</changeSet>
     <changeSet author="pedro" id="buffer-2.13-2" context="buffer">
    	    <comment>Delete content of occurrence_raw table</comment>
    	    <sql>DELETE FROM buffer.occurrence_raw</sql>
-    	<comment>Change the resource_uuid field to resource_id on the occurrence_raw table, a foreign key to relate buffer.occurrence_raw and dwca_resource</comment>
-   	    <renameColumn schemaName="buffer" tableName="occurrence_raw" oldColumnName="resource_uuid" newColumnName="resource_id"/>
-   	    <comment>Alter data type from column resource_id from text to int</comment>
-   	    <modifyDataType schemaName="buffer" tableName="occurrence_raw" columnName="resource_id" newDataType="int"/>
+    	<comment>Drop resource_uuid field on the occurrence table</comment>
+    	<dropColumn columnName="resource_uuid" schemaName="buffer" tableName="occurrence_raw"/>
+    	<comment>Create new column resource_id</comment>
+   	    <addColumn schemaName="buffer" tableName="occurrence_raw">
+	        <column name="resource_id" type="int"/>
+	    </addColumn>
     </changeSet>
     <changeSet author="pedro" id="buffer-2.13-3" context="buffer">
     		<comment>Changing the buffer.resource_metadata column resource_uuid to gbif_package_id</comment>
