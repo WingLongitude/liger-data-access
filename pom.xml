@@ -36,7 +36,7 @@
 		<!-- Plugin Versions -->
 		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
 		<maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
-		<maven-javadoc-plugin.version>2.10</maven-javadoc-plugin.version>
+		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>2.3</maven-source-plugin.version>
 	</properties>
 
@@ -84,6 +84,16 @@
 
 	<profiles>
 		<profile>
+			<!-- Avoid JavaDoc Errors in JDK 1.8 -->
+	    	<id>doclint-java8-disable</id>
+	    	<activation>
+	      		<jdk>[1.8,)</jdk>
+	    	</activation>
+		    <properties>
+		    	<javadoc.opts>-Xdoclint:none</javadoc.opts>
+		    </properties>
+	  	</profile>	
+		<profile>
 			<id>release</id>
 			<build>
 				<plugins>
@@ -105,6 +115,9 @@
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
+								<configuration>
+					            	<additionalparam>${javadoc.opts}</additionalparam>
+					          	</configuration>
 								<goals>
 									<goal>jar</goal>
 								</goals>
@@ -112,7 +125,7 @@
 						</executions>
 					</plugin>
 				</plugins>
-			</build>
+			</build>			
 		</profile>
 		
 	</profiles>
