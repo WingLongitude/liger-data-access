@@ -1,3 +1,8 @@
+# Version 2.13.0
+Released on 2015-06-03
+
+https://github.com/WingLongitude/liger-data-access/milestones/2.13.0
+
 # Version 2.12.0
 Released on 2015-01-15
 
