@@ -26,7 +26,7 @@ public class OccurrenceModel {
 	@Column(name = "dwca_id")
 	private String dwcaid;
 
-	private long resource_id;
+	private Long resource_id;
 	private String sourcefileid;
 
 	@JoinColumn(name = "auto_id")
@@ -592,11 +592,11 @@ public class OccurrenceModel {
 		this.resourcename = resourcename;
 	}
 
-	public long getResource_id() {
+	public Long getResource_id() {
 		return resource_id;
 	}
 
-	public void setResource_id(long resource_id) {
+	public void setResource_id(Long resource_id) {
 		this.resource_id = resource_id;
 	}
 }
