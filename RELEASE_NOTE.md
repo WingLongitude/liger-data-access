@@ -1,3 +1,8 @@
+# Version 2.13.1
+Released on 2015-06-15
+
+Bug fix release
+
 # Version 2.13.0
 Released on 2015-06-03
 

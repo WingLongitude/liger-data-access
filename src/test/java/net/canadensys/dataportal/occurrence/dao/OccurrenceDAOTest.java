@@ -354,7 +354,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 	@Test
 	public void testSearchFromModel() {
 		OccurrenceModel model = new OccurrenceModel();
-		model.setResource_id(1l);
+		model.setResource_id(1);
 		model.setLocality("Stockholm");
 
 		List<OccurrenceModel> result = occurrenceDAO.search(model, null);
