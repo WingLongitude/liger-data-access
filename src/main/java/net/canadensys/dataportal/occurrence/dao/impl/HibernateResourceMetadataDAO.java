@@ -41,9 +41,9 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 	}
 
 	@Override
-	public ResourceMetadataModel load(Integer dwca_resource_id) {
+	public ResourceMetadataModel load(Integer resource_id) {
 		Criteria searchCriteria = sessionFactory.getCurrentSession().createCriteria(ResourceMetadataModel.class);
-		searchCriteria.add(Restrictions.eq(MANAGED_ID, dwca_resource_id));
+		searchCriteria.add(Restrictions.eq(MANAGED_ID, resource_id));
 		return (ResourceMetadataModel) searchCriteria.uniqueResult();
 	}
 

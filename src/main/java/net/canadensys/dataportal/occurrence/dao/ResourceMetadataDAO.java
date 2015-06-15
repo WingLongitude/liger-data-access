@@ -63,15 +63,15 @@ public interface ResourceMetadataDAO {
 	 * @param id
 	 * @return ResourceMetadataModel or null if nothing is found
 	 */
-	public ResourceMetadataModel load(Integer dwca_resource_id);
+	public ResourceMetadataModel load(Integer resource_id);
 
 	/**
-	 * Load a ResourceMetadataModel from a resource_uuid
+	 * Load a ResourceMetadataModel from a gbif_package_id
 	 * 
-	 * @param resource_uuid
+	 * @param gbif_package_id
 	 * @return ResourceMetadataModel list or an empty list if nothing is found
 	 */
-	public ResourceMetadataModel load(String resource_uuid);
+	public ResourceMetadataModel load(String gbif_package_id);
 
 	/**
 	 * Drop a ResourceMetadata record from the table and all its associated resourceContacts;
