@@ -29,7 +29,7 @@ public class SQLStatementBuilderTest {
 	public void testGenerateSQLInsert() {
 		OccurrenceModel occModel = new OccurrenceModel();
 		occModel.setAuto_id(1);
-		occModel.setResource_id(1);
+		occModel.setResource_id(1l);
 		occModel.setCountry("Sweden");
 		Map<String, String> computedField = new HashMap<String, String>();
 		computedField.put("computed", "COUNT(tocount)");
@@ -49,12 +49,12 @@ public class SQLStatementBuilderTest {
 		OccurrenceModel occModel = new OccurrenceModel();
 		occModel.setAuto_id(0);
 		occModel.setCountry("Sweden");
-		occModel.setResource_id(1);
+		occModel.setResource_id(1l);
 		occList.add(occModel);
 		occModel = new OccurrenceModel();
 		occModel.setAuto_id(1);
 		occModel.setCountry("Norway");
-		occModel.setResource_id(1);
+		occModel.setResource_id(1l);
 		occList.add(occModel);
 
 		Map<String, String> computedField = new HashMap<String, String>();

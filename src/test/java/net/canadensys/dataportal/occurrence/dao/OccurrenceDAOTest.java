@@ -75,7 +75,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 		jdbcTemplate.update("DELETE FROM occurrence");
 		// add dwca_resource
 		jdbcTemplate
-		.update("INSERT INTO dwca_resource (id,name,sourcefileid) VALUES (1,'Test Dataset', 'uom-occurrence')");
+				.update("INSERT INTO dwca_resource (id,name,sourcefileid) VALUES (1,'Test Dataset', 'uom-occurrence')");
 		// add controlled rows
 		jdbcTemplate
 				.update("INSERT INTO occurrence (auto_id,country,locality,sourcefileid,institutioncode, resource_id) VALUES (1,'Mexico','Mexico','uom-occurrence','MT', 1)");
@@ -354,7 +354,7 @@ public class OccurrenceDAOTest extends AbstractTransactionalJUnit4SpringContextT
 	@Test
 	public void testSearchFromModel() {
 		OccurrenceModel model = new OccurrenceModel();
-		model.setResource_id(1);
+		model.setResource_id(1l);
 		model.setLocality("Stockholm");
 
 		List<OccurrenceModel> result = occurrenceDAO.search(model, null);
