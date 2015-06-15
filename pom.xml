@@ -4,7 +4,7 @@
 
 	<groupId>winglongitude</groupId>
 	<artifactId>liger-data-access</artifactId>
-	<version>2.13.1-SNAPSHOT</version>
+	<version>2.13.1</version>
 	<name>Liger Data Access</name>
 	<description>Data access layer for the Lontra, Harlequin, the Canadensys-explorer and SiBBr's explorador</description>
 	<url>https://github.com/WingLongitude/liger-data-access</url>
@@ -13,7 +13,7 @@
 		<connection>scm:git:https://github.com/WingLongitude/liger-data-access.git</connection>
 		<developerConnection>scm:git:git@github.com:WingLongitude/liger-data-access.git</developerConnection>
 		<url>https://github.com/WingLongitude/liger-data-access</url>
-	  	<tag>HEAD</tag>
+	  	<tag>liger-data-access-2.13.1</tag>
   	</scm>
 
 	<distributionManagement>
