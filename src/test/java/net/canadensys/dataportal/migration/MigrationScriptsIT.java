@@ -1,12 +1,16 @@
 package net.canadensys.dataportal.migration;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
+import liquibase.changelog.ChangeSet;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import net.canadensys.dataportal.occurrence.migration.LiquibaseHelper;
@@ -32,7 +36,18 @@ public class MigrationScriptsIT {
 		Connection conn;
 		try {
 			conn = ds.getConnection();
+
+			// ensure we have some changes to apply
+			List<ChangeSet> changeSet = LiquibaseHelper.listUnrunPublicChangeSets(conn);
+			assertFalse(changeSet.isEmpty());
+
+			// apply migration
 			LiquibaseHelper.migrate(conn);
+
+			// ensure we have no more changes to apply
+			changeSet = LiquibaseHelper.listUnrunPublicChangeSets(conn);
+			assertTrue(changeSet.isEmpty());
+
 			conn.close();
 		}
 		catch (SQLException e) {
