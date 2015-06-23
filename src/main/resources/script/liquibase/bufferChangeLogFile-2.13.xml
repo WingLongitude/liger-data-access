@@ -24,11 +24,11 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 	    </addColumn>
     </changeSet>
     <changeSet author="pedro" id="buffer-2.13-3" context="buffer">
-    		<comment>Changing the buffer.resource_metadata column resource_uuid to gbif_package_id</comment>
-			<renameColumn schemaName="buffer" tableName="resource_metadata" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
+    	<comment>Rename buffer.resource_metadata column resource_uuid to gbif_package_id</comment>
+		<renameColumn schemaName="buffer" tableName="resource_metadata" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
     </changeSet>
     <changeSet author="pedro" id="public-2.13-4">
-		<comment>Changing the buffer.occurrence_extension.resource_uuid to buffer.occurrence_extension.resource_id</comment>
+		<comment>Rename buffer.occurrence_extension.resource_uuid to buffer.occurrence_extension.resource_id</comment>
 		<addColumn schemaName="buffer" tableName="occurrence_extension">
 	        <column name="resource_id" type="int"/>
 	    </addColumn>

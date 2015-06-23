@@ -12,47 +12,47 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 		<renameColumn tableName="resource_metadata" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
  	</changeSet>
     <changeSet author="pedro" id="public-2.13-3">
-		<comment>Create resource_id field, a foreign key to relate occurrence and dwca_resource:</comment>
+		<comment>Create resource_id field, a foreign key to relate occurrence and dwca_resource</comment>
 		<addColumn schemaName="public" tableName="occurrence">
 	        <column name="resource_id" type="int"/>
 	    </addColumn>
-	    <comment>Add the foreign key constraint:</comment>
+	    <comment>Add the foreign key constraint</comment>
    	    <addForeignKeyConstraint baseColumnNames="resource_id"
         	baseTableName="occurrence"
         	constraintName="fk_occurrence_resource"
 			referencedColumnNames="id"
 			referencedTableName="dwca_resource"/>	
-		<comment>Update values in occurrente.resource_id field to match the dwca_resource.id field:</comment>
+		<comment>Update values in occurrente.resource_id field to match the dwca_resource.id field</comment>
    	    <sql>update occurrence o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_uuid)</sql>
-   	    <comment>Drop column occurrence.resource_uuid:</comment>
+   	    <comment>Drop column occurrence.resource_uuid</comment>
    	    <dropColumn columnName="resource_uuid" schemaName="public" tableName="occurrence"/>
 	</changeSet>
     <changeSet author="pedro" id="public-2.13-4">
-		<comment>Create resource_id field, a foreign key to relate occurrence_raw and dwca_resource:</comment>
+		<comment>Create resource_id field, a foreign key to relate occurrence_raw and dwca_resource</comment>
 		<addColumn schemaName="public" tableName="occurrence_raw">
 	        <column name="resource_id" type="int"/>
 	    </addColumn>
-	    <comment>Add the foreign key constraint:</comment>
+	    <comment>Add the foreign key constraint</comment>
    	    <addForeignKeyConstraint baseColumnNames="resource_id"
         	baseTableName="occurrence_raw"
         	constraintName="fk_occurrence_raw_resource"
 			referencedColumnNames="id"
 			referencedTableName="dwca_resource"/>
-		<comment>Update values in occurrente_raw.resource_id field to match the dwca_resource.id field:</comment>
+		<comment>Update values in occurrente_raw.resource_id field to match the dwca_resource.id field</comment>
    	    <sql>update occurrence_raw o set resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_uuid)</sql>
-   	    <comment>Drop column occurrence_raw.resource_uuid:</comment>
+   	    <comment>Drop column occurrence_raw.resource_uuid</comment>
    	    <dropColumn columnName="resource_uuid" schemaName="public" tableName="occurrence_raw"/>
 	</changeSet>
 	<changeSet author="pedro" id="public-2.13-5">
-		<comment>Changing the import_log.resource_uuid to import_log.gbif_package_id</comment>
+		<comment>Rename import_log.resource_uuid to import_log.gbif_package_id</comment>
 		<renameColumn tableName="import_log" oldColumnName="resource_uuid" newColumnName="gbif_package_id"/>
  	</changeSet>
  	<changeSet author="chrsitian" id="public-2.13-6">
-		<comment>Changing the occurrence_extension.resource_uuid to occurrence_extension.resource_id</comment>
+		<comment>Rename occurrence_extension.resource_uuid to occurrence_extension.resource_id</comment>
 		<addColumn schemaName="public" tableName="occurrence_extension">
 	        <column name="resource_id" type="int"/>
 	    </addColumn>
-	    <comment>Update values in occurrente_extension.resource_id field to match the dwca_resource.id field:</comment>
+	    <comment>Update values in occurrente_extension.resource_id field to match the dwca_resource.id field</comment>
    	    <sql>UPDATE occurrence_extension o SET resource_id = (select id from dwca_resource dr where dr.gbif_package_id = o.resource_uuid)</sql>
 		<dropColumn columnName="resource_uuid" schemaName="public" tableName="occurrence_extension"/>
  	</changeSet>	
