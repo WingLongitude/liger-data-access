@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS buffer;
 
-CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_auto_id_seq;
+CREATE SEQUENCE buffer.occurrence_auto_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence (
 auto_id INTEGER NOT NULL,
 dwca_id TEXT,
@@ -234,7 +234,7 @@ CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
 CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.unique_values_id_seq;
+CREATE SEQUENCE buffer.unique_values_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.unique_values
 (
   id integer DEFAULT nextval('buffer.unique_values_id_seq') NOT NULL,
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS buffer.unique_values
   CONSTRAINT unique_values_pkey PRIMARY KEY (id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.download_log_id_seq;
+CREATE SEQUENCE buffer.download_log_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.download_log
 (
   id integer DEFAULT nextval('buffer.download_log_id_seq') NOT NULL,
@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS buffer.resource_metadata
 );
 
 /* Structure to persist publisher information: */
-CREATE SEQUENCE IF NOT EXISTS buffer.publisher_id_seq;
+CREATE SEQUENCE buffer.publisher_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.publisher
 (
 	auto_id integer DEFAULT nextval('buffer.publisher_id_seq') NOT NULL,
@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS buffer.publisher
 );
 
 /* Structure to persist contacts information: */
-CREATE SEQUENCE IF NOT EXISTS buffer.contact_id_seq;
+CREATE SEQUENCE buffer.contact_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.contact
 (
 	auto_id integer DEFAULT nextval('buffer.contact_id_seq') NOT NULL,
@@ -321,7 +321,7 @@ CREATE TABLE IF NOT EXISTS buffer.contact
 	CONSTRAINT contact_pkey PRIMARY KEY (auto_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS buffer.occurrence_extension_id_seq;
+CREATE SEQUENCE buffer.occurrence_extension_id_seq;
 CREATE TABLE IF NOT EXISTS buffer.occurrence_extension
 (
 	auto_id bigint NOT NULL,

@@ -231,7 +231,7 @@ CONSTRAINT occurrence_raw_pkey PRIMARY KEY (auto_id ),
 CONSTRAINT occurrence_raw_dwcaid_sourcefileid_key UNIQUE (dwca_id , sourcefileid)
 );
 
-CREATE SEQUENCE IF NOT EXISTS unique_values_id_seq;
+CREATE SEQUENCE unique_values_id_seq;
 CREATE TABLE IF NOT EXISTS unique_values
 (
   id integer DEFAULT nextval('unique_values_id_seq') NOT NULL,
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS unique_values
   CONSTRAINT unique_values_pkey PRIMARY KEY (id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS download_log_id_seq;
+CREATE SEQUENCE download_log_id_seq;
 CREATE TABLE IF NOT EXISTS download_log
 (
   id integer DEFAULT nextval('download_log_id_seq') NOT NULL,
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS download_log
   CONSTRAINT download_log_pkey PRIMARY KEY (id )
 );
 
-CREATE SEQUENCE IF NOT EXISTS import_log_id_seq;
+CREATE SEQUENCE import_log_id_seq;
 CREATE TABLE IF NOT EXISTS import_log
 (
   id integer DEFAULT nextval('import_log_id_seq') NOT NULL,
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS import_log
 
 
 /* Structure to persist publisher information: */
-CREATE SEQUENCE IF NOT EXISTS publisher_id_seq;
+CREATE SEQUENCE publisher_id_seq;
 CREATE TABLE IF NOT EXISTS publisher
 (
 	auto_id integer DEFAULT nextval('publisher_id_seq') NOT NULL,
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS publisher
 	CONSTRAINT publisher_pkey PRIMARY KEY (auto_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS dwca_resource_id_seq;
+CREATE SEQUENCE dwca_resource_id_seq;
 CREATE TABLE IF NOT EXISTS dwca_resource
 (
   id integer DEFAULT nextval('dwca_resource_id_seq') NOT NULL,
@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS resource_metadata
 );
 
 /* Structure to persist contacts information: */
-CREATE SEQUENCE IF NOT EXISTS contact_id_seq;
+CREATE SEQUENCE contact_id_seq;
 CREATE TABLE IF NOT EXISTS contact
 (
 	auto_id integer DEFAULT nextval('contact_id_seq') NOT NULL,
