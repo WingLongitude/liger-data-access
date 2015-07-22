@@ -38,7 +38,7 @@ public interface DwcaResourceDAO {
 	public DwcaResourceModel loadByResourceUUID(String resource_uuid);
 
 	/**
-	 * Save a ResourceModel
+	 * Save a DwcaResourceModel
 	 * 
 	 * @param DwcaResourceModel
 	 * @return success or not
@@ -46,7 +46,9 @@ public interface DwcaResourceDAO {
 	public boolean save(DwcaResourceModel resourceModel);
 
 	/**
-	 * Remove a ResourceModel
+	 * Remove a DwcaResourceModel. If a ResourceMetadataModel exists for this DwcaResourceModel you need to
+	 * remove it before removing DwcaResourceModel.
+	 * 
 	 * @param resourceModel
 	 * @return
 	 */

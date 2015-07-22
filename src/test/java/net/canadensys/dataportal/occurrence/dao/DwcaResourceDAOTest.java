@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import net.canadensys.dataportal.occurrence.model.DwcaResourceModel;
 
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,14 @@ public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContex
 	@Autowired
 	private DwcaResourceDAO resourceDAO;
 
+	@Autowired
+	private SessionFactory sessionFactory;
+
 	@Test
-	public void testSaveAndLoad() {
+	public void testSaveLoadRemove() {
 
 		String sourceFileId = "source-file";
-		String gbif_package_id = "42843f95-6fe3-47e4-bd0c-f4fcadca232f";
+		String gbif_package_id = "42843f95-6fe3-47e4-bd0c-f4fcadca232ff";
 
 		DwcaResourceModel testModel = new DwcaResourceModel();
 		testModel.setGbif_package_id(gbif_package_id);
@@ -49,9 +53,15 @@ public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContex
 
 		DwcaResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);
-		
+
 		// Test removal of the dwca_resource object
-		boolean removed = resourceDAO.remove(loadedModel);
-		assertEquals(true, removed);
+		assertTrue(resourceDAO.remove(loadedModel));
+
+		// Synchronize session state with the database
+		sessionFactory.getCurrentSession().flush();
+
+		Long count = jdbcTemplate.queryForObject("SELECT count(*) FROM dwca_resource WHERE gbif_package_id = '" + gbif_package_id + "'",
+				Long.class);
+		assertEquals(0, count.intValue());
 	}
 }
