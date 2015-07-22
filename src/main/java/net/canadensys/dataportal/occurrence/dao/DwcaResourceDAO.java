@@ -45,4 +45,10 @@ public interface DwcaResourceDAO {
 	 */
 	public boolean save(DwcaResourceModel resourceModel);
 
+	/**
+	 * Remove a ResourceModel
+	 * @param resourceModel
+	 * @return
+	 */
+	public boolean remove(DwcaResourceModel resourceModel);
 }

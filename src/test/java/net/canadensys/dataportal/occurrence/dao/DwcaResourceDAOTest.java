@@ -49,5 +49,9 @@ public class DwcaResourceDAOTest extends AbstractTransactionalJUnit4SpringContex
 
 		DwcaResourceModel loadedById = resourceDAO.load(id);
 		assertEquals(loadedModel, loadedById);
+		
+		// Test removal of the dwca_resource object
+		boolean removed = resourceDAO.remove(loadedModel);
+		assertEquals(true, removed);
 	}
 }

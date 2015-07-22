@@ -63,8 +63,7 @@ public class HibernateResourceMetadataDAO implements ResourceMetadataDAO {
 	}
 
 	@Override
-	public boolean delete(ResourceMetadataModel resourceInformationModel) {
-		// Delete record:
+	public boolean remove(ResourceMetadataModel resourceInformationModel) {
 		try {
 			sessionFactory.getCurrentSession().delete(resourceInformationModel);
 		}

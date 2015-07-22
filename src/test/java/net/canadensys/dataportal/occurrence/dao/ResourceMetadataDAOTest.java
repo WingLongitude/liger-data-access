@@ -128,7 +128,7 @@ public class ResourceMetadataDAOTest extends AbstractTransactionalJUnit4SpringCo
 		assertEquals(fkey, resourceInformationPk);
 
 		// Test cascade deletion of information and all contacts after information deletion:
-		assertTrue(resourceMetadataDAO.delete(loadedMetadata));
+		assertTrue(resourceMetadataDAO.remove(loadedMetadata));
 		// Assert information was deleted:
 		assertNull(resourceMetadataDAO.load(resourceInformationPk));
 

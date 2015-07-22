@@ -78,6 +78,6 @@ public interface ResourceMetadataDAO {
 	 * 
 	 * @param resourceMetadataModel
 	 */
-	public boolean delete(ResourceMetadataModel resourceMetadataModel);
+	public boolean remove(ResourceMetadataModel resourceMetadataModel);
 
 }

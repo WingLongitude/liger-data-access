@@ -62,6 +62,18 @@ public class HibernateDwcaResourceDAO implements DwcaResourceDAO {
 		return true;
 	}
 
+	@Override
+	public boolean remove(DwcaResourceModel resourceModel) {
+		try {
+			sessionFactory.getCurrentSession().delete(resourceModel);
+		}
+		catch (HibernateException hEx) {
+			LOGGER.fatal("Couldn't delete DwcaResourceModel", hEx);
+			return false;
+		}
+		return true;
+	}
+	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
