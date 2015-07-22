@@ -37,6 +37,8 @@ public class MigrationScriptsIT {
 		try {
 			conn = ds.getConnection();
 
+			assertFalse(LiquibaseHelper.hasLiquibaseAlreadyRun(conn));
+
 			// ensure we have some changes to apply
 			List<ChangeSet> changeSet = LiquibaseHelper.listUnrunPublicChangeSets(conn);
 			assertFalse(changeSet.isEmpty());
@@ -47,6 +49,8 @@ public class MigrationScriptsIT {
 			// ensure we have no more changes to apply
 			changeSet = LiquibaseHelper.listUnrunPublicChangeSets(conn);
 			assertTrue(changeSet.isEmpty());
+
+			assertTrue(LiquibaseHelper.hasLiquibaseAlreadyRun(conn));
 
 			conn.close();
 		}

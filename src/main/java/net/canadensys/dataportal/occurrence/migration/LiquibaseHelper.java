@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.util.List;
 
 import liquibase.Liquibase;
+import liquibase.changelog.ChangeLogHistoryServiceFactory;
 import liquibase.changelog.ChangeSet;
+import liquibase.changelog.StandardChangeLogHistoryService;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
@@ -43,6 +46,19 @@ public class LiquibaseHelper {
 		// apply buffer master script
 		liquibase = new Liquibase(LiquibaseConfig.BUFFER_MASTER_SCRIPT, new ClassLoaderResourceAccessor(), database);
 		liquibase.update(LiquibaseConfig.BUFFER_CONTEXT);
+	}
+
+	/**
+	 * Check if the targeted database has already run Liquibase.
+	 * 
+	 * @param connection
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public static boolean hasLiquibaseAlreadyRun(Connection connection) throws DatabaseException {
+		Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+		return ((StandardChangeLogHistoryService) ChangeLogHistoryServiceFactory.getInstance().getChangeLogService(database))
+				.hasDatabaseChangeLogTable();
 	}
 
 	/**
