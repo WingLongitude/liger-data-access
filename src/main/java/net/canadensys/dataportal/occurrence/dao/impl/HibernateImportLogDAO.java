@@ -20,6 +20,7 @@ public class HibernateImportLogDAO implements ImportLogDAO {
 	private static final Logger LOGGER = Logger.getLogger(HibernateImportLogDAO.class);
 
 	private static final String MANAGED_ID = "id";
+	private static final String GBIF_PACKAGE_ID = "gbif_package_id";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -61,6 +62,15 @@ public class HibernateImportLogDAO implements ImportLogDAO {
 	public ImportLogModel loadLastFrom(String sourceFileId) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(ImportLogModel.class);
 		c.add(Restrictions.eq(OccurrenceFieldConstants.SOURCE_FILE_ID, sourceFileId));
+		c.addOrder(Order.desc(MANAGED_ID));
+		c.setMaxResults(1);
+		return (ImportLogModel) c.uniqueResult();
+	}
+
+	@Override
+	public ImportLogModel loadLastFromPackageId(String gbif_package_id) {
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(ImportLogModel.class);
+		c.add(Restrictions.eq(GBIF_PACKAGE_ID, gbif_package_id));
 		c.addOrder(Order.desc(MANAGED_ID));
 		c.setMaxResults(1);
 		return (ImportLogModel) c.uniqueResult();

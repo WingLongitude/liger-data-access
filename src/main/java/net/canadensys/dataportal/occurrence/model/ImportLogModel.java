@@ -93,10 +93,16 @@ public class ImportLogModel implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Deprecated
+	/**
+	 * use getGbif_package_id
+	 * @return
+	 */
 	public String getSourcefileid() {
 		return sourcefileid;
 	}
 
+	@Deprecated
 	public void setSourcefileid(String sourcefileid) {
 		this.sourcefileid = sourcefileid;
 	}

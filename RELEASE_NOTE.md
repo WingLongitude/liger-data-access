@@ -1,3 +1,14 @@
+# Version 2.15.0
+Released on 2015-07-23
+https://github.com/WingLongitude/liger-data-access/issues?q=milestone%3A2.15.0+is%3Aclosed
+[Code diff](https://github.com/WingLongitude/liger-data-access/compare/2.14.0...2.15.0)
+
+# Version 2.14.0
+Release on 2015-07-09
+New Liquibase utility methods
+
+[Code diff](https://github.com/WingLongitude/liger-data-access/compare/2.13.1...2.14.0)
+
 # Version 2.13.1
 Released on 2015-06-15
 

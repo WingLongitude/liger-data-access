@@ -29,6 +29,8 @@
 		<spring.version>4.0.9.RELEASE</spring.version>
 		<hibernate.version>4.3.7.Final</hibernate.version>
 		<jackson.version>2.2.3</jackson.version>
+		<apache-commons-io.version>2.4</apache-commons-io.version>
+		<apache-commons-beanutils.version>1.8.3</apache-commons-beanutils.version>
 		<canadensys.core.version>1.8</canadensys.core.version>
 		<dwca-io.version>1.23</dwca-io.version>
 		<liquibase.version>3.3.2</liquibase.version>
@@ -182,17 +184,16 @@
 			<version>${dwca-io.version}</version>
 		</dependency>
 
-		<!-- Apache IO -->
+		<!-- Apache libraries -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>${apache-commons-io.version}</version>
 		</dependency>
-		<!-- Apache BeanUtils -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.8.3</version>
+			<version>${apache-commons-beanutils.version}</version>
 		</dependency>
 
 		<!-- Log4j -->

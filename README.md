@@ -31,9 +31,9 @@ Dependencies
 * [Apache Maven 3](http://maven.apache.org/)
 * [Spring Framework 4.0.9.RELEASE](http://www.springsource.org/spring-framework)
 * [Hibernate 4.3.7.Final](http://www.hibernate.org/)
-* [Apache Commons BeanUtils 1.8.3](http://commons.apache.org/beanutils/)
+* [Apache Commons BeanUtils](http://commons.apache.org/proper/commons-beanutils/)
 * [Jackson 2.2.3](http://wiki.fasterxml.com/JacksonHome)
-* [GBIF DarwinCore Archive Reader 1.18](https://github.com/gbif/dwca-reader)
+* [GBIF dwca-io](https://github.com/gbif/dwca-io)
 * [JSON.org](http://www.json.org/java/)
 * [Canadensys Core 1.8](https://github.com/Canadensys/canadensys-core)
 
@@ -47,11 +47,11 @@ Build
 -----
 Build a jar file:
 ```
-mvn package
+mvn clean package
 ```
 Install to your local repository:
 ```
-mvn install
+mvn clean install
 ```
 
 Tests

@@ -33,9 +33,18 @@ public interface ImportLogDAO {
 	public ImportLogModel loadLast();
 
 	/**
-	 * Load the last inserted ImportLogModel for a specific resource_uuid
+	 * Use loadLastFromPackageId
 	 * 
 	 * @return ImportLogModel or null if nothing is found
 	 */
+	@Deprecated
 	public ImportLogModel loadLastFrom(String sourceFileId);
+
+	/**
+	 * Load the last inserted ImportLogModel for a specific gbif_package_id
+	 * 
+	 * @param gbif_package_id
+	 * @return
+	 */
+	public ImportLogModel loadLastFromPackageId(String gbif_package_id);
 }

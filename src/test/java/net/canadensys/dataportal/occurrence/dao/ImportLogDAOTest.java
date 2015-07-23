@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
+import java.util.UUID;
 
 import net.canadensys.dataportal.occurrence.model.ImportLogModel;
 
@@ -33,9 +34,10 @@ public class ImportLogDAOTest extends AbstractTransactionalJUnit4SpringContextTe
 
 	@Test
 	public void testSaveAndLoad() {
+		String gbif_package_id = UUID.randomUUID().toString();
 		ImportLogModel testModel = new ImportLogModel();
 		Date now = new Date();
-		testModel.setSourcefileid("test_sourcefileid");
+		testModel.setGbif_package_id(gbif_package_id);
 		testModel.setUpdated_by("me");
 		testModel.setEvent_end_date_time(now);
 		assertTrue(importLogDAO.save(testModel));
@@ -43,19 +45,19 @@ public class ImportLogDAOTest extends AbstractTransactionalJUnit4SpringContextTe
 		int id = testModel.getId();
 
 		ImportLogModel loadedModel = importLogDAO.load(id);
-		assertEquals("test_sourcefileid", loadedModel.getSourcefileid());
+		assertEquals(gbif_package_id, loadedModel.getGbif_package_id());
 		assertEquals("me", loadedModel.getUpdated_by());
 		assertEquals(now, loadedModel.getEvent_end_date_time());
 
 		// test importLogDAO.loadLastFrom
 		testModel = new ImportLogModel();
 		now = new Date();
-		testModel.setSourcefileid("test_sourcefileid");
+		testModel.setGbif_package_id(gbif_package_id);
 		testModel.setUpdated_by("me");
 		testModel.setEvent_end_date_time(now);
 		importLogDAO.save(testModel);
 
-		loadedModel = importLogDAO.loadLastFrom("test_sourcefileid");
+		loadedModel = importLogDAO.loadLastFromPackageId(gbif_package_id);
 		assertEquals(now, loadedModel.getEvent_end_date_time());
 	}
 }
