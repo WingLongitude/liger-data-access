@@ -68,7 +68,11 @@ public class SingleValueFieldInterpreterTest {
 		SingleValueFieldInterpreter svInterpreter = new SingleValueFieldInterpreter();
 		sqp.setSearchableField(TestSearchableFieldBuilder.buildSingleValueSearchableField(1, "searchtext", "searchtext"));
 		sqp.setOp(QueryOperatorEnum.MATCHES);
-
+		sqp.addValue("foo");
+		sqp.addParsedValue("foo", "searchtext", "foo");
+		assertTrue(svInterpreter.canHandleSearchQueryPart(sqp));
+		assertEquals("searchtext @@ to_tsquery('foo')", svInterpreter.toSQL(sqp));
+		assertEquals("searchtext @@ to_tsquery(%s)", svInterpreter.toCriterion(sqp).toString());
 	}
 
 }

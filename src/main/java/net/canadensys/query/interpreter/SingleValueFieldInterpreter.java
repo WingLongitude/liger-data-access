@@ -117,7 +117,7 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 			case IN:
 				return searchableField.getRelatedField() + " IN (" + value + ")";
 			case MATCHES:
-				return searchableField.getRelatedField() + " @@ to_tsquery(\'" + value + "\')"; 
+				return searchableField.getRelatedField() + " @@ to_tsquery(" + value + ")"; 
 		}
 		return null;
 	}
