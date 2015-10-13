@@ -13,7 +13,8 @@ public enum QueryOperatorEnum {
 	SLIKE(1, 1), // Starts like ...
 	ELIKE(1, 1), // Ends like ...
 	CLIKE(1, 1), // Contains like
-	IN(1, Integer.MAX_VALUE), BETWEEN(2, 2);
+	IN(1, Integer.MAX_VALUE), BETWEEN(2, 2),
+	MATCHES(1,Integer.MAX_VALUE); // Full text search in several fields
 
 	private final int minNumberOfValue;
 	private final int maxNumberOfValue;

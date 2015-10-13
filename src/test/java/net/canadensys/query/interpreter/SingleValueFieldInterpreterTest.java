@@ -59,7 +59,16 @@ public class SingleValueFieldInterpreterTest {
 		sqp.addParsedValue("true", "hassomething", Boolean.TRUE);
 		assertTrue(svInterpreter.canHandleSearchQueryPart(sqp));
 		assertEquals("hassomething='true'", svInterpreter.toSQL(sqp));
-		assertEquals("hassomething=true", svInterpreter.toCriterion(sqp).toString());
+		assertEquals("hassomething=true", svInterpreter.toCriterion(sqp).toString());		
+	}
+	
+	@Test
+	public void fullTextSearchTest() {
+		SearchQueryPart sqp = new SearchQueryPart();
+		SingleValueFieldInterpreter svInterpreter = new SingleValueFieldInterpreter();
+		sqp.setSearchableField(TestSearchableFieldBuilder.buildSingleValueSearchableField(1, "searchtext", "searchtext"));
+		sqp.setOp(QueryOperatorEnum.MATCHES);
+
 	}
 
 }

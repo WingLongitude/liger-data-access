@@ -1,14 +1,15 @@
 package net.canadensys.query.interpreter;
 
-import net.canadensys.databaseutils.SQLHelper;
-import net.canadensys.query.SearchQueryPart;
-import net.canadensys.query.SearchableField;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StringType;
+
+import net.canadensys.databaseutils.SQLHelper;
+import net.canadensys.query.SearchQueryPart;
+import net.canadensys.query.SearchableField;
 
 /**
  * Interprets a SearchQueryPart on a single database field.
@@ -20,6 +21,9 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 
 	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(SingleValueFieldInterpreter.class);
+	
+	String tsOperator = "@@";
+	String tsQuery = "to_tsquery(%s)";
 
 	@Override
 	public boolean canHandleSearchableField(SearchableField searchableField) {
@@ -56,6 +60,10 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 				return Restrictions.ilike(searchableField.getRelatedField(), searchQueryPart.getSingleValue(), MatchMode.ANYWHERE);
 			case IN:
 				return Restrictions.in(searchableField.getRelatedField(), searchQueryPart.getValueList());
+			case MATCHES:
+				return Restrictions.sqlRestriction(searchableField.getRelatedField() + " " + tsOperator + " " +  
+						tsQuery, searchQueryPart.getSingleValue(),
+						StringType.INSTANCE);
 		}
 		return null;
 	}
@@ -108,6 +116,8 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 				return searchableField.getRelatedField() + " ILIKE '%" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
 			case IN:
 				return searchableField.getRelatedField() + " IN (" + value + ")";
+			case MATCHES:
+				return searchableField.getRelatedField() + " @@ to_tsquery(\'" + value + "\')"; 
 		}
 		return null;
 	}

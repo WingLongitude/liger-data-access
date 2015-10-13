@@ -133,6 +133,7 @@ public class TestSearchableFieldBuilder {
 				supportedOperator.add(QueryOperatorEnum.ELIKE);
 				supportedOperator.add(QueryOperatorEnum.CLIKE);
 				supportedOperator.add(QueryOperatorEnum.IN);
+				supportedOperator.add(QueryOperatorEnum.MATCHES);
 				return supportedOperator;
 			}
 
