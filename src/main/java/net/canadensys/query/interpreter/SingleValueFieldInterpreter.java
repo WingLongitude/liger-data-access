@@ -21,15 +21,17 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 
 	// get log4j handler
 	private static final Logger LOGGER = Logger.getLogger(SingleValueFieldInterpreter.class);
-	
-	String tsOperator = "@@";
+
+	String tsOperator = " @@ ";
 	String tsQuery = "to_tsquery(%s)";
 
 	@Override
 	public boolean canHandleSearchableField(SearchableField searchableField) {
-		return (searchableField.getRelatedFields() != null && searchableField.getRelatedFields().size() == 1 && searchableField.getType() != null && (String.class
-				.equals(searchableField.getType()) || Number.class.isAssignableFrom(searchableField.getType()) || Boolean.class
-					.equals(searchableField.getType())));
+		return (searchableField.getRelatedFields() != null && searchableField.getRelatedFields().size() == 1
+				&& searchableField.getType() != null
+				&& (String.class.equals(searchableField.getType())
+						|| Number.class.isAssignableFrom(searchableField.getType())
+						|| Boolean.class.equals(searchableField.getType())));
 	}
 
 	@Override
@@ -61,9 +63,7 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 			case IN:
 				return Restrictions.in(searchableField.getRelatedField(), searchQueryPart.getValueList());
 			case MATCHES:
-				return Restrictions.sqlRestriction(searchableField.getRelatedField() + " " + tsOperator + " " +  
-						tsQuery, searchQueryPart.getSingleValue(),
-						StringType.INSTANCE);
+				return Restrictions.sqlRestriction(String.format(searchableField.getRelatedField() + tsOperator + tsQuery, searchQueryPart.getSingleValue()));
 		}
 		return null;
 	}
@@ -95,8 +95,7 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 		String value = "";
 		if (Number.class.isAssignableFrom(searchableField.getType())) {
 			value = StringUtils.join(queryPart.getValueList(), ",");
-		}
-		else { // TODO maybe handle boolean itself
+		} else { // TODO maybe handle boolean itself
 			for (String currValue : queryPart.getValueList()) {
 				value += "'" + SQLHelper.escapeSQLString(currValue) + "',";
 			}
@@ -104,20 +103,23 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 		}
 
 		switch (queryPart.getOp()) {
-			case EQ:
-				return searchableField.getRelatedField() + "=" + value;
-			case NEQ:
-				return searchableField.getRelatedField() + "<>" + value;
-			case SLIKE:
-				return searchableField.getRelatedField() + " ILIKE '" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
-			case ELIKE:
-				return searchableField.getRelatedField() + " ILIKE '%" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "'";
-			case CLIKE:
-				return searchableField.getRelatedField() + " ILIKE '%" + SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
-			case IN:
-				return searchableField.getRelatedField() + " IN (" + value + ")";
-			case MATCHES:
-				return searchableField.getRelatedField() + " @@ to_tsquery(" + value + ")"; 
+		case EQ:
+			return searchableField.getRelatedField() + "=" + value;
+		case NEQ:
+			return searchableField.getRelatedField() + "<>" + value;
+		case SLIKE:
+			return searchableField.getRelatedField() + " ILIKE '"
+					+ SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
+		case ELIKE:
+			return searchableField.getRelatedField() + " ILIKE '%"
+					+ SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "'";
+		case CLIKE:
+			return searchableField.getRelatedField() + " ILIKE '%"
+					+ SQLHelper.escapeSQLString(queryPart.getSingleValue()) + "%'";
+		case IN:
+			return searchableField.getRelatedField() + " IN (" + value + ")";
+		case MATCHES:
+			return String.format(searchableField.getRelatedField() + tsOperator + tsQuery, value);
 		}
 		return null;
 	}
