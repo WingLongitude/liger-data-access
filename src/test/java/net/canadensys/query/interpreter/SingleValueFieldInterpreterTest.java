@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class SingleValueFieldInterpreterTest {
 
-	/**
+	
 	@Test
 	public void testMinMaxInterpreterBetween() {
 
@@ -62,7 +62,7 @@ public class SingleValueFieldInterpreterTest {
 		assertEquals("hassomething='true'", svInterpreter.toSQL(sqp));
 		assertEquals("hassomething=true", svInterpreter.toCriterion(sqp).toString());		
 	}
-	**/
+
 	@Test
 	public void fullTextSearchTest() {
 		SearchQueryPart sqp = new SearchQueryPart();
