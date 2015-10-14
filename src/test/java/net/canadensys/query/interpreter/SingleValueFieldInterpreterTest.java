@@ -72,10 +72,9 @@ public class SingleValueFieldInterpreterTest {
 		sqp.addValue("foo");
 		sqp.addParsedValue("foo", "searchtext", "foo");
 		assertTrue(svInterpreter.canHandleSearchQueryPart(sqp));
-		String toSQL = svInterpreter.toSQL(sqp);
-		assertEquals("searchtext @@ to_tsquery('foo')", toSQL);
 		String toCriterion = svInterpreter.toCriterion(sqp).toString();
 		assertEquals("searchtext @@ to_tsquery(foo)", toCriterion);
+		String toSQL = svInterpreter.toSQL(sqp);
+		assertEquals("searchtext @@ to_tsquery('foo')", toSQL);
 	}
-
 }

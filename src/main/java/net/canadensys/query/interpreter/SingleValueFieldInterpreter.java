@@ -63,7 +63,7 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 			case IN:
 				return Restrictions.in(searchableField.getRelatedField(), searchQueryPart.getValueList());
 			case MATCHES:
-				return Restrictions.sqlRestriction(String.format(searchableField.getRelatedField() + tsOperator + tsQuery, searchQueryPart.getSingleValue()));
+				return Restrictions.sqlRestriction(searchableField.getRelatedField() + tsOperator + tsQuery, searchQueryPart.getSingleValue(), StringType.INSTANCE);
 		}
 		return null;
 	}
@@ -119,9 +119,8 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 		case IN:
 			return searchableField.getRelatedField() + " IN (" + value + ")";
 		case MATCHES:
-			return String.format(searchableField.getRelatedField() + tsOperator + tsQuery, value);
+			return String.format(searchableField.getRelatedField() + tsOperator + tsQuery, SQLHelper.escapeSQLString(value));
 		}
 		return null;
 	}
-
 }
