@@ -63,7 +63,8 @@ public class SingleValueFieldInterpreter implements QueryPartInterpreter {
 			case IN:
 				return Restrictions.in(searchableField.getRelatedField(), searchQueryPart.getValueList());
 			case MATCHES:
-				return Restrictions.sqlRestriction(searchableField.getRelatedField() + tsOperator + tsQuery, searchQueryPart.getSingleValue(), StringType.INSTANCE);
+				String tsQueryHibernate = String.format(tsQuery, "%");
+				return Restrictions.sqlRestriction(searchableField.getRelatedField() + tsOperator + tsQueryHibernate, searchQueryPart.getSingleValue(), StringType.INSTANCE);
 		}
 		return null;
 	}
