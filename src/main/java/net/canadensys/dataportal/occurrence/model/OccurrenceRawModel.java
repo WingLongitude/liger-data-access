@@ -157,7 +157,7 @@ public class OccurrenceRawModel {
 	private String recordnumber;
 	private String _references;
 	private String reproductivecondition;
-	private String rights;
+	private String license;
 	private String rightsholder;
 	private String samplingeffort;
 	private String samplingprotocol;
@@ -1222,12 +1222,12 @@ public class OccurrenceRawModel {
 		this.reproductivecondition = reproductivecondition;
 	}
 
-	public String getRights() {
-		return rights;
+	public String getLicense() {
+		return license;
 	}
 
-	public void setRights(String rights) {
-		this.rights = rights;
+	public void setLicense(String license) {
+		this.license = license;
 	}
 
 	public String getRightsholder() {
