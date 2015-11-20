@@ -33,12 +33,6 @@ public class LiquibaseHelper {
 		Liquibase liquibase;
 		Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
 
-		// set initial state
-		// liquibase = new Liquibase(LiquibaseConfig.PUBLIC_INITIAL_SCRIPT, new ClassLoaderResourceAccessor(), database);
-		// liquibase.changeLogSync(LiquibaseConfig.NO_CONTEXT, LiquibaseConfig.NO_LABEL);
-		// liquibase = new Liquibase(LiquibaseConfig.BUFFER_INITIAL_SCRIPT, new ClassLoaderResourceAccessor(), database);
-		// liquibase.changeLogSync(LiquibaseConfig.BUFFER_CONTEXT, LiquibaseConfig.NO_LABEL);
-
 		// apply public master script
 		liquibase = new Liquibase(LiquibaseConfig.PUBLIC_MASTER_SCRIPT, new ClassLoaderResourceAccessor(), database);
 		liquibase.update(LiquibaseConfig.NO_CONTEXT);

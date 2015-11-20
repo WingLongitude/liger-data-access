@@ -42,6 +42,10 @@ public class MigrationScriptsIT {
 			// ensure we have some changes to apply
 			List<ChangeSet> changeSet = LiquibaseHelper.listUnrunPublicChangeSets(conn);
 			assertFalse(changeSet.isEmpty());
+			
+	     // ensure we have some changes to apply on buffer schema
+			List<ChangeSet> bufferChangeSet = LiquibaseHelper.listUnrunBufferChangeSets(conn);
+      assertFalse(bufferChangeSet.isEmpty());
 
 			// apply migration
 			LiquibaseHelper.migrate(conn);
@@ -49,6 +53,8 @@ public class MigrationScriptsIT {
 			// ensure we have no more changes to apply
 			changeSet = LiquibaseHelper.listUnrunPublicChangeSets(conn);
 			assertTrue(changeSet.isEmpty());
+			bufferChangeSet = LiquibaseHelper.listUnrunBufferChangeSets(conn);
+			assertTrue(bufferChangeSet.isEmpty());
 
 			assertTrue(LiquibaseHelper.hasLiquibaseAlreadyRun(conn));
 

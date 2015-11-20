@@ -1,3 +1,8 @@
+# Version 2.16.0
+Released on 
+
+Fixed [Issue #30](https://github.com/WingLongitude/liger-data-access/issues/30)
+
 # Version 2.15.0
 Released on 2015-07-23
 
