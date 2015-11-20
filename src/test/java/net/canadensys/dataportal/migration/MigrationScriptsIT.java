@@ -45,7 +45,7 @@ public class MigrationScriptsIT {
 			
 	     // ensure we have some changes to apply on buffer schema
 			List<ChangeSet> bufferChangeSet = LiquibaseHelper.listUnrunBufferChangeSets(conn);
-      assertFalse(bufferChangeSet.isEmpty());
+			assertFalse(bufferChangeSet.isEmpty());
 
 			// apply migration
 			LiquibaseHelper.migrate(conn);
