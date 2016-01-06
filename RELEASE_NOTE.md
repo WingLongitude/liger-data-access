@@ -1,5 +1,5 @@
 # Version 2.16.0
-Released on 
+Released on 2016-01-06
 
 Fixed [Issue #30](https://github.com/WingLongitude/liger-data-access/issues/30)
 
