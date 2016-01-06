@@ -1,3 +1,6 @@
+# Version 2.16.1
+Fixed issue with previous Bintray pom.xml
+
 # Version 2.16.0
 Released on 2016-01-06
 
